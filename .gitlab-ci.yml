@@ -1,5 +1,5 @@
 # This will run the project in a node environment on gitlab's servers
-image: node/latest
+image: node:latest
 
 # These are the stages that the ci process will cycle through
 # starting with build, then test and lastly deploy
