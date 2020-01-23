@@ -1,0 +1,34 @@
+# These are the stages that the ci process will cycle through
+# starting with build, then test and lastly deploy
+stages:
+  - build
+  - test
+  - deploy
+
+# This will compile the application's frontend and produce a build folder
+build:
+  stage: build
+  script:
+    - cd frontend/ && yarn build
+  artifacts:
+    paths:
+      - frontend/build/
+    expire_in: 30 days
+
+# This will run tests on the application using a test framework. For example, Jest
+test:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - echo "Testing"
+    - echo "Test successful"
+
+# This will deploy the application to a web host so that the site is accessible from a uri
+deploy:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - echo "Deploying"
+    - echo "Deployed"
