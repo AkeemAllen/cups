@@ -12,10 +12,10 @@ stages:
 build:
   stage: build
   script:
-    - cd frontend/ && yarn install && yarn build
+    - yarn install && yarn build
   artifacts:
     paths:
-      - frontend/build/
+      - build/
     expire_in: 30 days
 
 # This will run tests on the application using a test framework. For example, Jest
