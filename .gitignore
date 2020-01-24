@@ -7,3 +7,4 @@
 
 # Ignoring .env file
 /backend/.env
+node_modules
