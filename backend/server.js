@@ -1,47 +1,27 @@
-// Importing required modules
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const http = require("http");
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
-require("dotenv").config();
+require('dotenv').config();
 
-// Initializes the express application
 const app = express();
 
-// Specifies the port that the app runs on, i.e. http://localhost:5000
-const port = process.env.PORT || 2020;
+const port = process.env.PORT || 5000;
 
-// Database connection to local or server instance of MongoDb
 const uri = process.env.ATLAS_URI || "mongodb://localhost:27017/cupsdatabase";
-mongoose.connect(uri, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-// Displays whether or note the connection was successful
+mongoose.connect(uri, {useUnifiedTopology: true, useNewUrlParser:true, useCreateIndex:true});
 const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("MongoDb Connection established successfully");
-});
+connection.once('open',() => {
+    console.log("MongoDB connection established successfully");
+})
 
-app.use(cors);
+app.use(cors());
 app.use(express.json());
 
-// Establishing application Routes
-const usersRoute = require("./routes/users");
-app.use("/users", usersRoute);
+const usersRouter = require('./routes/user')
+app.use('/users', usersRouter)
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
 
-const server = http.createServer(app);
-
-// Runs app on relevant port
-setImmediate(() => {
-  server.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
