@@ -11,6 +11,8 @@ stages:
 # This will compile the application's frontend and produce a build folder
 build:
   stage: build
+  only:
+    - develop
   script:
     - yarn install && yarn build
   artifacts:
