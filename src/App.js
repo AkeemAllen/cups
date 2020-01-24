@@ -1,24 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import greatness_gif from "./assets/images/greatness.gif";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>
+        <h1>WELCOME...</h1> <h2>Roxy and Rico</h2> to the start of great
+        things!!
+      </p>
+      <p>
+        This is the canvas upon which we shall build a system like{" "}
+        <strong>NO OTHER</strong>!!!
+      </p>
+      <img src={greatness_gif} alt="We are the champions" />
+      <p>Prepare to become greatness!!!</p>
     </div>
   );
 }
