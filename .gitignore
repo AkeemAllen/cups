@@ -3,7 +3,7 @@
 /frontend/node_modules
 
 # Ignoring build folder
-/frontend/build
+build/
 
 # Ignoring .env file
 /backend/.env
