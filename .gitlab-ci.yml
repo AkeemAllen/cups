@@ -26,8 +26,7 @@ test:
   dependencies:
     - build
   script:
-    - echo "Testing"
-    - echo "Test successful"
+    - cd backend/ && yarn jest
 
 # This will deploy the application to a web host so that the site is accessible from a uri
 deploy:

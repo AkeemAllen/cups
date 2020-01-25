@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "cups",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -33,6 +33,9 @@
   },
   "main": "index.js",
   "repository": "https://gitlab.com/advanced_programming_sem2_2020_A_R_R/cups",
-  "author": "Khalin <kcheverria9@gmail.com>",
-  "license": "MIT"
+  "author": "Akeem <allenakeem8@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  }
 }
