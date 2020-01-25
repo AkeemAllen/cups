@@ -6,7 +6,6 @@ image: node:latest
 stages:
   - build
   - test
-  - deploy
 
 # This will compile the application's frontend and produce a build folder
 build:
@@ -29,12 +28,3 @@ test:
     - cd backend/
     - yarn install
     - yarn jest
-
-# This will deploy the application to a web host so that the site is accessible from a uri
-deploy:
-  stage: deploy
-  dependencies:
-    - build
-  script:
-    - echo "Deploying"
-    - echo "Deployed"
