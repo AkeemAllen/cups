@@ -1,5 +1,6 @@
 import React from "react";
 import greatness_gif from "./assets/images/greatness.gif";
+import Button from "@material-ui/core/Button";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,13 @@ function App() {
       </p>
       <img src={greatness_gif} alt="We are the champions" />
       <p>Prepare to become greatness!!!</p>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => alert("Button Clicked")}
+      >
+        This Button is from the Material Ui Library
+      </Button>
     </div>
   );
 }
