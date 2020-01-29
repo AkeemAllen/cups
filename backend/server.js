@@ -6,8 +6,6 @@ require("dotenv").config();
 
 const app = express();
 
-const port = process.env.PORT || 5000;
-
 const uri = process.env.ATLAS_URI || "mongodb://localhost:27017/cupsdatabase";
 mongoose.connect(uri, {
   useUnifiedTopology: true,
@@ -31,6 +29,4 @@ app.get("/", (req, res) => {
   );
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+module.exports = app;
