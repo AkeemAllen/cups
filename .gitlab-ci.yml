@@ -27,4 +27,4 @@ test:
   script:
     - cd backend/
     - yarn install
-    - yarn jest
+    - yarn jest --forceExit --detectOpenHandles
