@@ -1,7 +1,7 @@
-import React from "react";
-import greatness_gif from "./assets/images/greatness.gif";
-import Button from "@material-ui/core/Button";
-import "./App.css";
+import React from 'react';
+import greatnessGif from './assets/images/greatness.gif';
+import Button from '@material-ui/core/Button';
+import './App.css';
 
 function App() {
   return (
@@ -11,15 +11,15 @@ function App() {
         things!!
       </p>
       <p>
-        This is the canvas upon which we shall build a system like{" "}
+        This is the canvas upon which we shall build a system like{' '}
         <strong>NO OTHER</strong>!!!
       </p>
-      <img src={greatness_gif} alt="We are the champions" />
+      <img src={greatnessGif} alt="We are the champions" />
       <p>Prepare to become greatness!!!</p>
       <Button
         variant="outlined"
         color="primary"
-        onClick={() => alert("Button Clicked")}
+        onClick={() => alert('Button Clicked')}
       >
         This Button is from the Material Ui Library
       </Button>
