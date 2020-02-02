@@ -10,7 +10,7 @@
     "mongoose": "^5.8.9"
   },
   "scripts": {
-    "start": "nodemon start.js",
+    "start": "node start.js",
     "test": "jest --detectOpenHandles --forceExit",
     "test:watch": "jest --watch",
     "lint": "eslint .",
