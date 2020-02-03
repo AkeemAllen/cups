@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const morgan = require('morgan');
 
 require('dotenv').config();
 
@@ -14,11 +15,13 @@ mongoose.connect(uri, {
 });
 const connection = mongoose.connection;
 connection.once('open', () => {
+  // eslint-disable-next-line no-console
   console.log('MongoDB connection established successfully');
 });
 
 app.use(cors());
 app.use(express.json());
+app.use(morgan('combined'));
 
 const usersRouter = require('./routes/user');
 app.use('/users', usersRouter);

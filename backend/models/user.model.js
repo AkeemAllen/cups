@@ -8,6 +8,11 @@ const userModel = new Schema({
     minlength: 3,
     unique: true
   },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6
+  },
   customerInfo: {
     disability: {
       type: String,
