@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const managerSchema = new Schema({
   userId: {
     type: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User'
     },
     required: true
   },
@@ -16,6 +16,6 @@ const managerSchema = new Schema({
   }
 });
 
-const Manager = mongoose.model("Manager", managerSchema);
+const Manager = mongoose.model('Manager', managerSchema);
 
 module.exports = Manager;
