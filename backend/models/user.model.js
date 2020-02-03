@@ -1,18 +1,34 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  userId: {
-    type: Object.id,
-    required: true
-  },
-  username: {
+const userModel = new Schema({
+  userName: {
     type: String,
     required: true,
-    minlength: 3
+    minlength: 3,
+    unique: true
+  },
+  customerInfo: {
+    disability: {
+      type: String,
+      required: true
+    },
+    accountBalance: {
+      type: Number,
+      default: 500,
+      required: false
+    },
+    required: false
+  },
+  managerInfo: {
+    branchNo: {
+      type: Number,
+      required: false
+    },
+    required: false
   }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userModel);
 
 module.exports = User;
