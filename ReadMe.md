@@ -1,5 +1,14 @@
 [CLICK ME TO SEE SITE!!!](https://confident-tereshkova-dbeca4.netlify.com/)
 
+## Members
+1. Akeem Allen 1706357 **Group Leader** **Integration Lead**
+2. Roxanne Meeks 170001
+3. Richard Robinson 1702417
+
+# Project Description
+Cups is a local coffee shop that provides a relaxing getaway in the middle of the city for the disabled community. They are also a wonderful example of a Social Enterprise Boost Initiative (https://www.micaf.gov.jm/msme-initiatives/social-enterprise-boost-initiative-sebi) similar to DeafCan coffee (https://www.deafcancoffee.com/ | https://youtu.be/gGYq0ASoEPM ). Kat, the manager, has been encouraged by her mentor to establish another store at 95 Moolean Avenue in the heart of Montego Bay. Kat would like to encourage an empowering environment through self service. Your consulting team providing pro bono services has considered to incorporate Artificial Intelligence through Computer Vision and Speech Processing to accomplish this. The touch-screen self service kiosk will allow customers to order their favourite treats and verify using their Digital Id.
+
+
 # Getting Started
 
 ## Installing Prerequisites
