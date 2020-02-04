@@ -22,9 +22,35 @@ router.route('/').get((req, res) => {
  * /users:
  *  post:
  *    description: Used to add a Users
+ *    consumes:
+ *      - application/json
+ *    parameters:
+ *      - in: body
+ *        name: user
+ *        description: The User to create
+ *        schema:
+ *          type: object
+ *          required:
+ *            - userName
+ *            - password
+ *          properties:
+ *            userName:
+ *              type: string
+ *            password:
+ *              type: string
+ *            customerInfo:
+ *              type: object
+ *              disability:
+ *                type: string
+ *              accountBalance:
+ *                type: string
+ *            managerInfo:
+ *              type: object
+ *              branch:
+ *                type: string
  *    responses:
  *      '200':
- *        description: A successful response
+ *        description: User successfully created
  */
 router.route('/').post(async (req, res) => {
   const userName = req.body.userName;

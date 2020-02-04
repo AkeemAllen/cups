@@ -16,7 +16,7 @@ const userModel = new Schema({
   customerInfo: {
     disability: {
       type: String,
-      required: true
+      required: false
     },
     accountBalance: {
       type: Number,
