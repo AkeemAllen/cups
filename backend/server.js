@@ -2,6 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerJsdoc = require('swagger-jsdoc');
+
+// const options = {
+//   swaggerDefinition: {
+//     openapi: '3.0.0'
+//   }
+// };
+
+// const swaggerSpec = swaggerJsdoc();
 
 require('dotenv').config();
 
@@ -22,6 +32,7 @@ connection.once('open', () => {
 app.use(cors());
 app.use(express.json());
 app.use(morgan('combined'));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, options));
 
 const usersRouter = require('./routes/user');
 app.use('/users', usersRouter);
