@@ -40,14 +40,16 @@ router.route('/').get((req, res) => {
  *              type: string
  *            customerInfo:
  *              type: object
- *              disability:
- *                type: string
- *              accountBalance:
- *                type: string
+ *              properties:
+ *                disability:
+ *                  type: string
+ *                accountBalance:
+ *                  type: number
  *            managerInfo:
  *              type: object
- *              branch:
- *                type: string
+ *              properties:
+ *                branch:
+ *                  type: number
  *    responses:
  *      '200':
  *        description: User successfully created
