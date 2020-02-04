@@ -46,7 +46,7 @@ Run the following commands to get started:
 
 `yarn install` Once again, this command installs all of the packages necessary to run the app
 
-`nodemon server.js` This command starts the server for the application on http://localhost:5000 by default
+`yarn start` This command starts the server for the application on http://localhost:5000 by default
 
 To test this simply navigate to http://localhost:5000
 
