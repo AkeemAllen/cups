@@ -2,16 +2,29 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
-// const swaggerUi = require('swagger-ui-express');
-// const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const routes = require('./routes/index');
 
-// const options = {
-//   swaggerDefinition: {
-//     openapi: '3.0.0'
-//   }
-// };
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'Cups Api',
+      description:
+        'An API for the new cups system to be implemented in coffee shops wordwide',
+      contact: {
+        name: 'Akeem Allen, Richard Robinson'
+      },
+      servers: [
+        'https://mysterious-caverns-49185.herokuapp.com/',
+        'http://localhost:5000/'
+      ]
+    }
+  },
+  apis: ['./routes/*.js']
+};
 
-// const swaggerSpec = swaggerJsdoc();
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
 require('dotenv').config();
 
@@ -32,10 +45,9 @@ connection.once('open', () => {
 app.use(cors());
 app.use(express.json());
 app.use(morgan('combined'));
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, options));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-const usersRouter = require('./routes/user');
-app.use('/users', usersRouter);
+app.use('/', routes);
 
 app.get('/', (req, res) => {
   res.send(
