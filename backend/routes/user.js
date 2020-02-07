@@ -15,10 +15,12 @@ const bcrypt = require('bcryptjs');
  * @swagger
  * /users:
  *  get:
- *    description: Used to get all Users
+ *    description: Returns all Users
  *    responses:
  *      '200':
  *        description: A successful response
+ *      '400':
+ *        description: An error occurred
  */
 router.route('/').get((req, res) => {
   User.find()
@@ -30,7 +32,7 @@ router.route('/').get((req, res) => {
  * @swagger
  * /users:
  *  post:
- *    description: Used to add a Users
+ *    description: Add a User
  *    consumes:
  *      - application/json
  *    parameters:
@@ -59,9 +61,6 @@ router.route('/').get((req, res) => {
  *              properties:
  *                branch:
  *                  type: number
- *    responses:
- *      '200':
- *        description: User successfully created
  */
 router.route('/').post(async (req, res) => {
   const userName = req.body.userName;
@@ -87,18 +86,74 @@ router.route('/').post(async (req, res) => {
   });
 });
 
+/**
+ * @swagger
+ * /users/:id:
+ *  get:
+ *    description: Return a single User
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ *      '400':
+ *        description: An error occurred
+ */
 router.route('/:id').get(async (req, res) => {
   await User.findById(req.params.id)
     .then(user => res.json(user))
     .catch(err => res.status(400).json('Error ' + err));
 });
 
+/**
+ * @swagger
+ * /users/:id:
+ *  delete:
+ *    description: Deletes a single User
+ *    response:
+ *      '200':
+ *        description: A successful response
+ *      '400':
+ *        description: An error occurred
+ */
 router.route('/:id').delete(async (req, res) => {
   await User.findByIdAndDelete(req.params.id)
     .then(() => res.json('User Deleted'))
     .catch(err => res.status(400).json('Error ' + err));
 });
 
+/**
+ * @swagger
+ * /users/update/:id:
+ *  post:
+ *    description: Updates a User's Information
+ *    consumes:
+ *      - application/json
+ *    parameters:
+ *      - in: body
+ *        name: user
+ *        description: The User to edit
+ *        schema:
+ *          type: object
+ *          required:
+ *            - userName
+ *            - password
+ *          properties:
+ *            userName:
+ *              type: string
+ *            password:
+ *              type: string
+ *            customerInfo:
+ *              type: object
+ *              properties:
+ *                disability:
+ *                  type: string
+ *                accountBalance:
+ *                  type: number
+ *            managerInfo:
+ *              type: object
+ *              properties:
+ *                branch:
+ *                  type: number
+ */
 router.route('/update/:id').post(async (req, res) => {
   await User.findById(req.params.id)
     .then(user => {
