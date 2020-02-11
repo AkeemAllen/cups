@@ -22,8 +22,8 @@ const bcrypt = require('bcryptjs');
  *      '400':
  *        description: An error occurred
  */
-router.route('/').get((req, res) => {
-  User.find()
+router.route('/').get(async (req, res) => {
+  await User.find()
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -174,26 +174,54 @@ router.route('/update/:id').post(async (req, res) => {
     .catch(err => res.status(400).json('Error ' + err));
 });
 
+/**
+ * @swagger
+ * /users/login:
+ *  post:
+ *    description: Allows an existing User to log in
+ *    consumes:
+ *      - application/json
+ *    parameters:
+ *      - in: body
+ *        name: user
+ *        description: The User to Log In
+ *        schema:
+ *          type: object
+ *          required:
+ *            - userName
+ *            - password
+ *          properties:
+ *            userName:
+ *              type: string
+ *            password:
+ *              type: string
+ *    responses:
+ *      '200':
+ *        description: User Logged in
+ *      '400':
+ *        description: User not logged in
+ */
 router.route('/login').post(async (req, res) => {
   const username = req.body.userName;
   const password = req.body.password;
 
   await User.findOne({ userName: username }).then(user => {
     if (!user) {
-      return 'User Not Found';
-    }
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err) throw err;
+      res.status(400).json('Login Failed');
+      return null;
+    } else {
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) throw err;
 
-      console.log(user.password);
-      if (isMatch) {
-        res.send('User matched');
-        return user;
-      } else {
-        res.send('Incorrect Password');
-        // return 'password is incorrect';
-      }
-    });
+        if (isMatch) {
+          res.status(200).json('User Logged In' + user);
+          return user;
+        } else {
+          res.status(400).json('Login Failed');
+          return null;
+        }
+      });
+    }
   });
 });
 
