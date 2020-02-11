@@ -214,8 +214,12 @@ router.route('/login').post(async (req, res) => {
         if (err) throw err;
 
         if (isMatch) {
-          res.status(200).json('User Logged In' + user);
-          return user;
+          console.log(user.customerInfo);
+          if (user.customerInfo.disability === undefined) {
+            res.status(200).json('Manager Logged In' + user);
+          } else {
+            res.status(200).json('User Logged In' + user);
+          }
         } else {
           res.status(400).json('Login Failed');
           return null;
