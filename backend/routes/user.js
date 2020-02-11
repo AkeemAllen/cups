@@ -68,22 +68,21 @@ router.route('/').post(async (req, res) => {
   const managerInfo = req.body.managerInfo;
   const password = req.body.password;
 
-  return bcrypt.hash(password, 10, async (err, hash) => {
-    if (err) {
-      console.log(err);
-    }
-    const newUser = new User({
-      userName,
-      password: hash,
-      customerInfo,
-      managerInfo
-    });
+  const salt = await bcrypt.genSalt();
 
-    await newUser
-      .save()
-      .then(() => res.json(newUser))
-      .catch(err => res.status(400).json('Error: ' + err));
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const newUser = new User({
+    userName,
+    password: hashedPassword,
+    customerInfo,
+    managerInfo
   });
+
+  return newUser
+    .save()
+    .then(() => res.json(newUser))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 /**
@@ -173,6 +172,29 @@ router.route('/update/:id').post(async (req, res) => {
       });
     })
     .catch(err => res.status(400).json('Error ' + err));
+});
+
+router.route('/login').post(async (req, res) => {
+  const username = req.body.userName;
+  const password = req.body.password;
+
+  await User.findOne({ userName: username }).then(user => {
+    if (!user) {
+      return 'User Not Found';
+    }
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) throw err;
+
+      console.log(user.password);
+      if (isMatch) {
+        res.send('User matched');
+        return user;
+      } else {
+        res.send('Incorrect Password');
+        // return 'password is incorrect';
+      }
+    });
+  });
 });
 
 module.exports = router;
