@@ -8,7 +8,7 @@ router.route('/').get(async (req, res ) => {
         .catch(err => res.status(400).jeson('Error: ' + err));
 });
 
-//Post Request Route
+//Post Request Route    
 router.route('/').post(async (req, res) => {
     const productName = req.body.productName;
     const quantity = req.body.quantity;
