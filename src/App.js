@@ -1,28 +1,23 @@
 import React from 'react';
-import greatnessGif from './assets/images/greatness.gif';
-import Button from '@material-ui/core/Button';
 import './App.css';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import Login from './pages/login';
+import Home from './pages/Home';
+import NavBar from './components/navBar';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 function App() {
   return (
-    <div className="App">
-      <p>
-        <h1>WELCOME...</h1> <h2>Roxy and Rico</h2> to the start of great
-        things!!
-      </p>
-      <p>
-        This is the canvas upon which we shall build a system like{' '}
-        <strong>NO OTHER</strong>!!!
-      </p>
-      <img src={greatnessGif} alt="We are the champions" />
-      <p>Prepare to become greatness!!!</p>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={() => alert('Button Clicked')}
-      >
-        This Button is from the Material Ui Library
-      </Button>
+    <div>
+      <NavBar />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/about" exact component={About} />
+        <Route path="/contact" component={Contact} />
+        <Redirect to="/" />
+      </Switch>
     </div>
   );
 }
