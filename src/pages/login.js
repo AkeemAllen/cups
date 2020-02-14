@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '@material-ui/core/Input';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import {Redirect} from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -28,7 +29,10 @@ class Login extends React.Component {
         password: this.state.Password
       })
       .then(function(response) {
-        console.log(response);
+        if (response){
+          console.log(response);
+          return <Redirect to="/dashboard" />
+        }
       })
       .catch(function(error) {
         console.log(error);
