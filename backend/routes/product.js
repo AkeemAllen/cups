@@ -13,17 +13,19 @@ router.route('/').post(async (req, res) => {
     const productName = req.body.productName;
     const quantity = req.body.quantity;
     const price = req.body.price;
-    const productImage = req.body.productImage;
+    // const productImage = req.body.productImage;
 
     const newProduct = new Product({
         productName,
         quantity,
         price,
-        productImage
+        // productImage
     });
 
     return newProduct
         .save()
-        .then(() => res.json(newUser))
+        .then(() => res.json(newProduct))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+module.exports = router;

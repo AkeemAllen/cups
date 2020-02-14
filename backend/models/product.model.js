@@ -15,10 +15,10 @@ const productSchema = new Schema({
     type: Number,
     required: true
   },
-  productImage: {
-    type: Image,
-    required: true,
-  }
+  // productImage: {
+  //   type: Image,
+  //   required: false,
+  // }
 });
 
 const Product = mongoose.model('Product', productSchema);

@@ -4,7 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
-const routes = require('./routes/index');
+const routes = require('./routes');
 
 const swaggerOptions = {
   swaggerDefinition: {
