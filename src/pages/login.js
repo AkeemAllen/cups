@@ -2,7 +2,6 @@ import React from 'react';
 import Input from '@material-ui/core/Input';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
-import NavBar from '../components/navBar';
 
 class Login extends React.Component {
   constructor(props) {
@@ -38,8 +37,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
-        <NavBar />
+      <div style={{ justifyContent: 'center', display: 'flex', width: '100%' }}>
         <form onSubmit={this.handleSubmit}>
           <h1>Login</h1>
           <Input
