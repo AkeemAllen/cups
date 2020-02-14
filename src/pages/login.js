@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
-import { Divider, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import axios from 'axios';
 import NavBar from '../components/navBar';
 
@@ -12,12 +12,15 @@ class Login extends React.Component {
       Password: ''
     };
   }
+
   handleUsername = event => {
     this.setState({ Username: event.target.value });
   };
+
   handlePassword = event => {
     this.setState({ Password: event.target.value });
   };
+
   handleSubmit = event => {
     event.preventDefault();
     axios
@@ -32,28 +35,28 @@ class Login extends React.Component {
         console.log(error);
       });
   };
+
   render() {
     return (
-        
-    <div>
-    <NavBar/>
-      <form onSubmit={this.handleSubmit}>
-        <h1>Login</h1>
-        <Input
-          placeholder="Username"
-          value={this.state.Username}
-          onChange={this.handleUsername}
-        />
-        <br />
-        <Input
-          placeholder="Password"
-          value={this.state.Password}
-          type="password"
-          onChange={this.handlePassword}
-        />
-        <br />
-        <Button type="submit">Submit</Button>
-      </form>
+      <div>
+        <NavBar />
+        <form onSubmit={this.handleSubmit}>
+          <h1>Login</h1>
+          <Input
+            placeholder="Username"
+            value={this.state.Username}
+            onChange={this.handleUsername}
+          />
+          <br />
+          <Input
+            placeholder="Password"
+            value={this.state.Password}
+            type="password"
+            onChange={this.handlePassword}
+          />
+          <br />
+          <Button type="submit">Submit</Button>
+        </form>
       </div>
     );
   }
