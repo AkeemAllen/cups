@@ -31,7 +31,7 @@ class Login extends React.Component {
         password: this.state.Password
       })
       .then(response => {
-        if (response.managerInfo !== undefined) {
+        if (response.data.managerInfo !== undefined) {
           this.setState({ manager: true, redirect: true });
         } else {
           this.setState({ manager: false, redirect: true });
