@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/about" exact component={About} />
         <Route path="/contact" component={Contact} />
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/admin" component={Dashboard} />
         <Redirect to="/" />
       </Switch>
     </div>
