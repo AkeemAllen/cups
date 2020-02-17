@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const Product = require('../models/product.model');
 
-//Connecting to the database
+// Connecting to the database
 router.route('/').get(async (req, res) => {
   await Product.find()
     .then(products => res.json(products))
     .catch(err => res.status(400).jeson('Error: ' + err));
 });
 
-//Post Request Route
+// Post Request Route
 router.route('/').post(async (req, res) => {
   const productName = req.body.productName;
   const quantity = req.body.quantity;

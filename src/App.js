@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import NavBar from './components/navBar';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/about" exact component={About} />
         <Route path="/contact" component={Contact} />
+        <Route path="/admin" component={Dashboard} />
         <Redirect to="/" />
       </Switch>
     </div>

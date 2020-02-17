@@ -216,9 +216,9 @@ router.route('/login').post(async (req, res) => {
         if (isMatch) {
           console.log(user.customerInfo);
           if (user.customerInfo.disability === undefined) {
-            res.status(200).json('Manager Logged In' + user);
+            res.status(200).json(user);
           } else {
-            res.status(200).json('User Logged In' + user);
+            res.status(200).json(user);
           }
         } else {
           res.status(400).json('Login Failed');
