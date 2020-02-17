@@ -24,9 +24,14 @@ class Login extends React.Component {
   };
 
   handleSubmit = event => {
+    let uri;
+    process.env.NODE_ENV !== 'production'
+      ? (uri = 'http://localhost:5000/users/login')
+      : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/users/login`);
+
     event.preventDefault();
     axios
-      .post('https://mysterious-caverns-49185.herokuapp.com/users/login', {
+      .post(uri, {
         userName: this.state.Username,
         password: this.state.Password
       })
@@ -38,7 +43,7 @@ class Login extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        throw error;
       });
   };
 
