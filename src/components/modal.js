@@ -20,6 +20,9 @@ export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState('');
+  const [id, setId] = React.useState('');
+  const [price, setPrice] = React.useState('');
+  const [quantity, setQuantiy] = React.useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -32,11 +35,20 @@ export default function TransitionsModal() {
   const handleName = event => {
     setName(event.target.value);
   };
+  const handleId = event => {
+    setId(event.target.value);
+  };
+  const handlePrice = event => {
+    setPrice(event.target.value);
+  };
+  const handleQuantity = event => {
+    setQuantiy(event.target.value);
+  };
 
   return (
     <div>
       <button type="button" onClick={handleOpen}>
-        react-transition-group
+        Add Item
       </button>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -54,7 +66,12 @@ export default function TransitionsModal() {
           <div className={classes.paper}>
             <form>
               <h1>Add Menu Item</h1>
-              <Input placeholder="ID" style={{ marginRight: '5px' }} />
+              <Input
+                placeholder="ID"
+                style={{ marginRight: '5px' }}
+                value={id}
+                onChange={handleId}
+              />
               <br />
               <Input
                 placeholder="Name"
@@ -63,9 +80,19 @@ export default function TransitionsModal() {
                 onChange={handleName}
               />
               <br />
-              <Input placeholder="Price" style={{ marginRight: '5px' }} />
+              <Input
+                placeholder="Quantiy"
+                style={{ marginRight: '5px' }}
+                value={quantity}
+                onChange={handleQuantity}
+              />
               <br />
-              <Input placeholder="Quantity" style={{ marginRight: '5px' }} />
+              <Input
+                placeholder="Price"
+                style={{ marginRight: '5px' }}
+                value={price}
+                onChange={handlePrice}
+              />
               <br />
               <Button type="submit">Add</Button>
             </form>
