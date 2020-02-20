@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [name, setName] = React.useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -26,6 +27,10 @@ export default function TransitionsModal() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleName = event => {
+    setName(event.target.value);
   };
 
   return (
@@ -51,7 +56,12 @@ export default function TransitionsModal() {
               <h1>Add Menu Item</h1>
               <Input placeholder="ID" style={{ marginRight: '5px' }} />
               <br />
-              <Input placeholder="Name" style={{ marginRight: '5px' }} />
+              <Input
+                placeholder="Name"
+                style={{ marginRight: '5px' }}
+                value={name}
+                onChange={handleName}
+              />
               <br />
               <Input placeholder="Price" style={{ marginRight: '5px' }} />
               <br />
