@@ -13,13 +13,13 @@ router.route('/').post(async (req, res) => {
   const productName = req.body.productName;
   const quantity = req.body.quantity;
   const price = req.body.price;
-  // const productImage = req.body.productImage;
+  const category = req.body.category;
 
   const newProduct = new Product({
     productName,
     quantity,
-    price
-    // productImage
+    price,
+    category
   });
 
   return newProduct

@@ -1,0 +1,33 @@
+.main {
+  //   display: flex;
+  //   justify-content: center;
+  .top-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //   background-image: linear-gradient(45deg, #ff9335, #a39171);
+    background-image: url('../../assets/images/coffee.jpg');
+    background-size: auto;
+    min-height: 500px;
+    flex-direction: column;
+    .header,
+    .sub-header {
+      color: white;
+    }
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 300px;
+    margin-right: 300px;
+    padding-top: 50px;
+    .card {
+      max-width: 345px;
+      .card-media {
+        height: 0;
+        padding-top: 56.25%;
+      }
+    }
+  }
+}

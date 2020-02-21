@@ -14,11 +14,11 @@ const productSchema = new Schema({
   price: {
     type: Number,
     required: true
+  },
+  category: {
+    type: String,
+    required: false
   }
-  // productImage: {
-  //   type: Image,
-  //   required: false,
-  // }
 });
 
 const Product = mongoose.model('Product', productSchema);
