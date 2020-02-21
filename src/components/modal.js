@@ -73,9 +73,14 @@ export default function TransitionsModal() {
   };
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
         Add Item
-      </button>
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
