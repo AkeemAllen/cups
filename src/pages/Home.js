@@ -2,11 +2,13 @@ import React from 'react';
 import coffeeShop from '../assets/images/coffee-shop.jpg';
 import './stylesheets/home.scss';
 import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
+import SearchAppBar from '../components/searchbar';
 
 function Home() {
   return (
     <div className="main">
       <div className="top-container">
+        <SearchAppBar />
         <h1 className="header">CUPS</h1>
         <h2 className="sub-header">One Stop Coffee Shop</h2>
       </div>
