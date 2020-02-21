@@ -4,26 +4,21 @@ import { Button } from '@material-ui/core';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Username: '',
-      Password: '',
-      redirect: false,
-      manager: false
-    };
-  }
+function Login() {
+  const [userName, setUserName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [redirect, setRedirect] = React.useState(false);
+  const [manager, setManager] = React.useState(false);
 
-  handleUsername = event => {
-    this.setState({ Username: event.target.value });
+  const handleUsername = event => {
+    setUserName(event.target.value);
   };
 
-  handlePassword = event => {
-    this.setState({ Password: event.target.value });
+  const handlePassword = event => {
+    setPassword(event.target.value);
   };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     let uri;
     process.env.NODE_ENV !== 'production'
       ? (uri = 'http://localhost:5000/users/login')
@@ -32,14 +27,16 @@ class Login extends React.Component {
     event.preventDefault();
     axios
       .post(uri, {
-        userName: this.state.Username,
-        password: this.state.Password
+        userName: userName,
+        password: password
       })
       .then(response => {
         if (response.data.managerInfo !== undefined) {
-          this.setState({ manager: true, redirect: true });
+          setManager(true);
+          setRedirect(true);
         } else {
-          this.setState({ manager: false, redirect: true });
+          setManager(false);
+          setRedirect(true);
         }
       })
       .catch(error => {
@@ -47,36 +44,34 @@ class Login extends React.Component {
       });
   };
 
-  render() {
-    if (this.state.redirect) {
-      if (this.state.manager === true) {
-        console.log('Entering Admin');
-        return <Redirect to="/admin" />;
-      }
-      console.log('Entering User');
-      return <Redirect to="/home" />;
+  if (redirect) {
+    if (manager === true) {
+      console.log('Entering Admin');
+      return <Redirect to="/admin" />;
     }
-    return (
-      <div style={{ justifyContent: 'center', display: 'flex', width: '100%' }}>
-        <form onSubmit={this.handleSubmit}>
-          <h1>Login</h1>
-          <Input
-            placeholder="Username"
-            value={this.state.Username}
-            onChange={this.handleUsername}
-          />
-          <br />
-          <Input
-            placeholder="Password"
-            value={this.state.Password}
-            type="password"
-            onChange={this.handlePassword}
-          />
-          <br />
-          <Button type="submit">Submit</Button>
-        </form>
-      </div>
-    );
+    console.log('Entering User');
+    return <Redirect to="/home" />;
   }
+  return (
+    <div style={{ justifyContent: 'center', display: 'flex', width: '100%' }}>
+      <form onSubmit={handleSubmit}>
+        <h1>Login</h1>
+        <Input
+          placeholder="Username"
+          value={userName}
+          onChange={handleUsername}
+        />
+        <br />
+        <Input
+          placeholder="Password"
+          value={password}
+          type="password"
+          onChange={handlePassword}
+        />
+        <br />
+        <Button type="submit">Submit</Button>
+      </form>
+    </div>
+  );
 }
 export default Login;
