@@ -29,7 +29,10 @@ export default function NavBar() {
 
   return (
     <div className={styles.root}>
-      <AppBar position="static" style={{ backgroundColor: '#ff9335' }}>
+      <AppBar
+        position="static"
+        style={{ backgroundColor: '#50514f', boxShadow: 'none' }}
+      >
         <Toolbar>
           <Link to="/" style={styles.links}>
             <Button color="inherit">Home</Button>
