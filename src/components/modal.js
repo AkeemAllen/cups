@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -19,10 +20,11 @@ const useStyles = makeStyles(theme => ({
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [id, setId] = React.useState(0);
+  const [category, setCategory] = React.useState('');
   const [name, setName] = React.useState('');
-  const [id, setId] = React.useState('');
-  const [price, setPrice] = React.useState('');
-  const [quantity, setQuantiy] = React.useState('');
+  const [price, setPrice] = React.useState(0.0);
+  const [quantity, setQuantiy] = React.useState(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -31,12 +33,14 @@ export default function TransitionsModal() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleId = event => {
+    setId(event.target.value);
+  };
   const handleName = event => {
     setName(event.target.value);
   };
-  const handleId = event => {
-    setId(event.target.value);
+  const handleCategory = event => {
+    setCategory(event.target.value);
   };
   const handlePrice = event => {
     setPrice(event.target.value);
@@ -44,7 +48,29 @@ export default function TransitionsModal() {
   const handleQuantity = event => {
     setQuantiy(event.target.value);
   };
+  const handleSubmit = event => {
+    event.preventDefault();
+    let uri;
+    process.env.NODE_ENV !== 'production'
+      ? (uri = 'http://localhost:5000/products')
+      : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/products`);
 
+    axios
+      .post(uri, {
+        id: id,
+        productName: name,
+        category: category,
+        quantity: quantity,
+        price: price
+      })
+      .then(response => {
+        console.log(response);
+        response.status === 200 ? alert('success') : alert('failed');
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
   return (
     <div>
       <button type="button" onClick={handleOpen}>
@@ -81,6 +107,13 @@ export default function TransitionsModal() {
               />
               <br />
               <Input
+                placeholder="Category"
+                style={{ marginRight: '5px' }}
+                value={category}
+                onChange={handleCategory}
+              />
+              <br />
+              <Input
                 placeholder="Quantiy"
                 style={{ marginRight: '5px' }}
                 value={quantity}
@@ -94,7 +127,9 @@ export default function TransitionsModal() {
                 onChange={handlePrice}
               />
               <br />
-              <Button type="submit">Add</Button>
+              <Button type="submit" onClick={handleSubmit}>
+                Add
+              </Button>
             </form>
           </div>
         </Fade>
