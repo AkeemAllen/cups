@@ -19,12 +19,14 @@
     .header {
       font-size: 60px;
       color: white;
+      margin-bottom: 5px;
       font-family: 'Courgette', sans-serif;
     }
     .sub-header {
-      font-style: italic;
-      font-size: 30px;
-      color: rgba($color: #50514f, $alpha: 1);
+      font-style: normal;
+      font-size: 20px;
+      font-weight: 200;
+      color: white;
     }
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -27,67 +27,83 @@ const StyledTableRow = withStyles(theme => ({
   }
 }))(TableRow);
 
-function createData(name, stock, category, price) {
-  return { name, stock, category, price };
-}
+// function createData(name, stock, category, price) {
+//   return { name, stock, category, price };
+// }
 
-const rows = [createData('sf', 34, 'sdf', 34)];
-
-const useStyles = makeStyles({
+const styles = {
   table: {
     minWidth: 700
   }
-});
-
-const getProducts = () => {
-  let uri;
-  process.env.NODE_ENV !== 'production'
-    ? (uri = 'http://localhost:5000/products')
-    : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/products`);
-
-  axios.get(uri).then(response => {
-    response.data.forEach(element => {
-      console.log(element.productName);
-      rows.push(
-        createData(
-          element.productName,
-          element.quantity,
-          element.category,
-          element.price
-        )
-      );
-    });
-    console.log(rows);
-  });
 };
 
-export default function CustomizedTables() {
-  const classes = useStyles();
-  getProducts();
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Product Name</StyledTableCell>
-            <StyledTableCell align="Center">Stock</StyledTableCell>
-            <StyledTableCell align="Center">Category</StyledTableCell>
-            <StyledTableCell align="Center">Price</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="Center">{row.stock}</StyledTableCell>
-              <StyledTableCell align="Center">{row.category}</StyledTableCell>
-              <StyledTableCell align="Center">{row.price}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+export default class CustomizedTables extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      records: []
+    };
+  }
+
+  componentDidMount() {
+    this.getProducts();
+  }
+
+  componentDidUpdate() {}
+
+  getProducts = () => {
+    let uri;
+    process.env.NODE_ENV !== 'production'
+      ? (uri = 'http://localhost:5000/products')
+      : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/products`);
+
+    axios.get(uri).then(response => {
+      response.data.forEach(element => {
+        this.setState({
+          records: [
+            ...this.state.records,
+            {
+              productName: element.productName,
+              category: element.category,
+              quantity: element.quantity,
+              price: element.price
+            }
+          ]
+        });
+      });
+    });
+  };
+
+  render() {
+    return (
+      <TableContainer component={Paper}>
+        <Table style={styles.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Product Name</StyledTableCell>
+              <StyledTableCell align="Center">Stock</StyledTableCell>
+              <StyledTableCell align="Center">Category</StyledTableCell>
+              <StyledTableCell align="Center">Price</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {this.state.records.map(record => (
+              <StyledTableRow key={record.name}>
+                <StyledTableCell component="th" scope="row">
+                  {record.productName}
+                </StyledTableCell>
+                <StyledTableCell align="Center">
+                  {record.quantity}
+                </StyledTableCell>
+                <StyledTableCell align="Center">
+                  {record.category}
+                </StyledTableCell>
+                <StyledTableCell align="Center">{record.price}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  }
 }
