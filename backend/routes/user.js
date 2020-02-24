@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const router = require('express').Router();
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 /**
  * bcrypt is a library which allows you to hash
@@ -205,23 +206,28 @@ router.route('/login').post(async (req, res) => {
   const username = req.body.userName;
   const password = req.body.password;
 
-  await User.findOne({ userName: username }).then(user => {
-    if (!user) {
-      res.status(400).json('User Not Found');
-      return null;
-    } else {
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) throw err;
+  await User.findOne({ userName: username })
+    .then(user => {
+      if (!user) {
+        res.status(400).json('User Not Found');
+        return null;
+      } else {
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) throw err;
 
-        if (isMatch) {
-          res.status(200).json(user);
-        } else {
-          res.status(400).json('Login Failed');
-          return null;
-        }
-      });
-    }
-  });
+          if (isMatch) {
+            jwt.sign({ user }, 'secretKey', (err, token) => {
+              res.status(200).json({ token });
+            });
+          } else {
+            res.status(400).json('Login Failed');
+          }
+        });
+      }
+    })
+    .catch(err => {
+      res.status(400).json(`Oops!! Something Went Wrong`);
+    });
 });
 
 module.exports = router;
