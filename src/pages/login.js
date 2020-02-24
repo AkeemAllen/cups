@@ -31,6 +31,7 @@ function Login() {
         password: password
       })
       .then(response => {
+        console.log(response);
         if (response.data.managerInfo !== undefined) {
           setManager(true);
           setRedirect(true);

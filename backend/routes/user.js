@@ -216,7 +216,7 @@ router.route('/login').post(async (req, res) => {
           if (err) throw err;
 
           if (isMatch) {
-            jwt.sign({ user }, 'secretKey', (err, token) => {
+            jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
               res.status(200).json({ token });
             });
           } else {
