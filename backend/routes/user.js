@@ -62,12 +62,15 @@ router.route('/').get(async (req, res) => {
  *              properties:
  *                branch:
  *                  type: number
+ *            isAdmin:
+ *              type: boolean
  */
 router.route('/').post(async (req, res) => {
   const userName = req.body.userName;
   const customerInfo = req.body.customerInfo;
   const managerInfo = req.body.managerInfo;
   const password = req.body.password;
+  const isAdmin = req.body.isAdmin;
 
   const salt = await bcrypt.genSalt();
 
@@ -77,7 +80,8 @@ router.route('/').post(async (req, res) => {
     userName,
     password: hashedPassword,
     customerInfo,
-    managerInfo
+    managerInfo,
+    isAdmin
   });
 
   return newUser
@@ -153,6 +157,8 @@ router.route('/:id').delete(async (req, res) => {
  *              properties:
  *                branch:
  *                  type: number
+ *            isAdmin:
+ *              type: boolean
  */
 router.route('/update/:id').post(async (req, res) => {
   await User.findById(req.params.id)
@@ -165,6 +171,7 @@ router.route('/update/:id').post(async (req, res) => {
         user.password = hash;
         user.customerInfo = req.body.customerInfo;
         user.managerInfo = req.body.managerInfo;
+        user.isAdmin = req.body.isAdmin;
 
         user
           .save()
@@ -217,6 +224,7 @@ router.route('/login').post(async (req, res) => {
 
           if (isMatch) {
             jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
+              if (err) throw err;
               res.status(200).json({ token });
             });
           } else {

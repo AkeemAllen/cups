@@ -16,6 +16,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Table from '../components/table';
 import Modal from '../components/modal';
+import { connect } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-export default function ClippedDrawer() {
+function ClippedDrawer() {
   const classes = useStyles();
 
   return (
@@ -81,3 +82,9 @@ export default function ClippedDrawer() {
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth.admin
+});
+
+export default connect(mapStateToProps, {})(ClippedDrawer);

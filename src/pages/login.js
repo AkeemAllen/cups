@@ -1,14 +1,15 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
 import { Button } from '@material-ui/core';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { authorizeUser } from '../redux/actions/authActions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-function Login() {
+const Login = props => {
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [redirect, setRedirect] = React.useState(false);
-  const [manager, setManager] = React.useState(false);
 
   const handleUsername = event => {
     setUserName(event.target.value);
@@ -19,34 +20,14 @@ function Login() {
   };
 
   const handleSubmit = event => {
-    let uri;
-    process.env.NODE_ENV !== 'production'
-      ? (uri = 'http://localhost:5000/users/login')
-      : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/users/login`);
-
     event.preventDefault();
-    axios
-      .post(uri, {
-        userName: userName,
-        password: password
-      })
-      .then(response => {
-        console.log(response);
-        if (response.data.managerInfo !== undefined) {
-          setManager(true);
-          setRedirect(true);
-        } else {
-          setManager(false);
-          setRedirect(true);
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
+    props.authorizeUser(userName, password);
+    setRedirect(true);
   };
 
   if (redirect) {
-    if (manager === true) {
+    console.log(props.auth);
+    if (props.auth === true) {
       console.log('Entering Admin');
       return <Redirect to="/admin" />;
     }
@@ -74,5 +55,15 @@ function Login() {
       </form>
     </div>
   );
-}
-export default Login;
+};
+
+Login.propTypes = {
+  authorizeUser: PropTypes.func.isRequired,
+  auth: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth.admin
+});
+
+export default connect(mapStateToProps, { authorizeUser })(Login);
