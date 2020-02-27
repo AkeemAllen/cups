@@ -88,6 +88,12 @@ router.route('/:id').delete(async (req, res) => {
 router.route('/update/:id').put(async (req, res) => {
   await Product.findById(req.params.id)
     .then(product => {
+      req.body.productName !== undefined
+        ? (product.productName = req.body.productName)
+        : null;
+      req.body.category !== undefined
+        ? (product.category = req.body.category)
+        : null;
       req.body.quantity !== undefined
         ? (product.quantity = req.body.quantity)
         : null;
