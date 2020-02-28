@@ -73,24 +73,44 @@ export default function TransitionsModal() {
   };
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
         Delete Item
-      </button>
+      </Button>
       <br />
       <br />
-      <button type="button" onClick={handleOpen}>
-        Update Quantiy
-      </button>
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
+        Update Item
+      </Button>
       <br />
       <br />
-      <button type="button" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
         Add Item
-      </button>
+      </Button>
       <br />
       <br />
-      <button type="button" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
         Update Cost
-      </button>
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

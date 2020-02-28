@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import SearchAppBar from '../components/searchbar';
 // import Menu from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +30,10 @@ export default function NavBar() {
 
   return (
     <div className={styles.root}>
-      <AppBar position="static" style={{ backgroundColor: '#ff9335' }}>
+      <AppBar
+        position="static"
+        style={{ backgroundColor: '#50514f', boxShadow: 'none' }}
+      >
         <Toolbar>
           <Link to="/" style={styles.links}>
             <Button color="inherit">Home</Button>
@@ -49,6 +53,7 @@ export default function NavBar() {
           <Link to="/login" style={styles.links}>
             <Button color="inherit">Login</Button>
           </Link>
+          <SearchAppBar />
         </Toolbar>
       </AppBar>
     </div>

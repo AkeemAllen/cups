@@ -1,38 +1,19 @@
 import React from 'react';
-import coffeeShop from '../assets/images/coffee-shop.jpg';
 import './stylesheets/home.scss';
-import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
-import SearchAppBar from '../components/searchbar';
 
 function Home() {
   return (
     <div className="main">
       <div className="top-container">
-        <SearchAppBar />
-        <h1 className="header">CUPS</h1>
+        <h1 className="header">Cups Uplifting People</h1>
         <h2 className="sub-header">One Stop Coffee Shop</h2>
       </div>
       <div className="content">
-        <Card className="card">
-          <CardMedia className="card-media" image={coffeeShop} />
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              This impressive paella is a perfect party dish and a fun meal to
-              cook together with your guests. Add 1 cup of frozen peas along
-              with the mussels, if you like.
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card className="card">
-          <CardMedia className="card-media" image={coffeeShop} />
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              This impressive paella is a perfect party dish and a fun meal to
-              cook together with your guests. Add 1 cup of frozen peas along
-              with the mussels, if you like.
-            </Typography>
-          </CardContent>
-        </Card>
+        <h1 className="title">Who We Are</h1>
+        <p className="paragraph">
+          Cups is a friendly coffee service that is dedicated to serving every
+          customer that walks through our doors.{' '}
+        </p>
       </div>
     </div>
   );
