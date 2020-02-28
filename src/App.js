@@ -7,6 +7,7 @@ import NavBar from './components/navBar';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
+import UserMenu from './pages/UserMenu';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/about" exact component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/admin" component={Dashboard} />
+        <Route path="/menu" component={UserMenu} />
         <Redirect to="/" />
       </Switch>
     </div>

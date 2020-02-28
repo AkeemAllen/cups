@@ -12,8 +12,8 @@ import {
   AppBar,
   CssBaseline
 } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+//import InboxIcon from '@material-ui/icons/MoveToInbox';
+//import MailIcon from '@material-ui/icons/Mail';
 import Table from '../components/table';
 import Modal from '../components/modal';
 
@@ -49,7 +49,7 @@ export default function ClippedDrawer() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Clipped drawer
+            Administrator Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -65,7 +65,7 @@ export default function ClippedDrawer() {
           {['Inventory'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {/*index % 2 === 0 ? <InboxIcon /> : <MailIcon />*/}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
