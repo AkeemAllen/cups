@@ -13,8 +13,7 @@ import {Button, Input} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 250,
-    maxHeight:250,
+    maxWidth: 340,
   },
   media: {
     height: 0,
@@ -35,37 +34,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+          <Avatar aria-label="AVI" className={classes.avatar}>
+            P
           </Avatar>
         }
-        title="Product Name"
+        title={props.title}
       />
-     {/* <CardMedia
+      <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
+        image={props.image}
         title="Coffee"
-        maxHeight="100px"
-        maxWidth="100px"
-     /> */}
+     />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Meal Description
+          {props.price}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <Input type='number' style={{ width:"75px" }}/>
+      <CardActions style={{justifyContent: 'space-between'}} disableSpacing>
+        <IconButton aria-label="Product Amount">
+          <Input type='number' style={{ width:"75px" }} placeholder="Amount"/>
         </IconButton>
         <IconButton aria-label="Add To Cart">
-          <Button>Add To Cart</Button>
+          <Button variant="outlined">Add To Cart</Button>
         </IconButton>
       </CardActions>
     </Card>
