@@ -58,6 +58,7 @@ connection.once('open', () => {
 // Create Storage Engine
 const storage = new GridFsStorage({
   url: uri,
+  options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
@@ -83,7 +84,51 @@ app.use(morgan('combined'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/', routes);
 app.use(methodOverride('_method'));
-// app.use(multer({ storage }));
+
+// Upload Files
+app.post('/upload', upload.single('file'), (req, res) => {
+  res.json({ file: req.file });
+});
+
+// Get All Files
+app.get('/files', (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    if (!files || files.length === 0) {
+      return res.status(404).json({ err: 'No files exist' });
+    }
+
+    return res.json(files);
+  });
+});
+
+// Get Single file
+app.get('/files/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({ err: 'File does not exist' });
+    }
+
+    return res.json(file);
+  });
+});
+
+// Get Single image
+app.get('/image/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    if (!file || file.length === 0) {
+      return res.status(404).json({ err: 'File does not exist' });
+    }
+
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an Image'
+      });
+    }
+  });
+});
 
 app.get('/', (req, res) => {
   res.send(
