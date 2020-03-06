@@ -46,24 +46,6 @@ exports.useMethodOverride = app => {
   app.use(methodOverride('_method'));
 };
 
-exports.mongoConnection = uri => {
-  let gfs;
-
-  mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  });
-
-  let connection = mongoose.connection;
-
-  connection.once('open', () => {
-    gfs = Grid(connection.db, mongoose.mongo);
-    gfs.collection('uploads');
-    console.log('MongoDB connection established successfully');
-  });
-};
-
 exports.useFileUpload = uri => {
   const storage = new GridFsStorage({
     url: uri,
@@ -88,3 +70,21 @@ exports.useFileUpload = uri => {
   const upload = multer({ storage });
   return upload;
 };
+
+// exports.mongoConnection = uri => {
+//   let gfs;
+
+//   mongoose.connect(uri, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true
+//   });
+
+//   let connection = mongoose.connection;
+
+//   connection.once('open', () => {
+//     gfs = Grid(connection.db, mongoose.mongo);
+//     gfs.collection('uploads');
+//     console.log('MongoDB connection established successfully');
+//   });
+// };

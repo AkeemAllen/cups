@@ -1,15 +1,33 @@
 const express = require('express');
 const routes = require('./routes');
 const middleWare = require('./middleware');
+const mongoose = require('mongoose');
+const Grid = require('gridfs-stream');
 
 require('dotenv').config();
 
 const app = express();
 const uri = process.env.ATLAS_URI || 'mongodb://localhost:27017/cupsdatabase';
 
+let gfs;
+
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
+
+let connection = mongoose.connection;
+
+connection.once('open', () => {
+  gfs = Grid(connection.db, mongoose.mongo);
+  gfs.collection('uploads');
+  console.log('MongoDB connection established successfully');
+});
+
 // MiddleWare
 app.use(express.json());
-middleWare.mongoConnection(uri);
+// middleWare.mongoConnection(uri);
 middleWare.useCors(app);
 middleWare.useMorgan(app);
 middleWare.useSwagger(app);
