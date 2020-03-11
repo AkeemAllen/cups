@@ -8,6 +8,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 import FileUpload from './pages/FileUpload';
+import UserMenu from './pages/UserMenu';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/contact" component={Contact} />
         <Route path="/admin" component={Dashboard} />
         <Route path="/fileupload" component={FileUpload} />
+        <Route path="/menu" component={UserMenu} />
         <Redirect to="/" />
       </Switch>
     </div>
