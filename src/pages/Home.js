@@ -1,7 +1,5 @@
 import React from 'react';
-// import coffeeShop from '../assets/images/coffee-shop.jpg';
 import './stylesheets/home.scss';
-// import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
 
 function Home() {
   return (
