@@ -89,16 +89,16 @@ router.route('/:id').delete(async (req, res) => {
 router.route('/update/:id').put(async (req, res) => {
   await Order.findById(req.params.id)
     .then(order => {
-      req.body.orderName !== undefined
-        ? (order.orderName = req.body.orderName)
-        : null;
-      req.body.category !== undefined
-        ? (order.category = req.body.category)
-        : null;
-      req.body.quantity !== undefined
-        ? (order.quantity = req.body.quantity)
-        : null;
-      req.body.price !== undefined ? (order.price = req.body.price) : null;
+      // req.body.orderName !== undefined
+      //   ? (order.orderName = req.body.orderName)
+      //   : null;
+      // req.body.category !== undefined
+      //   ? (order.category = req.body.category)
+      //   : null;
+      // req.body.quantity !== undefined
+      //   ? (order.quantity = req.body.quantity)
+      //   : null;
+      // req.body.price !== undefined ? (order.price = req.body.price) : null;
 
       order
         .save()
