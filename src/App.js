@@ -13,15 +13,17 @@ function App() {
   return (
     <div>
       <NavBar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/about" exact component={About} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/admin" component={Dashboard} />
-        <Route path="/fileupload" component={FileUpload} />
-        <Redirect to="/" />
-      </Switch>
+      <div style={{ height: '100vh' }}>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/about" exact component={About} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/admin" component={Dashboard} />
+          <Route path="/fileupload" component={FileUpload} />
+          <Redirect to="/" />
+        </Switch>
+      </div>
     </div>
   );
 }
