@@ -8,11 +8,10 @@ const orderSchema = new Schema({
       ref: 'User'
     }
   ],
-
   products: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Products'
+      ref: 'Product'
     }
   ]
 });

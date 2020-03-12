@@ -20,8 +20,8 @@ router.route('/').post(async (req, res) => {
   if (product === null) {
     res.status(404).json('Product not found!');
   }
-
-  const newOrder = new Order({ user, product });
+  console.log('user' + user);
+  const newOrder = new Order({ users: [user], products: [product] });
 
   return newOrder
     .save()
