@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
-import { Button } from '@material-ui/core';
+import { Button, Container } from '@material-ui/core';
+import { AccountCircleOutlined, LockOutlined } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
 import { authorizeUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
@@ -26,34 +27,48 @@ const Login = props => {
   };
 
   if (redirect) {
-    console.log(props.auth);
     if (props.auth === true) {
-      console.log('Entering Admin');
       return <Redirect to="/admin" />;
     }
-    console.log('Entering User');
     return <Redirect to="/home" />;
   }
   return (
-    <div style={{ justifyContent: 'center', display: 'flex', width: '100%' }}>
-      <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <Input
-          placeholder="Username"
-          value={userName}
-          onChange={handleUsername}
-        />
-        <br />
-        <Input
-          placeholder="Password"
-          value={password}
-          type="password"
-          onChange={handlePassword}
-        />
-        <br />
-        <Button type="submit">Submit</Button>
+    <Container
+      style={{
+        justifyContent: 'center',
+        display: 'flex',
+        width: '100%',
+        alignItems: 'center',
+        height: '100vh'
+      }}
+      maxWidth="sm"
+    >
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <h1 style={styles.header}>Login</h1>
+        <div style={styles.input}>
+          <AccountCircleOutlined fontSize="small" style={styles.icon} />
+          <Input
+            placeholder="Username"
+            value={userName}
+            onChange={handleUsername}
+            disableUnderline={true}
+          />
+        </div>
+        <div style={styles.input}>
+          <LockOutlined fontSize="small" style={styles.icon} />
+          <Input
+            placeholder="Password"
+            value={password}
+            type="password"
+            onChange={handlePassword}
+            disableUnderline={true}
+          />
+        </div>
+        <Button type="submit" style={styles.submitBtn}>
+          Submit
+        </Button>
       </form>
-    </div>
+    </Container>
   );
 };
 
@@ -65,5 +80,37 @@ Login.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth.admin
 });
+
+const styles = {
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '100px',
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  input: {
+    display: 'flex',
+    marginBottom: '20px',
+    alignItems: 'center',
+    borderRadius: '20px',
+    backgroundColor: '#ccc5b9',
+    paddingRight: '15px',
+    paddingLeft: '15px'
+  },
+  submitBtn: {
+    marginTop: '20px',
+    backgroundImage: 'linear-gradient(45deg, #8e2de2, #4a00e0)',
+    color: 'white'
+  },
+  icon: {
+    marginRight: '15px'
+  }
+};
 
 export default connect(mapStateToProps, { authorizeUser })(Login);

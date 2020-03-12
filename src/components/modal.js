@@ -79,7 +79,37 @@ export default function TransitionsModal() {
         type="button"
         onClick={handleOpen}
       >
+        Delete Item
+      </Button>
+      <br />
+      <br />
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
+        Update Item
+      </Button>
+      <br />
+      <br />
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
         Add Item
+      </Button>
+      <br />
+      <br />
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={handleOpen}
+      >
+        Update Cost
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"

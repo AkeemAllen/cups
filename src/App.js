@@ -12,11 +12,12 @@ import PrivateRoute from './components/PrivateRoute';
 import { bindActionCreators } from 'redux';
 import { authorizeUser } from './redux/actions/authActions';
 import { fetchProducts } from './redux/actions/productActions';
-
+import FileUpload from './pages/FileUpload';
+import UserMenu from './pages/UserMenu';
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{ height: '100vh' }}>
         <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />
@@ -24,6 +25,8 @@ class App extends React.Component {
           <Route path="/about" exact component={About} />
           <Route path="/contact" component={Contact} />
           <PrivateRoute path="/admin" component={Dashboard} />
+          <Route path="/fileupload" component={FileUpload} />
+          <Route path="/menu" component={UserMenu} />
           <Redirect to="/" />
         </Switch>
       </div>
