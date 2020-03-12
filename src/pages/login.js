@@ -47,10 +47,8 @@ function Login() {
 
   if (redirect) {
     if (manager === true) {
-      console.log('Entering Admin');
       return <Redirect to="/admin" />;
     }
-    console.log('Entering User');
     return <Redirect to="/home" />;
   }
   return (
@@ -100,7 +98,8 @@ const styles = {
     padding: '100px',
     backgroundColor: 'white',
     borderRadius: '10px',
-    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
+    boxShadow: '0px 0px 20px 10px rgba(0,0,0,0.1)',
+    fontFamily: 'Montserrat'
   },
   header: {
     display: 'flex',
@@ -118,7 +117,8 @@ const styles = {
   submitBtn: {
     marginTop: '20px',
     backgroundImage: 'linear-gradient(45deg, #8e2de2, #4a00e0)',
-    color: 'white'
+    color: 'white',
+    borderRadius: '20px'
   },
   icon: {
     marginRight: '15px'

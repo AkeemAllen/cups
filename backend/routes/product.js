@@ -1,5 +1,10 @@
 const router = require('express').Router();
 const Product = require('../models/product.model');
+const filesStorage = require('../middleware');
+
+// Setting up image storage
+const uri = process.env.ATLAS_URI || 'mongodb://localhost:27017/cupsdatabase';
+const upload = filesStorage.useFileUpload(uri);
 
 // Connecting to the database
 router.route('/').get(async (req, res) => {
