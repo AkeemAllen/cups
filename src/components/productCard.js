@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import { Button, Input } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,3 +65,9 @@ export default function RecipeReviewCard(props) {
     </Card>
   );
 }
+
+RecipeReviewCard.propTypes = {
+  title: PropTypes.string,
+  image: PropTypes.string,
+  price: PropTypes.number
+};
