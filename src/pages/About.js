@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/navBar';
 
 const styles = {
   header: {
@@ -11,6 +12,7 @@ const styles = {
 const About = () => {
   return (
     <div>
+      <NavBar />
       <h1 style={styles.header}>About</h1>
     </div>
   );
