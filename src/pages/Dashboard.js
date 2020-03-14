@@ -16,7 +16,7 @@ import {
 // import MailIcon from '@material-ui/icons/Mail';
 import Table from '../components/table';
 import Modal from '../components/modal';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -83,8 +83,8 @@ function ClippedDrawer() {
   );
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth.admin
-});
+// const mapStateToProps = state => ({
+//   auth: state.auth.admin
+// });
 
-export default connect(mapStateToProps, {})(ClippedDrawer);
+export default ClippedDrawer;

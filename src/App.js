@@ -14,6 +14,7 @@ import { authorizeUser } from './redux/actions/authActions';
 import { fetchProducts } from './redux/actions/productActions';
 import FileUpload from './pages/FileUpload';
 import UserMenu from './pages/UserMenu';
+
 class App extends React.Component {
   render() {
     return (
