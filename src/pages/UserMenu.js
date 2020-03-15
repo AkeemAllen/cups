@@ -4,9 +4,7 @@ import Container from '@material-ui/core/Container';
 function UserMenu() {
   return (
     <Container maxWidth="lg" className="main">
-      <h1 className="header" align="center">
-        Our Menu
-      </h1>
+      <h1 align="center">Our Menu</h1>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <ProductCard
           title="Coffee"

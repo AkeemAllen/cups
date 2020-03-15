@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import SearchAppBar from '../components/searchbar';
+// import SearchAppBar from '../components/searchbar';
 // import Menu from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles(theme => ({
@@ -23,15 +23,17 @@ const styles = {
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '0 200px'
+    padding: '0 300px'
   },
   content: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    width: '20%',
+    justifyContent: 'space-between'
   },
   links: {
     textDecoration: 'none',
-    color: 'black'
+    color: 'white'
   }
 };
 
@@ -41,9 +43,12 @@ export default function NavBar() {
   return (
     <div className={styles.root}>
       <AppBar
-        position="static"
-        color="transparent"
-        style={{ boxShadow: 'none', justifyContent: 'center' }}
+        position="absolute"
+        style={{
+          boxShadow: 'none',
+          justifyContent: 'center',
+          background: 'transparent'
+        }}
       >
         <Toolbar style={styles.toolbar}>
           <Typography variant="h6" className={classes.title}>
@@ -65,7 +70,7 @@ export default function NavBar() {
             <Link to="/login" style={styles.links}>
               <Button color="inherit">Login</Button>
             </Link>
-            <SearchAppBar />
+            {/* <SearchAppBar /> */}
           </div>
         </Toolbar>
       </AppBar>
