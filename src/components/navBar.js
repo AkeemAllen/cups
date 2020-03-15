@@ -10,8 +10,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1,
-    textAlign: 'center'
+    // flexGrow: 1,
+    textAlign: 'flex-start'
+    // marginleft: '20px'
   }
 }));
 
@@ -19,9 +20,18 @@ const styles = {
   root: {
     flexGrow: 1
   },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0 200px'
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
   links: {
     textDecoration: 'none',
-    color: 'white'
+    color: 'black'
   }
 };
 
@@ -32,28 +42,31 @@ export default function NavBar() {
     <div className={styles.root}>
       <AppBar
         position="static"
-        style={{ backgroundColor: '#50514f', boxShadow: 'none' }}
+        color="transparent"
+        style={{ boxShadow: 'none', justifyContent: 'center' }}
       >
-        <Toolbar>
-          <Link to="/" style={styles.links}>
-            <Button color="inherit">Home</Button>
-          </Link>
-          <Link to="/about" style={styles.links}>
-            <Button color="inherit">About</Button>
-          </Link>
-          <Link to="/menu" style={styles.links}>
-            <Button color="inherit">Menu</Button>
-          </Link>
+        <Toolbar style={styles.toolbar}>
           <Typography variant="h6" className={classes.title}>
             C.U.P.S
           </Typography>
-          <Link to="/contact" style={styles.links}>
+          <div style={styles.content}>
+            <Link to="/" style={styles.links}>
+              <Button color="inherit">Home</Button>
+            </Link>
+            {/* <Link to="/about" style={styles.links}>
+            <Button color="inherit">About</Button>
+          </Link> */}
+            <Link to="/menu" style={styles.links}>
+              <Button color="inherit">Menu</Button>
+            </Link>
+            {/* <Link to="/contact" style={styles.links}>
             <Button color="inherit">Contact</Button>
-          </Link>
-          <Link to="/login" style={styles.links}>
-            <Button color="inherit">Login</Button>
-          </Link>
-          <SearchAppBar />
+          </Link> */}
+            <Link to="/login" style={styles.links}>
+              <Button color="inherit">Login</Button>
+            </Link>
+            <SearchAppBar />
+          </div>
         </Toolbar>
       </AppBar>
     </div>

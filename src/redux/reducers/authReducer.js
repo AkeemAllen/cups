@@ -1,7 +1,7 @@
 import { AUTH_USER } from '../actions/types';
 
 const intialState = {
-  admin: false,
+  isAdmin: false,
   user: {
     userName: '',
     password: ''
@@ -13,7 +13,7 @@ export default function(state = intialState, action) {
     case AUTH_USER:
       return {
         ...state,
-        admin: action.payload.user.isAdmin
+        isAdmin: action.payload.user.isAdmin
       };
     default:
       return state;

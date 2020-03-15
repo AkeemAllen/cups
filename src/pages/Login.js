@@ -17,6 +17,12 @@ class Login extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.isAdmin !== prevProps.isAdmin) {
+      this.setState({ redirect: true });
+    }
+  }
+
   handleUsername = event => {
     this.setState({ userName: event.target.value });
   };
@@ -29,15 +35,18 @@ class Login extends React.Component {
     event.preventDefault();
     const { userName, password } = this.state;
     this.props.authorizeUser(userName, password);
-    this.setState({ redirect: true });
   };
 
   render() {
-    const { userName, password } = this.state;
-    const { auth } = this.props;
+    const { userName, password, redirect } = this.state;
+    const { isAdmin } = this.props;
 
-    if (auth) {
-      return <Redirect to="/admin" />;
+    if (redirect) {
+      if (isAdmin) {
+        return <Redirect to="/admin" />;
+      } else {
+        return <Redirect to="/menu" />;
+      }
     }
 
     return (
@@ -83,11 +92,11 @@ class Login extends React.Component {
 
 Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
-  auth: PropTypes.bool.isRequired
+  isAdmin: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth.admin
+  isAdmin: state.isAdmin.admin
 });
 
 export default connect(mapStateToProps, { authorizeUser })(Login);
@@ -117,7 +126,8 @@ const styles = {
   submitBtn: {
     marginTop: '20px',
     backgroundImage: 'linear-gradient(45deg, #8e2de2, #4a00e0)',
-    color: 'white'
+    color: 'white',
+    borderRadius: '25px'
   },
   icon: {
     marginRight: '15px'
