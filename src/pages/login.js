@@ -7,70 +7,79 @@ import { authorizeUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Login = props => {
-  const [userName, setUserName] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [redirect, setRedirect] = React.useState(false);
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: '',
+      password: '',
+      redirect: false
+    };
+  }
 
-  const handleUsername = event => {
-    setUserName(event.target.value);
+  handleUsername = event => {
+    this.setState({ userName: event.target.value });
   };
 
-  const handlePassword = event => {
-    setPassword(event.target.value);
+  handlePassword = event => {
+    this.setState({ password: event.target.value });
   };
 
-  const handleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
-    props.authorizeUser(userName, password);
-    setRedirect(true);
+    const { userName, password } = this.state;
+    this.props.authorizeUser(userName, password);
+    this.setState({ redirect: true });
   };
 
-  if (redirect) {
-    if (props.auth === true) {
+  render() {
+    const { userName, password } = this.state;
+    const { auth } = this.props;
+
+    if (auth) {
       return <Redirect to="/admin" />;
     }
-    return <Redirect to="/home" />;
+
+    return (
+      <Container
+        style={{
+          justifyContent: 'center',
+          display: 'flex',
+          width: '100%',
+          alignItems: 'center',
+          height: '100vh'
+        }}
+        maxWidth="sm"
+      >
+        <form onSubmit={this.handleSubmit} style={styles.form}>
+          <h1 style={styles.header}>Login</h1>
+          <div style={styles.input}>
+            <AccountCircleOutlined fontSize="small" style={styles.icon} />
+            <Input
+              placeholder="Username"
+              value={userName}
+              onChange={this.handleUsername}
+              disableUnderline={true}
+            />
+          </div>
+          <div style={styles.input}>
+            <LockOutlined fontSize="small" style={styles.icon} />
+            <Input
+              placeholder="Password"
+              value={password}
+              type="password"
+              onChange={this.handlePassword}
+              disableUnderline={true}
+            />
+          </div>
+          <Button type="submit" style={styles.submitBtn}>
+            Submit
+          </Button>
+        </form>
+      </Container>
+    );
   }
-  return (
-    <Container
-      style={{
-        justifyContent: 'center',
-        display: 'flex',
-        width: '100%',
-        alignItems: 'center',
-        height: '100vh'
-      }}
-      maxWidth="sm"
-    >
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <h1 style={styles.header}>Login</h1>
-        <div style={styles.input}>
-          <AccountCircleOutlined fontSize="small" style={styles.icon} />
-          <Input
-            placeholder="Username"
-            value={userName}
-            onChange={handleUsername}
-            disableUnderline={true}
-          />
-        </div>
-        <div style={styles.input}>
-          <LockOutlined fontSize="small" style={styles.icon} />
-          <Input
-            placeholder="Password"
-            value={password}
-            type="password"
-            onChange={handlePassword}
-            disableUnderline={true}
-          />
-        </div>
-        <Button type="submit" style={styles.submitBtn}>
-          Submit
-        </Button>
-      </form>
-    </Container>
-  );
-};
+}
 
 Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
@@ -80,6 +89,8 @@ Login.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth.admin
 });
+
+export default connect(mapStateToProps, { authorizeUser })(Login);
 
 const styles = {
   form: {
@@ -112,5 +123,3 @@ const styles = {
     marginRight: '15px'
   }
 };
-
-export default connect(mapStateToProps, { authorizeUser })(Login);
