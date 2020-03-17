@@ -17,12 +17,6 @@ class Login extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isAdmin !== prevProps.isAdmin) {
-      this.setState({ redirect: true });
-    }
-  }
-
   handleUsername = event => {
     this.setState({ userName: event.target.value });
   };
@@ -38,15 +32,12 @@ class Login extends React.Component {
   };
 
   render() {
-    const { userName, password, redirect } = this.state;
-    const { isAdmin } = this.props;
+    const { userName, password } = this.state;
+    const { auth } = this.props;
 
-    if (redirect) {
-      if (isAdmin) {
-        return <Redirect to="/admin" />;
-      } else {
-        return <Redirect to="/menu" />;
-      }
+    if (auth) {
+      console.log(auth);
+      return <Redirect to="/admin" />;
     }
 
     return (
@@ -92,11 +83,11 @@ class Login extends React.Component {
 
 Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
-  isAdmin: PropTypes.bool.isRequired
+  auth: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  isAdmin: state.isAdmin.admin
+  auth: state.auth.isAdmin
 });
 
 export default connect(mapStateToProps, { authorizeUser })(Login);

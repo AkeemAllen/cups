@@ -57,7 +57,7 @@ function Home() {
             <h1>Coffee Uplifting People&apos;s Spirits</h1>
             <p>
               Made with the love of all people in mind. Enjoy the refreshing
-              taste of fellowship
+              taste of fellowship.
             </p>
             <Link to="/login" style={{ textDecoration: 'none' }}>
               <Button
