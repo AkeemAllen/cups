@@ -12,8 +12,7 @@ import {
   AppBar,
   CssBaseline
 } from '@material-ui/core';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import MailIcon from '@material-ui/icons/Mail';
+import { Inbox, Mail } from '@material-ui/icons';
 import Table from '../components/table';
 import Modal from '../components/modal';
 // import { connect } from 'react-redux';
@@ -41,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-function ClippedDrawer() {
+function Dashboard() {
   const classes = useStyles();
 
   return (
@@ -66,7 +65,7 @@ function ClippedDrawer() {
           {['Inventory'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {/* index % 2 === 0 ? <InboxIcon /> : <MailIcon /> */}
+                {index % 2 === 0 ? <Inbox /> : <Mail />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -87,4 +86,4 @@ function ClippedDrawer() {
 //   auth: state.auth.admin
 // });
 
-export default ClippedDrawer;
+export default Dashboard;

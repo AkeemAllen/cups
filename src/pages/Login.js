@@ -34,7 +34,6 @@ class Login extends React.Component {
   render() {
     const { userName, password } = this.state;
     const { auth } = this.props;
-    // const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
 
     if (auth) {
       return <Redirect to="/admin" />;
