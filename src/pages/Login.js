@@ -36,7 +36,6 @@ class Login extends React.Component {
     const { auth } = this.props;
 
     if (auth) {
-      console.log(auth);
       return <Redirect to="/admin" />;
     }
 
