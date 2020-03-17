@@ -15,11 +15,13 @@ export const authorizeUser = (userName, password) => dispatch => {
       password: password
     })
     .then(response => {
+      localStorage.setItem('token', response.data.token);
       jwt.verify(
         response.data.token,
         `${process.env.REACT_APP_JWT_SECRET}`,
         (err, decoded) => {
           if (err) throw err;
+          localStorage.setItem('isAdmin', decoded.user.isAdmin);
           dispatch({
             type: AUTH_USER,
             payload: decoded
@@ -28,6 +30,8 @@ export const authorizeUser = (userName, password) => dispatch => {
       );
     })
     .catch(error => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('isAdmin');
       throw error;
     });
 };
