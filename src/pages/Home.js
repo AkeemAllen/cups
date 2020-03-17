@@ -15,7 +15,7 @@ function Home() {
             </p>
           </div>
           <div>
-            <img src={coffee} className="vector-img" />
+            <img src={coffee} className="vector-img" alt="coffee-vector" />
           </div>
         </div>
       </div>

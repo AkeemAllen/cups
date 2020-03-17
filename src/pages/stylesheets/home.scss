@@ -2,14 +2,7 @@
   .header {
     display: flex;
     justify-content: center;
-    background: linear-gradient(
-      50deg,
-      #322626,
-      #432d2b,
-      #51312e,
-      #654335,
-      #6f4e37
-    );
+    background: linear-gradient(135deg, #847064, #b99c63);
     background-size: cover;
     height: 75vh;
     position: relative;
@@ -46,7 +39,6 @@
       .vector-img {
         height: 350px;
         width: 400px;
-        filter: grayscale(100%) invert(100%);
       }
     }
   }
