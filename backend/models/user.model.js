@@ -31,7 +31,8 @@ const userModel = new Schema(
         required: false
       },
       required: false
-    }
+    },
+    isAdmin: Boolean
   },
   { timestamps: true }
 );

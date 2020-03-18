@@ -7,6 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { connect } from 'react-redux';
+import { fetchProducts } from '../redux/actions/productActions';
+import PropTypes from 'prop-types';
+import Delete from '@material-ui/icons/Delete';
 import axios from 'axios';
 
 const StyledTableCell = withStyles(theme => ({
@@ -27,83 +31,62 @@ const StyledTableRow = withStyles(theme => ({
   }
 }))(TableRow);
 
-// function createData(name, stock, category, price) {
-//   return { name, stock, category, price };
-// }
-
 const styles = {
   table: {
     minWidth: 700
   }
 };
 
-export default class CustomizedTables extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      records: []
-    };
-  }
+const deleteItem = id => {
+  axios.delete(`http://localhost:5000/products/${id}`);
+};
 
+class CustomizedTables extends React.Component {
   componentDidMount() {
-    this.getProducts();
+    this.props.fetchProducts();
   }
-
-  componentDidUpdate() {}
-
-  getProducts = () => {
-    let uri;
-    process.env.NODE_ENV !== 'production'
-      ? (uri = 'http://localhost:5000/products')
-      : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/products`);
-
-    axios.get(uri).then(response => {
-      response.data.forEach(element => {
-        this.setState({
-          records: [
-            ...this.state.records,
-            {
-              productName: element.productName,
-              category: element.category,
-              quantity: element.quantity,
-              price: element.price
-            }
-          ]
-        });
-      });
-    });
-  };
 
   render() {
+    const productItems = this.props.products.map(product => (
+      <StyledTableRow key={product._id}>
+        <StyledTableCell component="th" scope="row">
+          {product.productName}
+        </StyledTableCell>
+        <StyledTableCell align="center">{product.quantity}</StyledTableCell>
+        <StyledTableCell align="center">{product.category}</StyledTableCell>
+        <StyledTableCell align="center">{product.price}</StyledTableCell>
+        <StyledTableCell align="center">
+          {' '}
+          <Delete onClick={() => deleteItem(product._id)} />{' '}
+        </StyledTableCell>
+      </StyledTableRow>
+    ));
     return (
       <TableContainer component={Paper}>
         <Table style={styles.table} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Product Name</StyledTableCell>
-              <StyledTableCell align="Center">Stock</StyledTableCell>
-              <StyledTableCell align="Center">Category</StyledTableCell>
-              <StyledTableCell align="Center">Price</StyledTableCell>
+              <StyledTableCell align="center">Stock</StyledTableCell>
+              <StyledTableCell align="center">Category</StyledTableCell>
+              <StyledTableCell align="center">Price</StyledTableCell>
+              <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {this.state.records.map(record => (
-              <StyledTableRow key={record.name}>
-                <StyledTableCell component="th" scope="row">
-                  {record.productName}
-                </StyledTableCell>
-                <StyledTableCell align="Center">
-                  {record.quantity}
-                </StyledTableCell>
-                <StyledTableCell align="Center">
-                  {record.category}
-                </StyledTableCell>
-                <StyledTableCell align="Center">{record.price}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
+          <TableBody>{productItems}</TableBody>
         </Table>
       </TableContainer>
     );
   }
 }
+
+CustomizedTables.propTypes = {
+  fetchProducts: PropTypes.func.isRequired,
+  products: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => ({
+  products: state.products.products
+});
+
+export default connect(mapStateToProps, { fetchProducts })(CustomizedTables);

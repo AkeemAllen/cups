@@ -12,8 +12,6 @@ import {
   AppBar,
   CssBaseline
 } from '@material-ui/core';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import MailIcon from '@material-ui/icons/Mail';
 import Table from '../components/table';
 import Modal from '../components/modal';
 import NavBar from '../components/navBar';
@@ -43,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-export default function ClippedDrawer() {
+function Dashboard() {
   const classes = useStyles();
   const [redirect, setRedirect] = React.useState(false);
 
@@ -99,3 +97,9 @@ export default function ClippedDrawer() {
     </div>
   );
 }
+
+// const mapStateToProps = state => ({
+//   auth: state.auth.admin
+// });
+
+export default Dashboard;
