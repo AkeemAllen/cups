@@ -6,7 +6,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
-import NavBar from './components/navBar';
 import { connect } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
 import { bindActionCreators } from 'redux';
@@ -19,7 +18,6 @@ class App extends React.Component {
   render() {
     return (
       <div style={{ height: '100vh' }}>
-        <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />

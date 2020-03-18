@@ -6,6 +6,7 @@ import Login from '../components/login';
 import { useSpring, animated } from 'react-spring/web.cjs';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import NavBar from '../components/navBar';
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
@@ -51,6 +52,7 @@ function Home() {
 
   return (
     <div className="main">
+      <NavBar />
       <div className="header">
         <div className="header-content">
           <div className="header-text">
