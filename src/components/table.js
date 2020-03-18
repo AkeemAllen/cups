@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
+import Delete from '@material-ui/icons/Delete';
+import axios from 'axios';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -35,6 +37,10 @@ const styles = {
   }
 };
 
+const deleteItem = id => {
+  axios.delete(`http://localhost:5000/products/${id}`);
+};
+
 class CustomizedTables extends React.Component {
   componentDidMount() {
     this.props.fetchProducts();
@@ -49,6 +55,10 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">{product.quantity}</StyledTableCell>
         <StyledTableCell align="center">{product.category}</StyledTableCell>
         <StyledTableCell align="center">{product.price}</StyledTableCell>
+        <StyledTableCell align="center">
+          {' '}
+          <Delete onClick={() => deleteItem(product._id)} />{' '}
+        </StyledTableCell>
       </StyledTableRow>
     ));
     return (
@@ -60,6 +70,7 @@ class CustomizedTables extends React.Component {
               <StyledTableCell align="center">Stock</StyledTableCell>
               <StyledTableCell align="center">Category</StyledTableCell>
               <StyledTableCell align="center">Price</StyledTableCell>
+              <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>{productItems}</TableBody>
