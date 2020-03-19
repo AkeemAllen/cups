@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
+import { AddCircle } from '@material-ui/icons';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -76,40 +77,14 @@ export default function TransitionsModal() {
       <Button
         variant="contained"
         color="primary"
-        type="button"
         onClick={handleOpen}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '20px'
+        }}
       >
-        Delete Item
-      </Button>
-      <br />
-      <br />
-      <Button
-        variant="contained"
-        color="primary"
-        type="button"
-        onClick={handleOpen}
-      >
-        Update Item
-      </Button>
-      <br />
-      <br />
-      <Button
-        variant="contained"
-        color="primary"
-        type="button"
-        onClick={handleOpen}
-      >
-        Add Item
-      </Button>
-      <br />
-      <br />
-      <Button
-        variant="contained"
-        color="primary"
-        type="button"
-        onClick={handleOpen}
-      >
-        Update Cost
+        <AddCircle style={{ marginRight: '10px' }} /> Add Item
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"

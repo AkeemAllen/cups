@@ -92,7 +92,7 @@ export default function NavBar() {
               display: 'block',
               height: '2px',
               opacity: '.08',
-              width: '65%'
+              width: '70%'
             }}
           />
         </div>
