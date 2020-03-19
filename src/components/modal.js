@@ -6,26 +6,48 @@ import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   modal: {
+    justifyContent: 'center',
     display: 'flex',
+    width: '100%',
     alignItems: 'center',
+    height: '100vh'
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '100px',
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
+  },
+  input: {
+    display: 'flex',
+    marginBottom: '20px',
+    alignItems: 'center',
+    borderRadius: '20px',
+    backgroundColor: '#ccc5b9',
+    paddingRight: '15px',
+    paddingLeft: '15px'
+  },
+  header: {
+    display: 'flex',
     justifyContent: 'center'
   },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+  submitBtn: {
+    marginTop: '20px',
+    backgroundImage: 'linear-gradient(45deg, #8e2de2, #4a00e0)',
+    color: 'white',
+    borderRadius: '25px'
   }
 }));
 
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [id, setId] = React.useState(0);
   const [category, setCategory] = React.useState('');
   const [name, setName] = React.useState('');
-  const [price, setPrice] = React.useState(0.0);
-  const [quantity, setQuantiy] = React.useState(0);
+  const [price, setPrice] = React.useState('');
+  const [quantity, setQuantiy] = React.useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -33,9 +55,6 @@ export default function TransitionsModal() {
 
   const handleClose = () => {
     setOpen(false);
-  };
-  const handleId = event => {
-    setId(event.target.value);
   };
   const handleName = event => {
     setName(event.target.value);
@@ -58,14 +77,12 @@ export default function TransitionsModal() {
 
     axios
       .post(uri, {
-        id: id,
         productName: name,
         category: category,
         quantity: quantity,
         price: price
       })
       .then(response => {
-        console.log(response);
         response.status === 200 ? alert('success') : alert('failed');
       })
       .catch(err => {
@@ -87,8 +104,6 @@ export default function TransitionsModal() {
         <AddCircle style={{ marginRight: '10px' }} /> Add Item
       </Button>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
         onClose={handleClose}
@@ -99,49 +114,44 @@ export default function TransitionsModal() {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper}>
-            <form>
-              <h1>Add Menu Item</h1>
-              <Input
-                placeholder="ID"
-                style={{ marginRight: '5px' }}
-                value={id}
-                onChange={handleId}
-              />
-              <br />
-              <Input
-                placeholder="Name"
-                style={{ marginRight: '5px' }}
-                value={name}
-                onChange={handleName}
-              />
-              <br />
-              <Input
-                placeholder="Category"
-                style={{ marginRight: '5px' }}
-                value={category}
-                onChange={handleCategory}
-              />
-              <br />
-              <Input
-                placeholder="Quantiy"
-                style={{ marginRight: '5px' }}
-                value={quantity}
-                onChange={handleQuantity}
-              />
-              <br />
-              <Input
-                placeholder="Price"
-                style={{ marginRight: '5px' }}
-                value={price}
-                onChange={handlePrice}
-              />
-              <br />
-              <Button type="submit" onClick={handleSubmit}>
-                Add
-              </Button>
-            </form>
-          </div>
+          <form className={classes.form}>
+            <h1 className={classes.header}>Add Menu Item</h1>
+            <Input
+              placeholder="Name"
+              className={classes.input}
+              value={name}
+              onChange={handleName}
+              disableUnderline={true}
+            />
+            <Input
+              placeholder="Category"
+              className={classes.input}
+              value={category}
+              onChange={handleCategory}
+              disableUnderline={true}
+            />
+            <Input
+              placeholder="Quantiy"
+              className={classes.input}
+              value={quantity}
+              onChange={handleQuantity}
+              disableUnderline={true}
+            />
+            <Input
+              placeholder="Price"
+              className={classes.input}
+              value={price}
+              onChange={handlePrice}
+              disableUnderline={true}
+            />
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              className={classes.submitBtn}
+            >
+              Add
+            </Button>
+          </form>
         </Fade>
       </Modal>
     </div>

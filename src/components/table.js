@@ -1,12 +1,15 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  Paper,
+  TableRow,
+  TableHead,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  IconButton
+} from '@material-ui/core';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
@@ -57,7 +60,9 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">{product.price}</StyledTableCell>
         <StyledTableCell align="center">
           {' '}
-          <Delete onClick={() => deleteItem(product._id)} />{' '}
+          <IconButton onClick={() => deleteItem(product._id)}>
+            <Delete />
+          </IconButton>{' '}
         </StyledTableCell>
       </StyledTableRow>
     ));
