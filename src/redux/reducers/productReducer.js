@@ -13,6 +13,11 @@ export default function(state = intialState, action) {
         ...state,
         products: action.payload
       };
+
+    case NEW_PRODUCT:
+      return{
+         ...state
+      };
     default:
       return state;
   }

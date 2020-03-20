@@ -2,10 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
-//import axios from 'axios';
-import { newProduct } from '../redux/actions/productActions.js';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -44,14 +41,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function TransitionsModal(props) {
+export default function EditModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [category, setCategory] = React.useState('');
   const [name, setName] = React.useState('');
   const [price, setPrice] = React.useState('');
   const [quantity, setQuantiy] = React.useState('');
-  
 
   const handleOpen = () => {
     setOpen(true);
@@ -101,7 +97,7 @@ function TransitionsModal(props) {
         }}
       >
         <Fade in={open}>
-          <form className={classes.form} onSubmit = {handleSubmit}>
+          <form className={classes.form}>
             <h1 className={classes.header}>Add Menu Item</h1>
             <Input
               placeholder="Name"
@@ -133,6 +129,7 @@ function TransitionsModal(props) {
             />
             <Button
               type="submit"
+              onClick={handleSubmit}
               className={classes.submitBtn}
             >
               Add
@@ -143,13 +140,3 @@ function TransitionsModal(props) {
     </div>
   );
 }
-
-TransitionsModal.propTypes = {
-  newProduct: PropTypes.func.isRequired
-};
-
-//const mapStateToProps = state => ({
-//  auth: state.auth.isAdmin
-//})
-
-export default connect({}, {newProduct})(TransitionsModal);
