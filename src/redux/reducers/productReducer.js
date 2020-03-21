@@ -19,7 +19,8 @@ export default function(state = intialState, action) {
       };
     case NEW_PRODUCT:
       return {
-        ...state
+        ...state,
+        product: action.payload
       };
     default:
       return state;

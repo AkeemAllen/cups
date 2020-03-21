@@ -42,12 +42,22 @@ const styles = {
 };
 
 class CustomizedTables extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      products: []
+    };
+  }
+
   componentDidMount() {
     this.props.fetchProducts();
   }
 
-  componentDidUpdate() {
-    this.props.fetchProducts();
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.product) {
+      this.props.products.push(nextProps.product);
+    }
   }
 
   render() {
@@ -92,11 +102,13 @@ class CustomizedTables extends React.Component {
 CustomizedTables.propTypes = {
   fetchProducts: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
-  products: PropTypes.array.isRequired
+  products: PropTypes.array.isRequired,
+  product: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  products: state.products.products
+  products: state.products.products,
+  product: state.products.product
 });
 
 export default connect(mapStateToProps, { fetchProducts, deleteProduct })(

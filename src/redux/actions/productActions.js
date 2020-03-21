@@ -32,11 +32,8 @@ export const newProduct = (name, price, quantity, category) => dispatch => {
     .then(response => {
       dispatch({
         type: NEW_PRODUCT,
-        payload: response
+        payload: response.data
       });
-      response.status === 200
-        ? alert('Product Added')
-        : alert('Error Occurred');
     })
     .catch(err => {
       throw err;
