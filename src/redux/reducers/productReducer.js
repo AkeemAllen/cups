@@ -17,6 +17,10 @@ export default function(state = intialState, action) {
       return {
         ...state
       };
+    case NEW_PRODUCT:
+      return {
+        ...state
+      };
     default:
       return state;
   }

@@ -20,3 +20,25 @@ export const fetchProducts = () => dispatch => {
 export const deleteProduct = id => dispatch => {
   axios.delete(uri + `/${id}`).then(() => dispatch({ type: DELETE_PRODUCT }));
 };
+
+export const newProduct = (name, price, quantity, category) => dispatch => {
+  axios
+    .post(uri, {
+      productName: name,
+      category: category,
+      quantity: quantity,
+      price: price
+    })
+    .then(response => {
+      dispatch({
+        type: NEW_PRODUCT,
+        payload: response
+      });
+      response.status === 200
+        ? alert('Product Added')
+        : alert('Error Occurred');
+    })
+    .catch(err => {
+      throw err;
+    });
+};

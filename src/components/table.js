@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
 import Delete from '@material-ui/icons/Delete';
+import Create from '@material-ui/icons/Create';
 // import axios from 'axios';
 
 const StyledTableCell = withStyles(theme => ({
@@ -63,6 +64,9 @@ class CustomizedTables extends React.Component {
           <IconButton onClick={() => this.props.deleteProduct(product._id)}>
             <Delete />
           </IconButton>{' '}
+          <IconButton>
+            <Create />
+          </IconButton>
         </StyledTableCell>
       </StyledTableRow>
     ));
