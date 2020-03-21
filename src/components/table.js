@@ -11,10 +11,10 @@ import {
   IconButton
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { fetchProducts } from '../redux/actions/productActions';
+import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
 import Delete from '@material-ui/icons/Delete';
-import axios from 'axios';
+// import axios from 'axios';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -40,12 +40,12 @@ const styles = {
   }
 };
 
-const deleteItem = id => {
-  axios.delete(`http://localhost:5000/products/${id}`);
-};
-
 class CustomizedTables extends React.Component {
   componentDidMount() {
+    this.props.fetchProducts();
+  }
+
+  componentDidUpdate() {
     this.props.fetchProducts();
   }
 
@@ -60,7 +60,7 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">{product.price}</StyledTableCell>
         <StyledTableCell align="center">
           {' '}
-          <IconButton onClick={() => deleteItem(product._id)}>
+          <IconButton onClick={() => this.props.deleteProduct(product._id)}>
             <Delete />
           </IconButton>{' '}
         </StyledTableCell>
@@ -87,6 +87,7 @@ class CustomizedTables extends React.Component {
 
 CustomizedTables.propTypes = {
   fetchProducts: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
   products: PropTypes.array.isRequired
 };
 
@@ -94,4 +95,6 @@ const mapStateToProps = state => ({
   products: state.products.products
 });
 
-export default connect(mapStateToProps, { fetchProducts })(CustomizedTables);
+export default connect(mapStateToProps, { fetchProducts, deleteProduct })(
+  CustomizedTables
+);

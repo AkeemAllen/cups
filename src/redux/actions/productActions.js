@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-unused-vars
-import { FETCH_PRODUCTS, NEW_PRODUCT } from './types';
-// import axios from 'axios';
+import { FETCH_PRODUCTS, NEW_PRODUCT, DELETE_PRODUCT } from './types';
+import axios from 'axios';
+
+let uri;
+process.env.NODE_ENV !== 'production'
+  ? (uri = 'http://localhost:5000/products')
+  : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/products`);
 
 export const fetchProducts = () => dispatch => {
-  let uri;
-  process.env.NODE_ENV !== 'production'
-    ? (uri = 'http://localhost:5000/products')
-    : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/products`);
-
   fetch(uri)
     .then(res => res.json())
     .then(products =>
@@ -16,4 +16,7 @@ export const fetchProducts = () => dispatch => {
         payload: products
       })
     );
+};
+export const deleteProduct = id => dispatch => {
+  axios.delete(uri + `/${id}`).then(() => dispatch({ type: DELETE_PRODUCT }));
 };
