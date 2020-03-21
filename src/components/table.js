@@ -42,23 +42,26 @@ const styles = {
 };
 
 class CustomizedTables extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: []
-    };
-  }
-
   componentDidMount() {
     this.props.fetchProducts();
   }
 
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.product) {
-      this.props.products.push(nextProps.product);
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   if (nextProps.product) {
+  //     this.props.products.push(nextProps.product);
+  //   }
+  // }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.product !== prevProps.product) {
+      this.props.products.push(this.props.product);
     }
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   this.props.fetchProducts();
+  // }
 
   render() {
     const productItems = this.props.products.map(product => (
