@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
-import axios from 'axios';
+// import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -70,7 +70,7 @@ export default function EditModal() {
   };
   const handleSubmit = event => {
     event.preventDefault();
-    props.newProduct(name, price, quantity, category);
+    // props.newProduct(name, price, quantity, category);
   };
   return (
     <div>

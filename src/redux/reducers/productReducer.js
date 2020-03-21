@@ -15,8 +15,8 @@ export default function(state = intialState, action) {
       };
 
     case NEW_PRODUCT:
-      return{
-         ...state
+      return {
+        ...state
       };
     default:
       return state;

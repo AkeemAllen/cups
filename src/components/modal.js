@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
-//import axios from 'axios';
+// import axios from 'axios';
 import { newProduct } from '../redux/actions/productActions.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -51,7 +51,6 @@ function TransitionsModal(props) {
   const [name, setName] = React.useState('');
   const [price, setPrice] = React.useState('');
   const [quantity, setQuantiy] = React.useState('');
-  
 
   const handleOpen = () => {
     setOpen(true);
@@ -101,7 +100,7 @@ function TransitionsModal(props) {
         }}
       >
         <Fade in={open}>
-          <form className={classes.form} onSubmit = {handleSubmit}>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <h1 className={classes.header}>Add Menu Item</h1>
             <Input
               placeholder="Name"
@@ -131,10 +130,7 @@ function TransitionsModal(props) {
               onChange={handlePrice}
               disableUnderline={true}
             />
-            <Button
-              type="submit"
-              className={classes.submitBtn}
-            >
+            <Button type="submit" className={classes.submitBtn}>
               Add
             </Button>
           </form>
@@ -148,8 +144,8 @@ TransitionsModal.propTypes = {
   newProduct: PropTypes.func.isRequired
 };
 
-//const mapStateToProps = state => ({
-//  auth: state.auth.isAdmin
-//})
+const mapStateToProps = state => ({
+  auth: state.auth.isAdmin
+});
 
-export default connect({}, {newProduct})(TransitionsModal);
+export default connect(mapStateToProps, { newProduct })(TransitionsModal);

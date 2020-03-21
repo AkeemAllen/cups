@@ -68,7 +68,7 @@ class CustomizedTables extends React.Component {
           <IconButton onClick={() => deleteItem(product._id)}>
             <Delete />
           </IconButton>{' '}
-          <IconButton onClick={()=> editItem(product._id)}>
+          <IconButton onClick={() => editItem(product._id)}>
             <Create />
           </IconButton>
         </StyledTableCell>
