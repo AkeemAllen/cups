@@ -66,7 +66,7 @@ class NavBar extends React.Component {
               <Link to="/menu" style={styles.links}>
                 <Button color="inherit">Menu</Button>
               </Link>
-              {this.props.user !== null ? (
+              {localStorage.user !== undefined ? (
                 <Button color="inherit" onClick={() => this.props.logOut()}>
                   Log out
                 </Button>

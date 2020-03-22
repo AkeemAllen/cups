@@ -45,6 +45,14 @@ const useStyles = makeStyles(theme => ({
 function ProductCard(props) {
   const classes = useStyles();
 
+  const validateUser = item => {
+    if (localStorage.user !== undefined) {
+      props.addToCart(item);
+    } else {
+      alert('Please Log In');
+    }
+  };
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -65,7 +73,7 @@ function ProductCard(props) {
         <IconButton aria-label="Product Amount">
           <Input type="number" style={{ width: '75px' }} placeholder="Amount" />
         </IconButton>
-        <Button variant="outlined" onClick={() => props.addToCart(props.item)}>
+        <Button variant="outlined" onClick={() => validateUser(props.item)}>
           Add To Cart
         </Button>
       </CardActions>
@@ -78,11 +86,13 @@ ProductCard.propTypes = {
   image: PropTypes.string,
   price: PropTypes.number,
   item: PropTypes.object,
-  addToCart: PropTypes.func.isRequired
+  addToCart: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  cart: state.orders.cart
+  cart: state.orders.cart,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
