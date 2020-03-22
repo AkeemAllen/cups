@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function RecipeReviewCard(props) {
+function ProductCard(props) {
   const classes = useStyles();
 
   return (
@@ -65,24 +65,19 @@ function RecipeReviewCard(props) {
         <IconButton aria-label="Product Amount">
           <Input type="number" style={{ width: '75px' }} placeholder="Amount" />
         </IconButton>
-        <IconButton aria-label="Add To Cart">
-          <Button
-            variant="outlined"
-            onClick={() => props.addToCart(props.productId)}
-          >
-            Add To Cart
-          </Button>
-        </IconButton>
+        <Button variant="outlined" onClick={() => props.addToCart(props.item)}>
+          Add To Cart
+        </Button>
       </CardActions>
     </Card>
   );
 }
 
-RecipeReviewCard.propTypes = {
+ProductCard.propTypes = {
   title: PropTypes.string,
   image: PropTypes.string,
   price: PropTypes.number,
-  productId: PropTypes.number,
+  item: PropTypes.object,
   addToCart: PropTypes.func.isRequired
 };
 
@@ -94,4 +89,4 @@ const mapDispatchToProps = dispatch => ({
   addToCart: bindActionCreators(addToCart, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipeReviewCard);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);
