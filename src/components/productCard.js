@@ -1,20 +1,27 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import {
+  Card,
+  makeStyles,
+  Button,
+  Input,
+  Typography,
+  IconButton,
+  Avatar,
+  CardActions,
+  CardContent,
+  CardMedia,
+  CardHeader
+} from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
-import { Button, Input } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { addToCart } from '../redux/actions/orderActions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 340
+    maxWidth: 340,
+    boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)'
   },
   media: {
     height: 0,
@@ -35,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function RecipeReviewCard(props) {
+function RecipeReviewCard(props) {
   const classes = useStyles();
 
   return (
@@ -59,7 +66,12 @@ export default function RecipeReviewCard(props) {
           <Input type="number" style={{ width: '75px' }} placeholder="Amount" />
         </IconButton>
         <IconButton aria-label="Add To Cart">
-          <Button variant="outlined">Add To Cart</Button>
+          <Button
+            variant="outlined"
+            onClick={() => props.addToCart(props.productId)}
+          >
+            Add To Cart
+          </Button>
         </IconButton>
       </CardActions>
     </Card>
@@ -69,5 +81,17 @@ export default function RecipeReviewCard(props) {
 RecipeReviewCard.propTypes = {
   title: PropTypes.string,
   image: PropTypes.string,
-  price: PropTypes.number
+  price: PropTypes.number,
+  productId: PropTypes.number,
+  addToCart: PropTypes.func.isRequired
 };
+
+const mapStateToProps = state => ({
+  cart: state.orders.cart
+});
+
+const mapDispatchToProps = dispatch => ({
+  addToCart: bindActionCreators(addToCart, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeReviewCard);

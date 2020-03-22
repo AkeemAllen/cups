@@ -18,7 +18,9 @@ export const fetchProducts = () => dispatch => {
     );
 };
 export const deleteProduct = id => dispatch => {
-  axios.delete(uri + `/${id}`).then(() => dispatch({ type: DELETE_PRODUCT }));
+  axios
+    .delete(uri + `/${id}`)
+    .then(() => dispatch({ type: DELETE_PRODUCT, payload: id }));
 };
 
 export const newProduct = (name, price, quantity, category) => dispatch => {

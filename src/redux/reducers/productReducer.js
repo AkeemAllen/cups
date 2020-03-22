@@ -14,10 +14,12 @@ export default function(state = intialState, action) {
         products: action.payload
       };
     case DELETE_PRODUCT:
+      state.products.pop();
       return {
         ...state
       };
     case NEW_PRODUCT:
+      state.products.push(action.payload);
       return {
         ...state,
         product: action.payload

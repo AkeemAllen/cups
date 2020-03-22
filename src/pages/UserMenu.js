@@ -1,25 +1,102 @@
 import React from 'react';
 import ProductCard from '../components/productCard';
-import Container from '@material-ui/core/Container';
-// import NavBar from '../components/navBar';
+import {
+  Container,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Button
+} from '@material-ui/core';
+import NavBar from '../components/navBar';
+import { fetchProducts } from '../redux/actions/productActions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { ShoppingCart, Inbox, Mail } from '@material-ui/icons';
+import './stylesheets/userMenu.scss';
 
-function UserMenu() {
-  return (
-    <Container maxWidth="lg" className="main">
-      <h1 align="center">Our Menu</h1>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <ProductCard
-          title="Coffee"
-          price="$1000"
-          image={require('../assets/images/coffee.jpg')}
-        />
-        <ProductCard
-          title="Sugar Bun"
-          price="$150"
-          image={require('../assets/images/sugarbun.jpg')}
-        />
+class UserMenu extends React.Component {
+  state = {
+    open: false
+  };
+
+  componentDidMount() {
+    this.props.fetchProducts();
+  }
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  render() {
+    const itemNumber = this.props.cart.length;
+    const productItems = this.props.products.map(product => (
+      <ProductCard
+        key={product._id}
+        productId={product._id}
+        title={product.productName}
+        price={product.price}
+        image={require('../assets/images/coffee.jpg')}
+      />
+    ));
+
+    return (
+      <div>
+        <div className="main">
+          <NavBar />
+          <h1 align="center">Our Menu</h1>
+          <IconButton className="icon-container" onClick={this.handleOpen}>
+            <ShoppingCart className="shopping-icon" />
+            <div>{itemNumber}</div>
+          </IconButton>
+        </div>
+        <Container maxWidth="lg" className="content">
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {productItems}
+          </div>
+        </Container>
+        <Drawer
+          anchor="right"
+          open={this.state.open}
+          onClose={this.handleClose}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <List style={{ width: '250px' }}>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <Inbox /> : <Mail />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Button
+            style={{ width: '75%', display: 'flex', justifyContent: 'center' }}
+          >
+            Place Order
+          </Button>
+        </Drawer>
       </div>
-    </Container>
-  );
+    );
+  }
 }
-export default UserMenu;
+
+UserMenu.propTypes = {
+  fetchProducts: PropTypes.func.isRequired,
+  products: PropTypes.array.isRequired,
+  cart: PropTypes.number
+};
+
+const mapStateToProps = state => ({
+  products: state.products.products,
+  cart: state.orders.cart
+});
+
+export default connect(mapStateToProps, { fetchProducts })(UserMenu);

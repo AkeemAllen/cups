@@ -1,0 +1,37 @@
+.main {
+  background: linear-gradient(
+      0deg,
+      rgba(106, 43, 5, 0.7),
+      rgba(150, 67, 21, 0.9)
+    ),
+    url('../../assets/images/coffee-background_3.jpg');
+  background-size: cover;
+  height: 25vh;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 5%;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-image: url('../../assets/images/wave.svg');
+    height: 200px;
+    background-size: cover;
+  }
+  h1 {
+    padding-top: 5%;
+    font-family: 'Courgette', sans-serif;
+    font-size: 45px;
+    margin-bottom: 100px;
+  }
+  .icon-container {
+    position: absolute;
+    z-index: 1;
+    top: 150px;
+    right: 50px;
+    .shopping-icon {
+      font-size: 50px;
+    }
+  }
+}
