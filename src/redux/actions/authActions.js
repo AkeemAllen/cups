@@ -1,4 +1,4 @@
-import { AUTH_USER } from './types';
+import { AUTH_USER, LOG_OUT } from './types';
 
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -22,7 +22,7 @@ export const authorizeUser = (userName, password) => dispatch => {
         (err, decoded) => {
           if (err) throw err;
           localStorage.setItem('isAdmin', decoded.user.isAdmin);
-          localStorage.setItem('user', decoded.user);
+          localStorage.setItem('user', JSON.stringify(decoded.user));
           dispatch({
             type: AUTH_USER,
             payload: decoded
@@ -35,4 +35,13 @@ export const authorizeUser = (userName, password) => dispatch => {
       localStorage.removeItem('isAdmin');
       throw error;
     });
+};
+
+export const logOut = () => dispatch => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  localStorage.removeItem('isAdmin');
+  dispatch({
+    type: LOG_OUT
+  });
 };

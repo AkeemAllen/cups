@@ -1,4 +1,4 @@
-import { AUTH_USER } from '../actions/types';
+import { AUTH_USER, LOG_OUT } from '../actions/types';
 
 const intialState = {
   isAdmin: false,
@@ -13,6 +13,8 @@ export default function(state = intialState, action) {
         isAdmin: action.payload.user.isAdmin,
         user: action.payload.user
       };
+    case LOG_OUT:
+      return { ...state, isAdmin: false, user: null };
     default:
       return state;
   }

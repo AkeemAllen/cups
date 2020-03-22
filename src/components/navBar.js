@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
@@ -8,18 +7,15 @@ import {
   Divider
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logOut } from '../redux/actions/authActions';
 // import SearchAppBar from '../components/searchbar';
 
-const useStyles = makeStyles(theme => ({
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
+const styles = {
   title: {
     textAlign: 'flex-start'
-  }
-}));
-
-const styles = {
+  },
   root: {
     flexGrow: 1
     // display: 'flex',
@@ -46,57 +42,74 @@ const styles = {
   }
 };
 
-export default function NavBar() {
-  const classes = useStyles();
-
-  return (
-    <div className={styles.root}>
-      <AppBar
-        position="absolute"
-        style={{
-          display: 'flex',
-          boxShadow: 'none',
-          justifyContent: 'center',
-          background: 'transparent'
-        }}
-      >
-        <Toolbar style={styles.toolbar}>
-          <Typography variant="h6" className={classes.title}>
-            C.U.P.S
-          </Typography>
-          <div style={styles.content}>
-            <Link to="/" style={styles.links}>
-              <Button color="inherit">Home</Button>
-            </Link>
-            <Link to="/menu" style={styles.links}>
-              <Button color="inherit">Menu</Button>
-            </Link>
-            <Link to="/login" style={styles.links}>
-              <Button color="inherit">Login</Button>
-            </Link>
-            {/* <SearchAppBar /> */}
-          </div>
-        </Toolbar>
-        <div
+class NavBar extends React.Component {
+  render() {
+    return (
+      <div className={styles.root}>
+        <AppBar
+          position="absolute"
           style={{
-            width: '100%',
             display: 'flex',
-            justifyContent: 'center'
+            boxShadow: 'none',
+            justifyContent: 'center',
+            background: 'transparent'
           }}
         >
-          <Divider
-            variant="middle"
+          <Toolbar style={styles.toolbar}>
+            <Typography variant="h6" className={styles.title}>
+              C.U.P.S
+            </Typography>
+            <div style={styles.content}>
+              <Link to="/" style={styles.links}>
+                <Button color="inherit">Home</Button>
+              </Link>
+              <Link to="/menu" style={styles.links}>
+                <Button color="inherit">Menu</Button>
+              </Link>
+              {this.props.user !== null ? (
+                <Button color="inherit" onClick={() => this.props.logOut()}>
+                  Log out
+                </Button>
+              ) : (
+                <Link to="/login" style={styles.links}>
+                  <Button color="inherit">Login</Button>
+                </Link>
+              )}
+              {/* <SearchAppBar /> */}
+            </div>
+          </Toolbar>
+          <div
             style={{
-              backgroundImage:
-                'linear-gradient(-90deg,rgba(255,255,255,0) 0,#fff 5%,#fff 90%,rgba(255,255,255,0) 100%)',
-              display: 'block',
-              height: '2px',
-              opacity: '.08',
-              width: '70%'
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center'
             }}
-          />
-        </div>
-      </AppBar>
-    </div>
-  );
+          >
+            <Divider
+              variant="middle"
+              style={{
+                backgroundImage:
+                  'linear-gradient(-90deg,rgba(255,255,255,0) 0,#fff 5%,#fff 90%,rgba(255,255,255,0) 100%)',
+                display: 'block',
+                height: '2px',
+                opacity: '.08',
+                width: '70%'
+              }}
+            />
+          </div>
+        </AppBar>
+      </div>
+    );
+  }
 }
+
+NavBar.propTypes = {
+  logOut: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
+
+export default connect(mapStateToProps, { logOut })(NavBar);

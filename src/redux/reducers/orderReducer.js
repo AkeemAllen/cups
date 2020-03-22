@@ -7,15 +7,12 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case ADD_TO_CART: {
-      const cart = state.cart;
-      cart.push(action.payload);
-      state.cart = cart;
+    case ADD_TO_CART:
+      state.cart.push(action.payload);
       return {
         ...state,
-        product: action.payload
+        cart: [...state.cart]
       };
-    }
     case REMOVE_FROM_CART: {
       const cart = state.cart.filter(product => product._id !== action.payload);
       state.cart = cart;
