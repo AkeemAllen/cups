@@ -22,6 +22,7 @@ export const authorizeUser = (userName, password) => dispatch => {
         (err, decoded) => {
           if (err) throw err;
           localStorage.setItem('isAdmin', decoded.user.isAdmin);
+          localStorage.setItem('user', decoded.user);
           dispatch({
             type: AUTH_USER,
             payload: decoded

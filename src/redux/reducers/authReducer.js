@@ -2,10 +2,7 @@ import { AUTH_USER } from '../actions/types';
 
 const intialState = {
   isAdmin: false,
-  user: {
-    userName: '',
-    password: ''
-  }
+  user: null
 };
 
 export default function(state = intialState, action) {
@@ -13,7 +10,8 @@ export default function(state = intialState, action) {
     case AUTH_USER:
       return {
         ...state,
-        isAdmin: action.payload.user.isAdmin
+        isAdmin: action.payload.user.isAdmin,
+        user: action.payload.user
       };
     default:
       return state;

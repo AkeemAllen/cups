@@ -33,10 +33,13 @@ class Login extends React.Component {
 
   render() {
     const { userName, password } = this.state;
-    const { auth } = this.props;
+    const { auth, user } = this.props;
 
-    if (auth) {
-      return <Redirect to="/admin" />;
+    if (user !== null) {
+      if (auth) {
+        return <Redirect to="/admin" />;
+      }
+      return <Redirect to="/menu" />;
     }
 
     return (
@@ -82,11 +85,13 @@ class Login extends React.Component {
 
 Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
-  auth: PropTypes.bool.isRequired
+  auth: PropTypes.bool.isRequired,
+  user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth.isAdmin
+  auth: state.auth.isAdmin,
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps, { authorizeUser })(Login);

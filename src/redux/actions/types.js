@@ -9,3 +9,4 @@ export const NEW_PRODUCT = 'NEW_PRODUCT';
 // Order Actions
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const PLACE_ORDER = 'PLACE_ORDER';

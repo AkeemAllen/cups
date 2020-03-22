@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import NavBar from '../components/navBar';
 import { fetchProducts } from '../redux/actions/productActions';
-import { removeFromCart } from '../redux/actions/orderActions';
+import { removeFromCart, placeOrder } from '../redux/actions/orderActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ShoppingCart, Inbox, Mail, Delete } from '@material-ui/icons';
@@ -85,6 +85,7 @@ class UserMenu extends React.Component {
           </List>
           <Button
             style={{ width: '75%', display: 'flex', justifyContent: 'center' }}
+            onClick={() => this.props.placeOrder(this.props.cart)}
           >
             Place Order
           </Button>
@@ -97,6 +98,7 @@ class UserMenu extends React.Component {
 UserMenu.propTypes = {
   fetchProducts: PropTypes.func.isRequired,
   removeFromCart: PropTypes.func.isRequired,
+  placeOrder: PropTypes.func.isRequired,
   products: PropTypes.array.isRequired,
   cart: PropTypes.array
 };
@@ -106,6 +108,8 @@ const mapStateToProps = state => ({
   cart: state.orders.cart
 });
 
-export default connect(mapStateToProps, { fetchProducts, removeFromCart })(
-  UserMenu
-);
+export default connect(mapStateToProps, {
+  fetchProducts,
+  removeFromCart,
+  placeOrder
+})(UserMenu);
