@@ -1,4 +1,9 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, PLACE_ORDER } from './types';
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  PLACE_ORDER,
+  REMOVE_ALL_FROM_CART
+} from './types';
 import axios from 'axios';
 
 let uri;
@@ -21,4 +26,8 @@ export const placeOrder = cart => dispatch => {
       // user:
     })
     .then(response => dispatch({ type: PLACE_ORDER, payload: response.data }));
+};
+
+export const removeAllFromCart = () => dispatch => {
+  dispatch({ type: REMOVE_ALL_FROM_CART });
 };

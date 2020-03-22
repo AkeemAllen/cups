@@ -1,4 +1,9 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, PLACE_ORDER } from '../actions/types';
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  PLACE_ORDER,
+  REMOVE_ALL_FROM_CART
+} from '../actions/types';
 
 const initialState = {
   cart: [],
@@ -24,6 +29,12 @@ export default function(state = initialState, action) {
     case PLACE_ORDER: {
       return {
         ...state
+      };
+    }
+    case REMOVE_ALL_FROM_CART: {
+      return {
+        ...state,
+        cart: []
       };
     }
     default:

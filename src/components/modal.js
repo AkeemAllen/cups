@@ -74,6 +74,7 @@ function TransitionsModal(props) {
   const handleSubmit = event => {
     event.preventDefault();
     props.newProduct(name, price, quantity, category);
+    handleClose();
   };
   return (
     <div>

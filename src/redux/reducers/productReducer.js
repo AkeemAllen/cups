@@ -13,11 +13,15 @@ export default function(state = intialState, action) {
         ...state,
         products: action.payload
       };
-    case DELETE_PRODUCT:
-      state.products.pop();
+    case DELETE_PRODUCT: {
+      state.products = state.products.filter(
+        product => product._id !== action.payload
+      );
       return {
-        ...state
+        ...state,
+        products: [...state.products]
       };
+    }
     case NEW_PRODUCT:
       state.products.push(action.payload);
       return {

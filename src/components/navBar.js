@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logOut } from '../redux/actions/authActions';
+import { removeAllFromCart } from '../redux/actions/orderActions';
 // import SearchAppBar from '../components/searchbar';
 
 const styles = {
@@ -67,7 +68,13 @@ class NavBar extends React.Component {
                 <Button color="inherit">Menu</Button>
               </Link>
               {localStorage.user !== undefined ? (
-                <Button color="inherit" onClick={() => this.props.logOut()}>
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    this.props.logOut();
+                    this.props.removeAllFromCart();
+                  }}
+                >
                   Log out
                 </Button>
               ) : (
@@ -105,6 +112,7 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   logOut: PropTypes.func.isRequired,
+  removeAllFromCart: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
 };
 
@@ -112,4 +120,4 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { logOut })(NavBar);
+export default connect(mapStateToProps, { logOut, removeAllFromCart })(NavBar);
