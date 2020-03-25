@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
-import { uploadImage } from '../redux/actions/productActions.js';
+import { uploadImage, updateProduct } from '../redux/actions/productActions.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -53,43 +53,44 @@ function ImageForm(props) {
   const fileUploadHandler = () => {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    props.uploadImage(formData);
+    props.uploadImage(props.id, formData);
+    props.handleClose();
   };
 
   return (
-    <div>
-      <Modal
-        className={classes.modal}
-        open={props.open}
-        onClose={props.handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={props.open}>
-          <form className={classes.form} encType="multipart/form-data">
-            <h1 className={classes.header}>Upload Image</h1>
-            <Input
-              type="file"
-              name="file"
-              id="file"
-              onChange={fileSelectedHandler}
-              disableUnderline
-            />
-            <Button onClick={fileUploadHandler} className={classes.submitBtn}>
-              Upload
-            </Button>
-          </form>
-        </Fade>
-      </Modal>
-    </div>
+    <Modal
+      className={classes.modal}
+      open={props.open}
+      onClose={props.handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500
+      }}
+    >
+      <Fade in={props.open}>
+        <form className={classes.form} encType="multipart/form-data">
+          <h1 className={classes.header}>Upload Image</h1>
+          <Input
+            type="file"
+            name="file"
+            id="file"
+            onChange={fileSelectedHandler}
+            disableUnderline
+          />
+          <Button onClick={fileUploadHandler} className={classes.submitBtn}>
+            Upload
+          </Button>
+        </form>
+      </Fade>
+    </Modal>
   );
 }
 
 ImageForm.propTypes = {
   uploadImage: PropTypes.func.isRequired,
+  updateProduct: PropTypes.func.isRequired,
+  id: PropTypes.string,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired
 };
@@ -98,4 +99,6 @@ const mapStateToProps = state => ({
   auth: state.auth.isAdmin
 });
 
-export default connect(mapStateToProps, { uploadImage })(ImageForm);
+export default connect(mapStateToProps, { uploadImage, updateProduct })(
+  ImageForm
+);

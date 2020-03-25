@@ -1,5 +1,10 @@
 // eslint-disable-next-line no-unused-vars
-import { FETCH_PRODUCTS, NEW_PRODUCT, DELETE_PRODUCT } from '../actions/types';
+import {
+  FETCH_PRODUCTS,
+  NEW_PRODUCT,
+  DELETE_PRODUCT,
+  UPDATE_PRODUCT
+} from '../actions/types';
 
 const intialState = {
   products: [],
@@ -28,6 +33,11 @@ export default function(state = intialState, action) {
         ...state,
         product: action.payload
       };
+    case UPDATE_PRODUCT: {
+      return {
+        ...state
+      };
+    }
     default:
       return state;
   }

@@ -8,14 +8,14 @@ import {
   Table,
   TableBody,
   TableCell,
-  IconButton
+  IconButton,
+  Button
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
 import Delete from '@material-ui/icons/Delete';
 import Create from '@material-ui/icons/Create';
-import { Link } from 'react-router-dom';
 import ImageForm from './ImageForm';
 // import axios from 'axios';
 
@@ -45,15 +45,16 @@ const styles = {
 
 class CustomizedTables extends React.Component {
   state = {
-    open: false
+    open: false,
+    id: null
   };
 
   componentDidMount() {
     this.props.fetchProducts();
   }
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  handleOpen = productId => {
+    this.setState({ open: true, id: productId });
   };
 
   handleClose = () => {
@@ -61,6 +62,10 @@ class CustomizedTables extends React.Component {
   };
 
   render() {
+    let imageViewUri;
+    process.env.NODE_ENV !== 'production'
+      ? (imageViewUri = 'http://localhost:5000/image')
+      : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/image`);
     const productItems = this.props.products.map(product => (
       <StyledTableRow key={product._id}>
         <StyledTableCell component="th" scope="row">
@@ -70,7 +75,17 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">{product.category}</StyledTableCell>
         <StyledTableCell align="center">{product.price}</StyledTableCell>
         <StyledTableCell align="center">
-          <Link onClick={() => this.handleOpen()}>Upload Image</Link>
+          {product.image !== null ? (
+            <a href={`${imageViewUri}/${product.image}`}>View Image</a>
+          ) : (
+            <Button
+              size="small"
+              onClick={() => this.handleOpen(product._id)}
+              style={{ margin: 0 }}
+            >
+              Upload Image
+            </Button>
+          )}
         </StyledTableCell>
         <StyledTableCell align="center">
           {' '}
@@ -98,6 +113,7 @@ class CustomizedTables extends React.Component {
           </TableHead>
           <TableBody>{productItems}</TableBody>
           <ImageForm
+            id={this.state.id}
             open={this.state.open}
             handleClose={() => this.handleClose()}
           />

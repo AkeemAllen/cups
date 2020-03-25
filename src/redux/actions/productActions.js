@@ -1,5 +1,10 @@
 // eslint-disable-next-line no-unused-vars
-import { FETCH_PRODUCTS, NEW_PRODUCT, DELETE_PRODUCT } from './types';
+import {
+  FETCH_PRODUCTS,
+  NEW_PRODUCT,
+  DELETE_PRODUCT,
+  UPDATE_PRODUCT
+} from './types';
 import axios from 'axios';
 
 let uri;
@@ -42,16 +47,42 @@ export const newProduct = (name, price, quantity, category) => dispatch => {
     });
 };
 
-export const uploadImage = formData => dispatch => {
-  let imageUri;
+export const updateProduct = (
+  id,
+  { name, price, quantity, category, image }
+) => dispatch => {
+  axios
+    .put(uri + `/update/${id}`, {
+      productName: name,
+      category: category,
+      quantity: quantity,
+      price: price,
+      image: image
+    })
+    .then(() => dispatch({ type: UPDATE_PRODUCT }));
+};
+
+export const uploadImage = (productId, formData) => dispatch => {
+  let imageUploadUri;
   process.env.NODE_ENV !== 'production'
-    ? (imageUri = 'http://localhost:5000/upload')
-    : (imageUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/upload`);
+    ? (imageUploadUri = 'http://localhost:5000/upload')
+    : (imageUploadUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/upload`);
 
   axios
-    .post(imageUri, formData)
-    .then(res => console.log(res))
+    .post(imageUploadUri, formData)
+    .then(res => {
+      dispatch(updateProduct(productId, { image: res.data.file.filename }));
+    })
     .catch(err => {
       throw err;
     });
 };
+
+// export const viewImage = () => dispatch => {
+//   let imageViewUri;
+//   process.env.NODE_ENV !== 'production'
+//     ? (imageViewUri = 'http://localhost:5000/upload')
+//     : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/upload`);
+
+//     axios.get()
+// };

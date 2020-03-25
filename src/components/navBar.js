@@ -57,7 +57,7 @@ class NavBar extends React.Component {
           }}
         >
           <Toolbar style={styles.toolbar}>
-            <Typography variant="h6" className={styles.title}>
+            <Typography variant="h6" style={styles.title}>
               C.U.P.S
             </Typography>
             <div style={styles.content}>
@@ -113,7 +113,7 @@ class NavBar extends React.Component {
 NavBar.propTypes = {
   logOut: PropTypes.func.isRequired,
   removeAllFromCart: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
