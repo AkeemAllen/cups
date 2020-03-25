@@ -9,7 +9,8 @@ import {
   TableBody,
   TableCell,
   IconButton,
-  Button
+  Button,
+  Divider
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
@@ -76,7 +77,13 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">{product.price}</StyledTableCell>
         <StyledTableCell align="center">
           {product.image !== null ? (
-            <a href={`${imageViewUri}/${product.image}`}>View Image</a>
+            <div>
+              <a href={`${imageViewUri}/${product.image}`}>View</a>
+              <Divider orientation="vertical" />
+              <a href="#" onClick={() => this.handleOpen(product._id)}>
+                Change
+              </a>
+            </div>
           ) : (
             <Button
               size="small"

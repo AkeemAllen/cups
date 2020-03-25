@@ -59,7 +59,9 @@ export const updateProduct = (
       price: price,
       image: image
     })
-    .then(() => dispatch({ type: UPDATE_PRODUCT }));
+    .then(response =>
+      dispatch({ type: UPDATE_PRODUCT, payload: response.data })
+    );
 };
 
 export const uploadImage = (productId, formData) => dispatch => {

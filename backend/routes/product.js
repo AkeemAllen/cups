@@ -107,7 +107,7 @@ router.route('/update/:id').put(async (req, res) => {
 
       product
         .save()
-        .then(() => res.json('Product Updated'))
+        .then(() => res.json(product))
         .catch(err => res.status(400).json('Error ' + err));
     })
     .catch(err => res.status(400).json('Error ' + err));
