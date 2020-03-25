@@ -41,3 +41,17 @@ export const newProduct = (name, price, quantity, category) => dispatch => {
       throw err;
     });
 };
+
+export const uploadImage = formData => dispatch => {
+  let imageUri;
+  process.env.NODE_ENV !== 'production'
+    ? (imageUri = 'http://localhost:5000/upload')
+    : (imageUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/upload`);
+
+  axios
+    .post(imageUri, formData)
+    .then(res => console.log(res))
+    .catch(err => {
+      throw err;
+    });
+};

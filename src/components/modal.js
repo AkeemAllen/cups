@@ -55,7 +55,6 @@ function TransitionsModal(props) {
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -76,6 +75,7 @@ function TransitionsModal(props) {
     props.newProduct(name, price, quantity, category);
     handleClose();
   };
+
   return (
     <div>
       <Button

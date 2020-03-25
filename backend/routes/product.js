@@ -1,10 +1,5 @@
 const router = require('express').Router();
 const Product = require('../models/product.model');
-const filesStorage = require('../middleware');
-
-// Setting up image storage
-const uri = process.env.ATLAS_URI || 'mongodb://localhost:27017/cupsdatabase';
-const upload = filesStorage.useFileUpload(uri);
 
 // Connecting to the database
 router.route('/').get(async (req, res) => {
@@ -93,16 +88,22 @@ router.route('/:id').delete(async (req, res) => {
 router.route('/update/:id').put(async (req, res) => {
   await Product.findById(req.params.id)
     .then(product => {
+      // eslint-disable-next-line no-unused-expressions
       req.body.productName !== undefined
         ? (product.productName = req.body.productName)
         : null;
+      // eslint-disable-next-line no-unused-expressions
       req.body.category !== undefined
         ? (product.category = req.body.category)
         : null;
+      // eslint-disable-next-line no-unused-expressions
       req.body.quantity !== undefined
         ? (product.quantity = req.body.quantity)
         : null;
+      // eslint-disable-next-line no-unused-expressions
       req.body.price !== undefined ? (product.price = req.body.price) : null;
+      // eslint-disable-next-line no-unused-expressions
+      req.body.image !== undefined ? (product.image = req.body.image) : null;
 
       product
         .save()

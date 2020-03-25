@@ -9,7 +9,7 @@ export default class FileUpload extends Component {
     return (
       <div>
         <form
-          action="http://localhost:5000/images/upload"
+          action="http://localhost:5000/upload"
           method="POST"
           encType="multipart/form-data"
         >

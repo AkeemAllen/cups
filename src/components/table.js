@@ -15,6 +15,8 @@ import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
 import Delete from '@material-ui/icons/Delete';
 import Create from '@material-ui/icons/Create';
+import { Link } from 'react-router-dom';
+import ImageForm from './ImageForm';
 // import axios from 'axios';
 
 const StyledTableCell = withStyles(theme => ({
@@ -42,9 +44,21 @@ const styles = {
 };
 
 class CustomizedTables extends React.Component {
+  state = {
+    open: false
+  };
+
   componentDidMount() {
     this.props.fetchProducts();
   }
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   render() {
     const productItems = this.props.products.map(product => (
@@ -55,6 +69,9 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">{product.quantity}</StyledTableCell>
         <StyledTableCell align="center">{product.category}</StyledTableCell>
         <StyledTableCell align="center">{product.price}</StyledTableCell>
+        <StyledTableCell align="center">
+          <Link onClick={() => this.handleOpen()}>Upload Image</Link>
+        </StyledTableCell>
         <StyledTableCell align="center">
           {' '}
           <IconButton onClick={() => this.props.deleteProduct(product._id)}>
@@ -75,10 +92,15 @@ class CustomizedTables extends React.Component {
               <StyledTableCell align="center">Stock</StyledTableCell>
               <StyledTableCell align="center">Category</StyledTableCell>
               <StyledTableCell align="center">Price</StyledTableCell>
+              <StyledTableCell align="center">Image</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>{productItems}</TableBody>
+          <ImageForm
+            open={this.state.open}
+            handleClose={() => this.handleClose()}
+          />
         </Table>
       </TableContainer>
     );
