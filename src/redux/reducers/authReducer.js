@@ -14,7 +14,7 @@ export default function(state = intialState, action) {
         user: action.payload.user
       };
     case LOG_OUT:
-      return { ...state, isAdmin: false, user: null };
+      return { ...state, isAdmin: false, user: undefined };
     default:
       return state;
   }
