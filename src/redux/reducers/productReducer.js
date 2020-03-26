@@ -36,9 +36,7 @@ export default function(state = intialState, action) {
     case UPDATE_PRODUCT: {
       state.products.forEach((product, index, arr) => {
         if (product._id === action.payload._id) {
-          console.log(product);
           arr[index] = action.payload;
-          console.log(arr);
         }
       });
       return {

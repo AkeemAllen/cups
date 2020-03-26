@@ -74,7 +74,7 @@ class CustomizedTables extends React.Component {
         </StyledTableCell>
         <StyledTableCell align="center">{product.quantity}</StyledTableCell>
         <StyledTableCell align="center">{product.category}</StyledTableCell>
-        <StyledTableCell align="center">{product.price}</StyledTableCell>
+        <StyledTableCell align="center">${product.price}</StyledTableCell>
         <StyledTableCell align="center">
           {product.image !== null ? (
             <div>

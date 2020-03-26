@@ -66,7 +66,7 @@ function ProductCard(props) {
       <CardMedia className={classes.media} image={props.image} title="Coffee" />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.price}
+          ${props.price}
         </Typography>
       </CardContent>
       <CardActions style={{ justifyContent: 'space-between' }} disableSpacing>

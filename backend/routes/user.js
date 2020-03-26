@@ -234,7 +234,7 @@ router.route('/login').post(async (req, res) => {
       }
     })
     .catch(err => {
-      res.status(400).json(`Oops!! Something Went Wrong`);
+      res.status(400).json(`Oops!! Something Went Wrong` + err);
     });
 });
 
