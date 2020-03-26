@@ -20,8 +20,9 @@ const productSchema = new Schema({
     required: false
   },
   image: {
-    data: Buffer,
-    contentType: String
+    type: String,
+    required: false,
+    default: null
   }
 });
 

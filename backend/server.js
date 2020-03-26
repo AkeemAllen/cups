@@ -17,11 +17,12 @@ mongoose.connect(uri, {
   useCreateIndex: true
 });
 
-let connection = mongoose.connection;
+const connection = mongoose.connection;
 
 connection.once('open', () => {
   gfs = Grid(connection.db, mongoose.mongo);
   gfs.collection('uploads');
+  // eslint-disable-next-line no-console
   console.log('MongoDB connection established successfully');
 });
 
@@ -36,13 +37,18 @@ const upload = middleWare.useFileUpload(uri);
 
 app.use('/', routes);
 
+/**
+ * Uploading Image
+ */
 app.post('/upload', upload.single('file'), (req, res) => {
   res.json({ file: req.file });
 });
 
-// Get All Files
+// Get All Image Files
 app.get('/files', (req, res) => {
   gfs.files.find().toArray((err, files) => {
+    if (err) throw err;
+
     if (!files || files.length === 0) {
       return res.status(404).json({ err: 'No files exist' });
     }
@@ -51,9 +57,11 @@ app.get('/files', (req, res) => {
   });
 });
 
-// Get Single file
+// Get A Single Image File Info
 app.get('/files/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    if (err) throw err;
+
     if (!file || file.length === 0) {
       return res.status(404).json({ err: 'File does not exist' });
     }
@@ -62,9 +70,10 @@ app.get('/files/:filename', (req, res) => {
   });
 });
 
-// Get Single image
+// View the retrieved Image
 app.get('/image/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    if (err) throw err;
     if (!file || file.length === 0) {
       return res.status(404).json({ err: 'File does not exist' });
     }

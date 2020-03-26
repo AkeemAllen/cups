@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const router = require('express').Router();
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 /**
  * bcrypt is a library which allows you to hash
@@ -61,12 +62,15 @@ router.route('/').get(async (req, res) => {
  *              properties:
  *                branch:
  *                  type: number
+ *            isAdmin:
+ *              type: boolean
  */
 router.route('/').post(async (req, res) => {
   const userName = req.body.userName;
   const customerInfo = req.body.customerInfo;
   const managerInfo = req.body.managerInfo;
   const password = req.body.password;
+  const isAdmin = req.body.isAdmin;
 
   const salt = await bcrypt.genSalt();
 
@@ -76,7 +80,8 @@ router.route('/').post(async (req, res) => {
     userName,
     password: hashedPassword,
     customerInfo,
-    managerInfo
+    managerInfo,
+    isAdmin
   });
 
   return newUser
@@ -152,6 +157,8 @@ router.route('/:id').delete(async (req, res) => {
  *              properties:
  *                branch:
  *                  type: number
+ *            isAdmin:
+ *              type: boolean
  */
 router.route('/update/:id').post(async (req, res) => {
   await User.findById(req.params.id)
@@ -164,6 +171,7 @@ router.route('/update/:id').post(async (req, res) => {
         user.password = hash;
         user.customerInfo = req.body.customerInfo;
         user.managerInfo = req.body.managerInfo;
+        user.isAdmin = req.body.isAdmin;
 
         user
           .save()
@@ -205,23 +213,29 @@ router.route('/login').post(async (req, res) => {
   const username = req.body.userName;
   const password = req.body.password;
 
-  await User.findOne({ userName: username }).then(user => {
-    if (!user) {
-      res.status(400).json('User Not Found');
-      return null;
-    } else {
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) throw err;
+  await User.findOne({ userName: username })
+    .then(user => {
+      if (!user) {
+        res.status(400).json('User Not Found');
+        return null;
+      } else {
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) throw err;
 
-        if (isMatch) {
-          res.status(200).json(user);
-        } else {
-          res.status(400).json('Login Failed');
-          return null;
-        }
-      });
-    }
-  });
+          if (isMatch) {
+            jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
+              if (err) throw err;
+              res.status(200).json({ token });
+            });
+          } else {
+            res.status(400).json('Login Failed');
+          }
+        });
+      }
+    })
+    .catch(err => {
+      res.status(400).json(`Oops!! Something Went Wrong` + err);
+    });
 });
 
 module.exports = router;

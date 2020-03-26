@@ -12,10 +12,11 @@ import {
   AppBar,
   CssBaseline
 } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Table from '../components/table';
 import Modal from '../components/modal';
+import NavBar from '../components/navBar';
+import { Inbox, Mail, Home } from '@material-ui/icons';
+import { Redirect } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -40,44 +41,65 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-export default function ClippedDrawer() {
+function Dashboard() {
   const classes = useStyles();
+  const [redirect, setRedirect] = React.useState(false);
+
+  if (redirect) {
+    // setRedirect(false);
+    return <Redirect to="/" />;
+  }
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Clipped drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List>
-          {['Inventory'].map((text, index) => (
-            <ListItem button key={text}>
+    <div>
+      <NavBar />
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" noWrap>
+              Administrator Dashboard
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <div className={classes.toolbar} />
+          <List>
+            <ListItem button onClick={() => setRedirect(true)}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <Home />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary="Home" />
             </ListItem>
-          ))}
-        </List>
-        <Divider />
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Table />
-        <Modal />
-      </main>
+            {['Inventory'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <Inbox /> : <Mail />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Table />
+          <Modal />
+        </main>
+      </div>
     </div>
   );
 }
+
+// const mapStateToProps = state => ({
+//   auth: state.auth.admin
+// });
+
+export default Dashboard;

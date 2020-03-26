@@ -3,8 +3,6 @@ const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const methodOverride = require('method-override');
-const mongoose = require('mongoose');
-const Grid = require('gridfs-stream');
 const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto');
@@ -70,21 +68,3 @@ exports.useFileUpload = uri => {
   const upload = multer({ storage });
   return upload;
 };
-
-// exports.mongoConnection = uri => {
-//   let gfs;
-
-//   mongoose.connect(uri, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useCreateIndex: true
-//   });
-
-//   let connection = mongoose.connection;
-
-//   connection.once('open', () => {
-//     gfs = Grid(connection.db, mongoose.mongo);
-//     gfs.collection('uploads');
-//     console.log('MongoDB connection established successfully');
-//   });
-// };

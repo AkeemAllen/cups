@@ -1,13 +1,24 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import axios from 'axios';
+import {
+  Paper,
+  TableRow,
+  TableHead,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  IconButton,
+  Button,
+  Divider
+} from '@material-ui/core';
+import { connect } from 'react-redux';
+import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
+import PropTypes from 'prop-types';
+import Delete from '@material-ui/icons/Delete';
+import Create from '@material-ui/icons/Create';
+import ImageForm from './ImageForm';
+// import axios from 'axios';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -27,83 +38,110 @@ const StyledTableRow = withStyles(theme => ({
   }
 }))(TableRow);
 
-// function createData(name, stock, category, price) {
-//   return { name, stock, category, price };
-// }
-
 const styles = {
   table: {
     minWidth: 700
   }
 };
 
-export default class CustomizedTables extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      records: []
-    };
-  }
+class CustomizedTables extends React.Component {
+  state = {
+    open: false,
+    id: null
+  };
 
   componentDidMount() {
-    this.getProducts();
+    this.props.fetchProducts();
   }
 
-  componentDidUpdate() {}
+  handleOpen = productId => {
+    this.setState({ open: true, id: productId });
+  };
 
-  getProducts = () => {
-    let uri;
-    process.env.NODE_ENV !== 'production'
-      ? (uri = 'http://localhost:5000/products')
-      : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/products`);
-
-    axios.get(uri).then(response => {
-      response.data.forEach(element => {
-        this.setState({
-          records: [
-            ...this.state.records,
-            {
-              productName: element.productName,
-              category: element.category,
-              quantity: element.quantity,
-              price: element.price
-            }
-          ]
-        });
-      });
-    });
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   render() {
+    let imageViewUri;
+    process.env.NODE_ENV !== 'production'
+      ? (imageViewUri = 'http://localhost:5000/image')
+      : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/image`);
+    const productItems = this.props.products.map(product => (
+      <StyledTableRow key={product._id}>
+        <StyledTableCell component="th" scope="row">
+          {product.productName}
+        </StyledTableCell>
+        <StyledTableCell align="center">{product.quantity}</StyledTableCell>
+        <StyledTableCell align="center">{product.category}</StyledTableCell>
+        <StyledTableCell align="center">${product.price}</StyledTableCell>
+        <StyledTableCell align="center">
+          {product.image !== null ? (
+            <div>
+              <a href={`${imageViewUri}/${product.image}`}>View</a>
+              <Divider orientation="vertical" />
+              <a href="#" onClick={() => this.handleOpen(product._id)}>
+                Change
+              </a>
+            </div>
+          ) : (
+            <Button
+              size="small"
+              onClick={() => this.handleOpen(product._id)}
+              style={{ margin: 0 }}
+            >
+              Upload Image
+            </Button>
+          )}
+        </StyledTableCell>
+        <StyledTableCell align="center">
+          {' '}
+          <IconButton onClick={() => this.props.deleteProduct(product._id)}>
+            <Delete />
+          </IconButton>{' '}
+          <IconButton>
+            <Create />
+          </IconButton>
+        </StyledTableCell>
+      </StyledTableRow>
+    ));
     return (
       <TableContainer component={Paper}>
         <Table style={styles.table} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Product Name</StyledTableCell>
-              <StyledTableCell align="Center">Stock</StyledTableCell>
-              <StyledTableCell align="Center">Category</StyledTableCell>
-              <StyledTableCell align="Center">Price</StyledTableCell>
+              <StyledTableCell align="center">Stock</StyledTableCell>
+              <StyledTableCell align="center">Category</StyledTableCell>
+              <StyledTableCell align="center">Price</StyledTableCell>
+              <StyledTableCell align="center">Image</StyledTableCell>
+              <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {this.state.records.map(record => (
-              <StyledTableRow key={record.name}>
-                <StyledTableCell component="th" scope="row">
-                  {record.productName}
-                </StyledTableCell>
-                <StyledTableCell align="Center">
-                  {record.quantity}
-                </StyledTableCell>
-                <StyledTableCell align="Center">
-                  {record.category}
-                </StyledTableCell>
-                <StyledTableCell align="Center">{record.price}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
+          <TableBody>{productItems}</TableBody>
+          <ImageForm
+            id={this.state.id}
+            open={this.state.open}
+            handleClose={() => this.handleClose()}
+          />
         </Table>
       </TableContainer>
     );
   }
 }
+
+CustomizedTables.propTypes = {
+  fetchProducts: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
+  products: PropTypes.array.isRequired,
+  product: PropTypes.object
+};
+
+const mapStateToProps = state => ({
+  products: state.products.products,
+  product: state.products.product
+});
+
+export default connect(mapStateToProps, { fetchProducts, deleteProduct })(
+  CustomizedTables
+);
