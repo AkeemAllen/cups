@@ -19,8 +19,8 @@ export const removeFromCart = productId => dispatch => {
   dispatch({ type: REMOVE_FROM_CART, payload: productId });
 };
 
-export const placeOrder = cart => dispatch => {
-  axios.post(uri, { user: '', products: cart }).then(response => {
+export const placeOrder = (user, cart) => dispatch => {
+  axios.post(uri, { userId: user._id, products: cart }).then(response => {
     dispatch({ type: PLACE_ORDER, payload: cart });
   });
 };
