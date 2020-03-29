@@ -1,7 +1,7 @@
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  PLACE_ORDER,
+  // PLACE_ORDER,
   REMOVE_ALL_FROM_CART
 } from './types';
 import axios from 'axios';
