@@ -85,7 +85,9 @@ class UserMenu extends React.Component {
           </List>
           <Button
             style={{ width: '75%', display: 'flex', justifyContent: 'center' }}
-            onClick={() => this.props.placeOrder(this.props.cart)}
+            onClick={() =>
+              this.props.placeOrder(this.props.user, this.props.cart)
+            }
           >
             Place Order
           </Button>
@@ -100,12 +102,14 @@ UserMenu.propTypes = {
   removeFromCart: PropTypes.func.isRequired,
   placeOrder: PropTypes.func.isRequired,
   products: PropTypes.array.isRequired,
-  cart: PropTypes.array
+  cart: PropTypes.array,
+  user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   products: state.products.products,
-  cart: state.orders.cart
+  cart: state.orders.cart,
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps, {
