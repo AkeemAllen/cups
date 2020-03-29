@@ -10,13 +10,17 @@ import {
   Toolbar,
   Drawer,
   AppBar,
-  CssBaseline
+  CssBaseline,
+  Button
 } from '@material-ui/core';
 import Table from '../components/table';
 import Modal from '../components/modal';
 import NavBar from '../components/navBar';
 import { Inbox, Mail, Home } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logOut } from '../redux/actions/authActions';
+import PropTypes from 'prop-types';
 
 const drawerWidth = 240;
 
@@ -41,12 +45,11 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-function Dashboard() {
+function Dashboard(props) {
   const classes = useStyles();
   const [redirect, setRedirect] = React.useState(false);
 
   if (redirect) {
-    // setRedirect(false);
     return <Redirect to="/" />;
   }
 
@@ -56,10 +59,13 @@ function Dashboard() {
       <div className={classes.root}>
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
+          <Toolbar style={{ justifyContent: 'space-between' }}>
             <Typography variant="h6" noWrap>
               Administrator Dashboard
             </Typography>
+            <Button style={{ color: 'white' }} onClick={() => props.logOut()}>
+              Log Out
+            </Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -98,8 +104,8 @@ function Dashboard() {
   );
 }
 
-// const mapStateToProps = state => ({
-//   auth: state.auth.admin
-// });
+Dashboard.propTypes = {
+  logOut: PropTypes.func.isRequired
+};
 
-export default Dashboard;
+export default connect(null, { logOut })(Dashboard);

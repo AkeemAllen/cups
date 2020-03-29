@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import Delete from '@material-ui/icons/Delete';
 import Create from '@material-ui/icons/Create';
 import ImageForm from './ImageForm';
-// import axios from 'axios';
+import EditModal from './editModal';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -47,6 +47,7 @@ const styles = {
 class CustomizedTables extends React.Component {
   state = {
     open: false,
+    openEdit: false,
     id: null
   };
 
@@ -62,18 +63,27 @@ class CustomizedTables extends React.Component {
     this.setState({ open: false });
   };
 
+  handleEditOpen = productId => {
+    this.setState({ openEdit: true, id: productId });
+  };
+
+  handleCloseEdit = () => {
+    this.setState({ openEdit: false });
+  };
+
   render() {
     let imageViewUri;
     process.env.NODE_ENV !== 'production'
       ? (imageViewUri = 'http://localhost:5000/image')
       : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/image`);
+
     const productItems = this.props.products.map(product => (
       <StyledTableRow key={product._id}>
         <StyledTableCell component="th" scope="row">
           {product.productName}
         </StyledTableCell>
-        <StyledTableCell align="center">{product.quantity}</StyledTableCell>
         <StyledTableCell align="center">{product.category}</StyledTableCell>
+        <StyledTableCell align="center">{product.quantity}</StyledTableCell>
         <StyledTableCell align="center">${product.price}</StyledTableCell>
         <StyledTableCell align="center">
           {product.image !== null ? (
@@ -99,7 +109,7 @@ class CustomizedTables extends React.Component {
           <IconButton onClick={() => this.props.deleteProduct(product._id)}>
             <Delete />
           </IconButton>{' '}
-          <IconButton>
+          <IconButton onClick={() => this.handleEditOpen(product._id)}>
             <Create />
           </IconButton>
         </StyledTableCell>
@@ -111,8 +121,8 @@ class CustomizedTables extends React.Component {
           <TableHead>
             <TableRow>
               <StyledTableCell>Product Name</StyledTableCell>
-              <StyledTableCell align="center">Stock</StyledTableCell>
               <StyledTableCell align="center">Category</StyledTableCell>
+              <StyledTableCell align="center">Stock</StyledTableCell>
               <StyledTableCell align="center">Price</StyledTableCell>
               <StyledTableCell align="center">Image</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
@@ -123,6 +133,11 @@ class CustomizedTables extends React.Component {
             id={this.state.id}
             open={this.state.open}
             handleClose={() => this.handleClose()}
+          />
+          <EditModal
+            id={this.state.id}
+            open={this.state.openEdit}
+            handleCloseEdit={() => this.handleCloseEdit()}
           />
         </Table>
       </TableContainer>

@@ -20,12 +20,7 @@ export const removeFromCart = productId => dispatch => {
 };
 
 export const placeOrder = cart => dispatch => {
-  axios
-    .post(uri, {
-      products: cart
-      // user:
-    })
-    .then(response => dispatch({ type: PLACE_ORDER, payload: response.data }));
+  axios.post(uri, { user: 'sdjf', products: cart });
 };
 
 export const removeAllFromCart = () => dispatch => {
