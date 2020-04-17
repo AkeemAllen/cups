@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
 import {
-  Container,
+  Grid,
   IconButton,
   Drawer,
   List,
@@ -10,12 +10,12 @@ import {
   ListItemText,
   Button
 } from '@material-ui/core';
-import NavBar from '../components/NavBar';
+// import NavBar from '../components/NavBar';
 import { fetchProducts } from '../redux/actions/productActions';
 import { removeFromCart, placeOrder } from '../redux/actions/orderActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ShoppingCart, Inbox, Mail, Delete } from '@material-ui/icons';
+import { Inbox, Mail, Delete } from '@material-ui/icons';
 import './stylesheets/userMenu.scss';
 import { bindActionCreators } from 'redux';
 
@@ -45,33 +45,24 @@ class UserMenu extends React.Component {
       placeOrder,
       open
     } = this.props;
-    const itemNumber = cart.length;
+    // const itemNumber = cart.length;
 
     const productItems = products.map(product => (
-      <ProductCard
-        key={product._id}
-        item={product}
-        title={product.productName}
-        price={product.price}
-        image={require('../assets/images/coffee-shop.jpg')}
-      />
+      <Grid item key={product._id}>
+        <ProductCard
+          item={product}
+          title={product.productName}
+          price={product.price}
+          image={require('../assets/images/coffee-shop.jpg')}
+        />
+      </Grid>
     ));
 
     return (
       <div>
-        <div className="main-container">
-          <NavBar />
-          <h1 align="center">Our Menu</h1>
-          <IconButton className="icon-container" onClick={this.handleOpen}>
-            <ShoppingCart className="shopping-icon" />
-            <div>{itemNumber}</div>
-          </IconButton>
-        </div>
-        <Container maxWidth="lg" className="content">
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            {productItems}
-          </div>
-        </Container>
+        <Grid container spacing={4} justify="center">
+          {productItems}
+        </Grid>
         <Drawer
           anchor="right"
           open={open}

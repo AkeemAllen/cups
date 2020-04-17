@@ -10,11 +10,13 @@ import { bindActionCreators } from 'redux';
 import { authorizeUser } from './redux/actions/authActions';
 import { fetchProducts } from './redux/actions/productActions';
 import UserMenu from './pages/UserMenu';
+import NavBar from './components/NavBar';
 
 class App extends React.Component {
   render() {
     return (
       <div style={{ height: '100vh' }}>
+        <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />

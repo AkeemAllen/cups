@@ -1,18 +1,12 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Divider
-} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logOut } from '../redux/actions/authActions';
 import { removeAllFromCart } from '../redux/actions/orderActions';
 import { bindActionCreators } from 'redux';
-// import SearchAppBar from '../components/searchbar';
+import SearchAppBar from '../components/Searchbar';
 
 const styles = {
   title: {
@@ -20,13 +14,10 @@ const styles = {
   },
   root: {
     flexGrow: 1
-    // display: 'flex',
-    // justifyContent: 'center'
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'space-between',
-    padding: '0 300px'
+    justifyContent: 'space-between'
   },
   content: {
     display: 'flex',
@@ -48,15 +39,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className={styles.root}>
-        <AppBar
-          position="absolute"
-          style={{
-            display: 'flex',
-            boxShadow: 'none',
-            justifyContent: 'center',
-            background: 'transparent'
-          }}
-        >
+        <AppBar position="sticky">
           <Toolbar style={styles.toolbar}>
             <Typography variant="h6" style={styles.title}>
               C.U.P.S
@@ -83,28 +66,9 @@ class NavBar extends React.Component {
                   <Button color="inherit">Login</Button>
                 </Link>
               )}
-              {/* <SearchAppBar /> */}
+              <SearchAppBar />
             </div>
           </Toolbar>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center'
-            }}
-          >
-            <Divider
-              variant="middle"
-              style={{
-                backgroundImage:
-                  'linear-gradient(-90deg,rgba(255,255,255,0) 0,#fff 5%,#fff 90%,rgba(255,255,255,0) 100%)',
-                display: 'block',
-                height: '2px',
-                opacity: '.08',
-                width: '70%'
-              }}
-            />
-          </div>
         </AppBar>
       </div>
     );
