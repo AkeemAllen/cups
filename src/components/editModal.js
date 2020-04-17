@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
-import { AddCircle } from '@material-ui/icons';
-// import axios from 'axios';
+import { updateProduct } from '../redux/actions/productActions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -41,21 +42,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function EditModal() {
+function EditModal(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const [category, setCategory] = React.useState('');
   const [name, setName] = React.useState('');
   const [price, setPrice] = React.useState('');
   const [quantity, setQuantiy] = React.useState('');
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   const handleName = event => {
     setName(event.target.value);
   };
@@ -70,35 +63,24 @@ export default function EditModal() {
   };
   const handleSubmit = event => {
     event.preventDefault();
-    // props.newProduct(name, price, quantity, category);
+    props.updateProduct(props.id, { name, price, quantity, category });
+    props.handleCloseEdit();
   };
   return (
     <div>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleOpen}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginTop: '20px'
-        }}
-      >
-        <AddCircle style={{ marginRight: '10px' }} /> Add Item
-      </Button>
       <Modal
         className={classes.modal}
-        open={open}
-        onClose={handleClose}
+        open={props.open}
+        onClose={props.handleCloseEdit}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
       >
-        <Fade in={open}>
+        <Fade in={props.open}>
           <form className={classes.form}>
-            <h1 className={classes.header}>Add Menu Item</h1>
+            <h1 className={classes.header}>Edit Menu Item</h1>
             <Input
               placeholder="Name"
               className={classes.input}
@@ -132,7 +114,7 @@ export default function EditModal() {
               onClick={handleSubmit}
               className={classes.submitBtn}
             >
-              Add
+              Edit
             </Button>
           </form>
         </Fade>
@@ -140,3 +122,12 @@ export default function EditModal() {
     </div>
   );
 }
+
+EditModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleCloseEdit: PropTypes.func.isRequired,
+  updateProduct: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired
+};
+
+export default connect(null, { updateProduct })(EditModal);
