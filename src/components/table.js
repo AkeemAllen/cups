@@ -15,10 +15,10 @@ import {
 import { connect } from 'react-redux';
 import { fetchProducts, deleteProduct } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
-import Delete from '@material-ui/icons/Delete';
-import Create from '@material-ui/icons/Create';
+import { Delete, Create } from '@material-ui/icons';
 import ImageForm from './ImageForm';
-import EditModal from './editModal';
+import EditModal from './EditModal';
+import { bindActionCreators } from 'redux';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -157,6 +157,9 @@ const mapStateToProps = state => ({
   product: state.products.product
 });
 
-export default connect(mapStateToProps, { fetchProducts, deleteProduct })(
-  CustomizedTables
-);
+const mapDispatchToProps = dispatch => ({
+  fetchProducts: bindActionCreators(fetchProducts, dispatch),
+  deleteProduct: bindActionCreators(deleteProduct, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomizedTables);

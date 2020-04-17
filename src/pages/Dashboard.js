@@ -13,14 +13,15 @@ import {
   CssBaseline,
   Button
 } from '@material-ui/core';
-import Table from '../components/table';
-import Modal from '../components/modal';
-import NavBar from '../components/navBar';
+import Table from '../components/Table';
+import Modal from '../components/Modal';
+import NavBar from '../components/NavBar';
 import { Inbox, Mail, Home } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../redux/actions/authActions';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 const drawerWidth = 240;
 
@@ -108,4 +109,8 @@ Dashboard.propTypes = {
   logOut: PropTypes.func.isRequired
 };
 
-export default connect(null, { logOut })(Dashboard);
+const mapDispatchToProps = dispatch => ({
+  logOut: bindActionCreators(logOut, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(Dashboard);

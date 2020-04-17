@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { authorizeUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 class Login extends React.Component {
   constructor(props) {
@@ -94,7 +95,11 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { authorizeUser })(Login);
+const mapDispatchToProps = dispatch => ({
+  authorizeUser: bindActionCreators(authorizeUser, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = {
   form: {

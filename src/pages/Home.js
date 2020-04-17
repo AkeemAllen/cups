@@ -3,7 +3,7 @@ import './stylesheets/home.scss';
 import coffee from '../assets/images/coffee.png';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import NavBar from '../components/navBar';
+import NavBar from '../components/NavBar';
 
 function Home() {
   return (
