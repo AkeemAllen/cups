@@ -4,6 +4,7 @@ import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
 import { updateProduct } from '../redux/actions/productActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -66,6 +67,7 @@ function EditModal(props) {
     props.updateProduct(props.id, { name, price, quantity, category });
     props.handleCloseEdit();
   };
+
   return (
     <div>
       <Modal
@@ -130,4 +132,8 @@ EditModal.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-export default connect(null, { updateProduct })(EditModal);
+const mapDispatchToProps = dispatch => ({
+  updateProduct: bindActionCreators(updateProduct, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(EditModal);

@@ -4,6 +4,7 @@ import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
 import { uploadImage, updateProduct } from '../redux/actions/productActions.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -99,6 +100,9 @@ const mapStateToProps = state => ({
   auth: state.auth.isAdmin
 });
 
-export default connect(mapStateToProps, { uploadImage, updateProduct })(
-  ImageForm
-);
+const mapDispatchToProps = dispatch => ({
+  uploadImage: bindActionCreators(uploadImage, dispatch),
+  updateProduct: bindActionCreators(updateProduct, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageForm);

@@ -6,6 +6,7 @@ import { AddCircle } from '@material-ui/icons';
 import { newProduct } from '../redux/actions/productActions.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -149,4 +150,8 @@ const mapStateToProps = state => ({
   auth: state.auth.isAdmin
 });
 
-export default connect(mapStateToProps, { newProduct })(TransitionsModal);
+const mapDispatchToProps = dispatch => ({
+  newProduct: bindActionCreators(newProduct, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransitionsModal);

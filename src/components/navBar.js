@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logOut } from '../redux/actions/authActions';
 import { removeAllFromCart } from '../redux/actions/orderActions';
+import { bindActionCreators } from 'redux';
 // import SearchAppBar from '../components/searchbar';
 
 const styles = {
@@ -120,4 +121,9 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { logOut, removeAllFromCart })(NavBar);
+const mapDispatchToProps = dispatch => ({
+  logOut: bindActionCreators(logOut, dispatch),
+  removeAllFromCart: bindActionCreators(removeAllFromCart, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
