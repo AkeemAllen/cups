@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import Table from '../components/Table';
 import Modal from '../components/Modal';
-import NavBar from '../components/NavBar';
 import { Inbox, Mail, Home } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -56,7 +55,6 @@ function Dashboard(props) {
 
   return (
     <div>
-      <NavBar />
       <div className={classes.root}>
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>

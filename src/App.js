@@ -11,11 +11,12 @@ import { authorizeUser } from './redux/actions/authActions';
 import { fetchProducts } from './redux/actions/productActions';
 import UserMenu from './pages/UserMenu';
 import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 class App extends React.Component {
   render() {
     return (
-      <div style={{ height: '100vh' }}>
+      <div>
         <NavBar />
         <Switch>
           <Route path="/" exact component={Home} />
@@ -24,6 +25,7 @@ class App extends React.Component {
           <Route path="/menu" component={UserMenu} />
           <Redirect to="/" />
         </Switch>
+        <Footer />
       </div>
     );
   }

@@ -32,6 +32,9 @@ const styles = {
   bar: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  appBar: {
+    backgroundColor: '#316e8f'
   }
 };
 
@@ -39,7 +42,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className={styles.root}>
-        <AppBar position="sticky">
+        <AppBar position="sticky" style={styles.appBar}>
           <Toolbar style={styles.toolbar}>
             <Typography variant="h6" style={styles.title}>
               C.U.P.S

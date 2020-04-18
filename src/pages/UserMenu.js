@@ -59,7 +59,7 @@ class UserMenu extends React.Component {
     ));
 
     return (
-      <div>
+      <div style={{ padding: 16 }}>
         <Grid container spacing={4} justify="center">
           {productItems}
         </Grid>
