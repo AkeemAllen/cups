@@ -12,6 +12,7 @@ import { ShoppingCart, Mail, Inbox, Delete } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { removeFromCart, placeOrder } from '../redux/actions/orderActions';
+import { bindActionCreators } from 'redux';
 
 function Cart(props) {
   const [open, setOpen] = React.useState(false);
@@ -44,7 +45,7 @@ function Cart(props) {
                 {product % 2 === 0 ? <Inbox /> : <Mail />}
               </ListItemIcon>
               <ListItemText primary={product.productName} />
-              <IconButton onClick={() => removeFromCart(product._id)}>
+              <IconButton onClick={() => props.removeFromCart(product._id)}>
                 <Delete />
               </IconButton>
             </ListItem>
@@ -54,9 +55,12 @@ function Cart(props) {
           style={{
             width: '75%',
             display: 'flex',
-            justifyContent: 'center'
+            backgroundColor: '#316e8f',
+            margin: '10px auto',
+            color: 'white'
           }}
-          onClick={() => placeOrder(props.user, props.cart)}
+          disabled={props.cart.length <= 0}
+          onClick={() => props.placeOrder(props.user, props.cart)}
         >
           Place Order
         </Button>
@@ -66,6 +70,8 @@ function Cart(props) {
 }
 
 Cart.propTypes = {
+  placeOrder: PropTypes.func.isRequired,
+  removeFromCart: PropTypes.func.isRequired,
   cart: PropTypes.array,
   user: PropTypes.object
 };
@@ -75,4 +81,9 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, {})(Cart);
+const mapDispatchToProps = dispatch => ({
+  removeFromCart: bindActionCreators(removeFromCart, dispatch),
+  placeOrder: bindActionCreators(placeOrder, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
