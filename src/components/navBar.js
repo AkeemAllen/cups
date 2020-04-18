@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import { logOut } from '../redux/actions/authActions';
 import { removeAllFromCart } from '../redux/actions/orderActions';
 import { bindActionCreators } from 'redux';
-import SearchAppBar from '../components/Searchbar';
+// import SearchAppBar from './Searchbar';
+import Cart from './Cart';
 
 const styles = {
   title: {
@@ -22,12 +23,14 @@ const styles = {
   content: {
     display: 'flex',
     flexDirection: 'row',
-    width: '20%',
+    // width: '20%',
     justifyContent: 'space-between'
   },
   links: {
     textDecoration: 'none',
-    color: 'white'
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center'
   },
   bar: {
     display: 'flex',
@@ -35,6 +38,9 @@ const styles = {
   },
   appBar: {
     backgroundColor: '#316e8f'
+  },
+  icon: {
+    color: 'white'
   }
 };
 
@@ -69,7 +75,8 @@ class NavBar extends React.Component {
                   <Button color="inherit">Login</Button>
                 </Link>
               )}
-              <SearchAppBar />
+              {/* <SearchAppBar /> */}
+              <Cart />
             </div>
           </Toolbar>
         </AppBar>
