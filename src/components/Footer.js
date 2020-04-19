@@ -13,7 +13,7 @@ function Footer() {
 
 const styles = {
   container: {
-    backgroundColor: '#fafafa',
+    // backgroundColor: '#fafafa',
     color: 'black',
     position: 'absolute',
     bottom: 0

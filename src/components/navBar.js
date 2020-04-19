@@ -34,6 +34,12 @@ const styles = {
     color: 'black',
     display: 'flex',
     alignItems: 'center'
+    // flexDirection: 'column'
+  },
+  btn: {
+    display: 'flex',
+    alignItems: 'center',
+    fontFamily: 'Courgette, sans-serif'
   },
   bar: {
     display: 'flex',
@@ -52,33 +58,40 @@ class NavBar extends React.Component {
           <Toolbar style={styles.toolbar}>
             <Typography variant="h6" style={styles.title}>
               <img
-                src={require('../assets/images/Logo.png')}
-                width="70px"
+                src={require('../assets/images/coffee-logo2.png')}
+                width="250px"
                 alt="Cups Logo"
-              />{' '}
-              C.U.P.S
+              />
             </Typography>
             <div style={styles.content}>
               <Link to="/" style={styles.links}>
-                <Button color="inherit">Home</Button>
+                <Button color="inherit" style={styles.btn}>
+                  Home
+                </Button>
+                {/* <span style={{ background: 'black' }}>
+                  <div style={{ width: '50px', height: '5px' }}></div>
+                </span> */}
               </Link>
               <Link to="/menu" style={styles.links}>
-                <Button color="inherit">Menu</Button>
+                <Button color="inherit" style={styles.btn}>
+                  Menu
+                </Button>
               </Link>
               {localStorage.user !== undefined ? (
                 <Button
-                  color="inherit"
                   onClick={() => {
                     this.props.logOut();
                     this.props.removeAllFromCart();
                   }}
-                  style={styles.links}
+                  style={styles.btn}
                 >
                   Log out
                 </Button>
               ) : (
                 <Link to="/login" style={styles.links}>
-                  <Button color="inherit">Login</Button>
+                  <Button color="inherit" style={styles.btn}>
+                    Login
+                  </Button>
                 </Link>
               )}
               {/* <SearchAppBar /> */}

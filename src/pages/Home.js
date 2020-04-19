@@ -27,7 +27,7 @@ function Home() {
           <img src={require('../assets/images/coffee.png')} width="200px" />
         </Grid> */}
       </Grid>
-      <Grid
+      {/* <Grid
         container
         direction="column"
         alignItems="center"
@@ -46,7 +46,7 @@ function Home() {
             challenged.
           </p>
         </Grid>
-      </Grid>
+      </Grid> */}
     </div>
   );
 }
