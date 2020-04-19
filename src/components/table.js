@@ -88,11 +88,21 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">
           {product.image !== null ? (
             <div>
-              <a href={`${imageViewUri}/${product.image}`}>View</a>
+              <Button>
+                <a
+                  style={{ textDecoration: 'none' }}
+                  href={`${imageViewUri}/${product.image}`}
+                >
+                  View
+                </a>
+              </Button>
               <Divider orientation="vertical" />
-              <a href="#" onClick={() => this.handleOpen(product._id)}>
+              <Button
+                variant="text"
+                onClick={() => this.handleOpen(product._id)}
+              >
                 Change
-              </a>
+              </Button>
             </div>
           ) : (
             <Button

@@ -11,7 +11,11 @@ import Cart from './Cart';
 
 const styles = {
   title: {
-    textAlign: 'flex-start'
+    textAlign: 'flex-start',
+    display: 'flex',
+    alignItems: 'center',
+    fontFamily: 'Courgette, sans-serif',
+    color: 'black'
   },
   root: {
     flexGrow: 1
@@ -23,12 +27,11 @@ const styles = {
   content: {
     display: 'flex',
     flexDirection: 'row',
-    // width: '20%',
     justifyContent: 'space-between'
   },
   links: {
     textDecoration: 'none',
-    color: 'white',
+    color: 'black',
     display: 'flex',
     alignItems: 'center'
   },
@@ -37,10 +40,7 @@ const styles = {
     flexDirection: 'column'
   },
   appBar: {
-    backgroundColor: '#316e8f'
-  },
-  icon: {
-    color: 'white'
+    backgroundColor: 'white'
   }
 };
 
@@ -51,6 +51,11 @@ class NavBar extends React.Component {
         <AppBar position="sticky" style={styles.appBar}>
           <Toolbar style={styles.toolbar}>
             <Typography variant="h6" style={styles.title}>
+              <img
+                src={require('../assets/images/Logo.png')}
+                width="70px"
+                alt="Cups Logo"
+              />{' '}
               C.U.P.S
             </Typography>
             <div style={styles.content}>
@@ -67,6 +72,7 @@ class NavBar extends React.Component {
                     this.props.logOut();
                     this.props.removeAllFromCart();
                   }}
+                  style={styles.links}
                 >
                   Log out
                 </Button>

@@ -28,7 +28,7 @@ function Cart(props) {
   const itemNumber = props.cart.length;
   return (
     <div>
-      <IconButton style={{ color: 'white' }} onClick={handleOpen}>
+      <IconButton style={{ color: '#e35b2d' }} onClick={handleOpen}>
         <ShoppingCart />
         <div>{itemNumber}</div>
       </IconButton>

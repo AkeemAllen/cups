@@ -13,8 +13,8 @@ function Footer() {
 
 const styles = {
   container: {
-    backgroundColor: '#316e8f',
-    color: 'white',
+    backgroundColor: '#fafafa',
+    color: 'black',
     position: 'absolute',
     bottom: 0
   }
