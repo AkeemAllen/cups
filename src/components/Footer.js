@@ -14,9 +14,7 @@ function Footer() {
 const styles = {
   container: {
     // backgroundColor: '#fafafa',
-    color: 'black',
-    position: 'absolute',
-    bottom: 0
+    color: 'black'
   }
 };
 

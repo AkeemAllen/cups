@@ -1,11 +1,9 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
 import { Grid } from '@material-ui/core';
-// import NavBar from '../components/NavBar';
 import { fetchProducts } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './stylesheets/userMenu.scss';
 import { bindActionCreators } from 'redux';
 
 class UserMenu extends React.Component {

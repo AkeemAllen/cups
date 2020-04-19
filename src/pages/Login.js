@@ -49,8 +49,7 @@ class Login extends React.Component {
           justifyContent: 'center',
           display: 'flex',
           width: '100%',
-          alignItems: 'center',
-          height: '100vh'
+          alignItems: 'center'
         }}
         maxWidth="sm"
       >
@@ -75,7 +74,16 @@ class Login extends React.Component {
               disableUnderline={true}
             />
           </div>
-          <Button type="submit" style={styles.submitBtn}>
+          <Button
+            type="submit"
+            style={styles.submitBtn}
+            disabled={
+              userName === '' ||
+              password === '' ||
+              userName === null ||
+              password === null
+            }
+          >
             Submit
           </Button>
         </form>
@@ -106,13 +114,12 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     padding: '100px',
-    backgroundColor: 'white',
-    borderRadius: '10px',
-    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
+    backgroundColor: 'white'
   },
   header: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    fontFamily: 'Courgette, sans-serif'
   },
   input: {
     display: 'flex',
@@ -125,7 +132,7 @@ const styles = {
   },
   submitBtn: {
     marginTop: '20px',
-    backgroundImage: 'linear-gradient(45deg, #8e2de2, #4a00e0)',
+    background: '#e35b2d',
     color: 'white',
     borderRadius: '25px'
   },

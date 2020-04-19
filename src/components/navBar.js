@@ -59,7 +59,7 @@ class NavBar extends React.Component {
             <Typography variant="h6" style={styles.title}>
               <img
                 src={require('../assets/images/coffee-logo2.png')}
-                width="250px"
+                width="70px"
                 alt="Cups Logo"
               />
             </Typography>
