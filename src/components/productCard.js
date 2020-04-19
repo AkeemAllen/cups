@@ -10,7 +10,9 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  CardHeader
+  CardHeader,
+  Modal,
+  Backdrop
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import PropTypes from 'prop-types';
@@ -19,6 +21,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
+  modal: {
+    justifyContent: 'center',
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    height: '100vh'
+  },
   root: {
     maxWidth: 340,
     boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)'
@@ -39,18 +48,31 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  modalMessage: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '30px',
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
   }
 }));
 
 function ProductCard(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
   const validateUser = item => {
     if (localStorage.user !== undefined) {
       props.addToCart(item);
     } else {
-      alert('Please Log In');
+      setOpen(true);
     }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -77,6 +99,21 @@ function ProductCard(props) {
           Add To Cart
         </Button>
       </CardActions>
+      {/**
+       * Asks user Logged In if Logged Out
+       */}
+      <Modal
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <div className={classes.modalMessage}>Please Log In</div>
+      </Modal>
     </Card>
   );
 }
