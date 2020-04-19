@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Button
-} from '@material-ui/core';
-import { ShoppingCart, Mail, Inbox, Delete } from '@material-ui/icons';
+import { IconButton, Drawer, List, ListItem, Button } from '@material-ui/core';
+import { ShoppingCart, Delete } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { removeFromCart, placeOrder } from '../redux/actions/orderActions';
@@ -36,15 +28,25 @@ function Cart(props) {
         anchor="right"
         open={open}
         onClose={handleClose}
-        style={{ display: 'flex', justifyContent: 'center' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center'
+        }}
       >
         <List style={{ width: '250px' }}>
           {props.cart.map(product => (
-            <ListItem button key={product._id}>
-              <ListItemIcon>
-                {product % 2 === 0 ? <Inbox /> : <Mail />}
-              </ListItemIcon>
-              <ListItemText primary={product.productName} />
+            <ListItem
+              button
+              key={product._id}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}
+            >
+              <h3 style={{ fontFamily: 'Courgette, sans-serif' }}>
+                {product.productName}
+              </h3>
               <IconButton onClick={() => props.removeFromCart(product._id)}>
                 <Delete />
               </IconButton>

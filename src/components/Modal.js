@@ -1,6 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
+import {
+  Backdrop,
+  Button,
+  Input,
+  Fade,
+  Modal,
+  Select
+} from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 // import axios from 'axios';
 import { newProduct } from '../redux/actions/productActions.js';
@@ -111,13 +118,17 @@ function TransitionsModal(props) {
               onChange={handleName}
               disableUnderline={true}
             />
-            <Input
-              placeholder="Category"
+            <Select
               className={classes.input}
+              native
               value={category}
               onChange={handleCategory}
-              disableUnderline={true}
-            />
+              disableUnderline
+            >
+              <option value="Beverage">Beverage</option>
+              <option value="Snack">Snack</option>
+              <option value="Special">Special</option>
+            </Select>
             <Input
               placeholder="Quantiy"
               className={classes.input}

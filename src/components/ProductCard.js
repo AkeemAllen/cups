@@ -5,7 +5,6 @@ import {
   Button,
   Input,
   Typography,
-  IconButton,
   Avatar,
   CardActions,
   CardContent,
@@ -62,6 +61,7 @@ const useStyles = makeStyles(theme => ({
 function ProductCard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  // const [amount, setAmount] = React.useState(0);
 
   const validateUser = item => {
     if (localStorage.user !== undefined) {
@@ -91,10 +91,8 @@ function ProductCard(props) {
           ${props.price}
         </Typography>
       </CardContent>
-      <CardActions style={{ justifyContent: 'space-between' }} disableSpacing>
-        <IconButton aria-label="Product Amount">
-          <Input type="number" style={{ width: '75px' }} placeholder="Amount" />
-        </IconButton>
+      <CardActions style={{ justifyContent: 'space-between' }}>
+        <Input type="number" style={{ width: '75px' }} placeholder="Amount" />
         <Button variant="outlined" onClick={() => validateUser(props.item)}>
           Add To Cart
         </Button>
