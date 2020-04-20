@@ -1,6 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Backdrop, Button, Input, Fade, Modal } from '@material-ui/core';
+import {
+  Backdrop,
+  Button,
+  Input,
+  Fade,
+  Modal,
+  Select
+} from '@material-ui/core';
 import { updateProduct } from '../redux/actions/productActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -90,13 +97,17 @@ function EditModal(props) {
               onChange={handleName}
               disableUnderline={true}
             />
-            <Input
+            <Select
               placeholder="Category"
               className={classes.input}
               value={category}
               onChange={handleCategory}
               disableUnderline={true}
-            />
+            >
+              <option value="Coffee">Coffee</option>
+              <option value="Beverage">Beverage</option>
+              <option value="Snack">Snack</option>
+            </Select>
             <Input
               placeholder="Quantiy"
               className={classes.input}

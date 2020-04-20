@@ -5,11 +5,9 @@ import {
   Button,
   Input,
   Typography,
-  Avatar,
   CardActions,
   CardContent,
   CardMedia,
-  CardHeader,
   Modal,
   Backdrop
 } from '@material-ui/core';
@@ -77,23 +75,28 @@ function ProductCard(props) {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="AVI" className={classes.avatar}>
-            P
-          </Avatar>
-        }
+      <CardMedia
+        className={classes.media}
+        image={props.image}
         title={props.title}
       />
-      <CardMedia className={classes.media} image={props.image} title="Coffee" />
-      <CardContent>
+      <CardContent title={props.title}>
+        <h4
+          style={{
+            margin: '0',
+            marginBottom: '5px',
+            fontFamily: 'Courgette, sans-serif'
+          }}
+        >
+          {props.title}
+        </h4>
         <Typography variant="body2" color="textSecondary" component="p">
           ${props.price}
         </Typography>
       </CardContent>
       <CardActions style={{ justifyContent: 'space-between' }}>
         <Input type="number" style={{ width: '75px' }} placeholder="Amount" />
-        <Button variant="outlined" onClick={() => validateUser(props.item)}>
+        <Button variant="depressed" onClick={() => validateUser(props.item)}>
           Add To Cart
         </Button>
       </CardActions>

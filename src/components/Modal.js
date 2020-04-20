@@ -93,7 +93,7 @@ function TransitionsModal(props) {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: '20px'
+          marginBottom: '20px'
         }}
       >
         <AddCircle style={{ marginRight: '10px' }} /> Add Item

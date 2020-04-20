@@ -54,7 +54,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className={styles.root}>
-        <AppBar position="sticky" style={styles.appBar}>
+        <AppBar position="fixed" style={styles.appBar}>
           <Toolbar style={styles.toolbar}>
             <Typography variant="h6" style={styles.title}>
               <img

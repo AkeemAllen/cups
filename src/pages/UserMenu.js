@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 
 class UserMenu extends React.Component {
   state = {
-    category: 'coffee'
+    category: 'all'
   };
 
   componentDidMount() {
@@ -20,6 +20,11 @@ class UserMenu extends React.Component {
   };
 
   render() {
+    let imageViewUri;
+    process.env.NODE_ENV !== 'production'
+      ? (imageViewUri = 'http://localhost:5000/image')
+      : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/image`);
+
     const { products } = this.props;
 
     const productItems = products.map(product => (
@@ -28,7 +33,7 @@ class UserMenu extends React.Component {
           item={product}
           title={product.productName}
           price={product.price}
-          image={require('../assets/images/coffee-shop.jpg')}
+          image={`${imageViewUri}/${product.image}`}
         />
       </Grid>
     ));
@@ -41,7 +46,7 @@ class UserMenu extends React.Component {
             item={product}
             title={product.productName}
             price={product.price}
-            image={require('../assets/images/coffee-shop.jpg')}
+            image={`${imageViewUri}/${product.image}`}
           />
         </Grid>
       ));
@@ -53,7 +58,7 @@ class UserMenu extends React.Component {
             item={product}
             title={product.productName}
             price={product.price}
-            image={require('../assets/images/coffee-shop.jpg')}
+            image={`${imageViewUri}/${product.image}`}
           />
         </Grid>
       ));
@@ -65,7 +70,7 @@ class UserMenu extends React.Component {
             item={product}
             title={product.productName}
             price={product.price}
-            image={require('../assets/images/coffee-shop.jpg')}
+            image={`${imageViewUri}/${product.image}`}
           />
         </Grid>
       ));
@@ -77,14 +82,20 @@ class UserMenu extends React.Component {
             item={product}
             title={product.productName}
             price={product.price}
-            image={require('../assets/images/coffee-shop.jpg')}
+            image={`${imageViewUri}/${product.image}`}
           />
         </Grid>
       ));
 
     return (
-      <div style={{ padding: 16 }}>
-        <Grid container spacing={4} justify="center">
+      <div style={{ padding: 16, marginTop: 60 }}>
+        <Grid
+          container
+          spacing={4}
+          justify="center"
+          alignItems="center"
+          style={{ width: '60%', margin: 'auto' }}
+        >
           <Grid container justify="center">
             <Grid item>
               <Button onClick={() => this.changeMenuItems('all')}>

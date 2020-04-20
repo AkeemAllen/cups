@@ -63,8 +63,8 @@ class CustomizedTables extends React.Component {
     this.setState({ open: false });
   };
 
-  handleEditOpen = productId => {
-    this.setState({ openEdit: true, id: productId });
+  handleEditOpen = product => {
+    this.setState({ openEdit: true, id: product._id });
   };
 
   handleCloseEdit = () => {
@@ -88,21 +88,20 @@ class CustomizedTables extends React.Component {
         <StyledTableCell align="center">
           {product.image !== null ? (
             <div>
-              <Button>
-                <a
-                  style={{ textDecoration: 'none' }}
-                  href={`${imageViewUri}/${product.image}`}
-                >
-                  View
-                </a>
-              </Button>
+              <a
+                style={{ textDecoration: 'none' }}
+                href={`${imageViewUri}/${product.image}`}
+              >
+                View
+              </a>
               <Divider orientation="vertical" />
-              <Button
-                variant="text"
+              <a
+                style={{ textDecoration: 'none' }}
+                href="#"
                 onClick={() => this.handleOpen(product._id)}
               >
                 Change
-              </Button>
+              </a>
             </div>
           ) : (
             <Button
@@ -119,7 +118,7 @@ class CustomizedTables extends React.Component {
           <IconButton onClick={() => this.props.deleteProduct(product._id)}>
             <Delete />
           </IconButton>{' '}
-          <IconButton onClick={() => this.handleEditOpen(product._id)}>
+          <IconButton onClick={() => this.handleEditOpen(product)}>
             <Create />
           </IconButton>
         </StyledTableCell>
@@ -148,6 +147,7 @@ class CustomizedTables extends React.Component {
             id={this.state.id}
             open={this.state.openEdit}
             handleCloseEdit={() => this.handleCloseEdit()}
+            // product={}
           />
         </Table>
       </TableContainer>

@@ -95,8 +95,8 @@ function Dashboard(props) {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Table />
           <Modal />
+          <Table />
         </main>
       </div>
     </div>
