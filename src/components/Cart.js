@@ -74,7 +74,7 @@ function Cart(props) {
               <AttachMoney />
               Total Cost
             </h3>
-            {props.totalCost}
+            ${props.totalCost}
           </ListItem>
         </List>
         <Button

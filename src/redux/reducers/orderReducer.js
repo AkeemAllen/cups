@@ -28,9 +28,14 @@ export default function(state = initialState, action) {
         product => product.product._id !== action.payload
       );
       state.cart = cart;
+      let totalCost = 0;
+      state.cart.forEach(product => {
+        totalCost = totalCost + parseInt(product.cost);
+      });
       return {
         ...state,
-        product: action.payload
+        product: action.payload,
+        totalCost: totalCost
       };
     }
     case PLACE_ORDER: {
@@ -39,9 +44,14 @@ export default function(state = initialState, action) {
       };
     }
     case REMOVE_ALL_FROM_CART: {
+      let totalCost = 0;
+      state.cart.forEach(product => {
+        totalCost = totalCost + parseInt(product.cost);
+      });
       return {
         ...state,
-        cart: []
+        cart: [],
+        totalCost: totalCost
       };
     }
     case CALCULATE_COST: {
@@ -50,9 +60,14 @@ export default function(state = initialState, action) {
           arr[index].cost = action.cost;
         }
       });
+      let totalCost = 0;
+      state.cart.forEach(product => {
+        totalCost = totalCost + parseInt(product.cost);
+      });
       return {
         ...state,
-        cart: [...state.cart]
+        cart: [...state.cart],
+        totalCost: totalCost
       };
     }
     default:
