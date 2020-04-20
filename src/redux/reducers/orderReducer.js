@@ -2,12 +2,14 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   PLACE_ORDER,
-  REMOVE_ALL_FROM_CART
+  REMOVE_ALL_FROM_CART,
+  CALCULATE_COST
 } from '../actions/types';
 
 const initialState = {
   cart: [],
-  product: ''
+  product: '',
+  totalCost: 0
 };
 
 export default function(state = initialState, action) {
@@ -40,6 +42,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cart: []
+      };
+    }
+    case CALCULATE_COST: {
+      state.cart.forEach((product, index, arr) => {
+        if (product.product._id === action.productId) {
+          arr[index].cost = action.cost;
+        }
+      });
+      return {
+        ...state,
+        cart: [...state.cart]
       };
     }
     default:

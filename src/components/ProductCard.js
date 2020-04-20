@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import PropTypes from 'prop-types';
-import { addToCart } from '../redux/actions/orderActions';
+import { addToCart, calculateCost } from '../redux/actions/orderActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -69,6 +69,7 @@ function ProductCard(props) {
         setOpen(true);
       } else {
         props.addToCart(item, amount);
+        setTimeout(props.calculateCost(item._id, item.price, amount), 3000);
       }
     } else {
       setMessage('Please Log In');
@@ -142,6 +143,7 @@ ProductCard.propTypes = {
   price: PropTypes.number,
   item: PropTypes.object,
   addToCart: PropTypes.func.isRequired,
+  calculateCost: PropTypes.func.isRequired,
   user: PropTypes.object
 };
 
@@ -151,7 +153,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addToCart: bindActionCreators(addToCart, dispatch)
+  addToCart: bindActionCreators(addToCart, dispatch),
+  calculateCost: bindActionCreators(calculateCost, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);

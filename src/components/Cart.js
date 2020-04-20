@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Drawer, List, ListItem, Button } from '@material-ui/core';
-import { ShoppingCart, Delete } from '@material-ui/icons';
+import { ShoppingCart, Delete, AttachMoney } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { removeFromCart, placeOrder } from '../redux/actions/orderActions';
@@ -45,15 +45,37 @@ function Cart(props) {
               }}
             >
               <h3 style={{ fontFamily: 'Courgette, sans-serif' }}>
-                {product.product.productName}
+                {product.quantity} {product.product.productName}
               </h3>
-              <IconButton
-                onClick={() => props.removeFromCart(product.product._id)}
-              >
-                <Delete />
-              </IconButton>
+              <div>
+                ${product.cost}
+                <IconButton
+                  onClick={() => props.removeFromCart(product.product._id)}
+                >
+                  <Delete />
+                </IconButton>
+              </div>
             </ListItem>
           ))}
+          <ListItem
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between'
+            }}
+          >
+            <h3
+              style={{
+                fontFamily: 'Courgette, sans-serif',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <AttachMoney />
+              Total Cost
+            </h3>
+            {props.totalCost}
+          </ListItem>
         </List>
         <Button
           style={{
@@ -77,12 +99,14 @@ Cart.propTypes = {
   placeOrder: PropTypes.func.isRequired,
   removeFromCart: PropTypes.func.isRequired,
   cart: PropTypes.array,
-  user: PropTypes.object
+  user: PropTypes.object,
+  totalCost: PropTypes.number
 };
 
 const mapStateToProps = state => ({
   cart: state.orders.cart,
-  user: state.auth.user
+  user: state.auth.user,
+  totalCost: state.orders.totalCost
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -2,7 +2,8 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   PLACE_ORDER,
-  REMOVE_ALL_FROM_CART
+  REMOVE_ALL_FROM_CART,
+  CALCULATE_COST
 } from './types';
 import axios from 'axios';
 
@@ -15,7 +16,14 @@ export const addToCart = (productId, quantity) => dispatch => {
   dispatch({ type: ADD_TO_CART, productId, quantity });
 };
 
-// export const calculateCost = () => dispatch => {}
+export const calculateCost = (
+  productId,
+  productPrice,
+  productAmount
+) => dispatch => {
+  const cost = productAmount * productPrice;
+  dispatch({ type: CALCULATE_COST, cost, productId });
+};
 
 export const removeFromCart = productId => dispatch => {
   dispatch({ type: REMOVE_FROM_CART, payload: productId });
