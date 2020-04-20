@@ -37,7 +37,7 @@ function Cart(props) {
           {props.cart.map(product => (
             <ListItem
               button
-              key={product._id}
+              key={product.product._id}
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -45,9 +45,11 @@ function Cart(props) {
               }}
             >
               <h3 style={{ fontFamily: 'Courgette, sans-serif' }}>
-                {product.productName}
+                {product.product.productName}
               </h3>
-              <IconButton onClick={() => props.removeFromCart(product._id)}>
+              <IconButton
+                onClick={() => props.removeFromCart(product.product._id)}
+              >
                 <Delete />
               </IconButton>
             </ListItem>

@@ -11,8 +11,8 @@ process.env.NODE_ENV !== 'production'
   ? (uri = 'http://localhost:5000/orders')
   : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/orders`);
 
-export const addToCart = productId => dispatch => {
-  dispatch({ type: ADD_TO_CART, payload: productId });
+export const addToCart = (productId, quantity) => dispatch => {
+  dispatch({ type: ADD_TO_CART, productId, quantity });
 };
 
 // export const calculateCost = () => dispatch => {}

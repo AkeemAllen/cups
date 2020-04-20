@@ -59,12 +59,19 @@ const useStyles = makeStyles(theme => ({
 function ProductCard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
   const [amount, setAmount] = React.useState(0);
 
   const validateUser = item => {
     if (localStorage.user !== undefined) {
-      props.addToCart(item);
+      if (amount <= 0) {
+        setMessage('Amount Should be Greater Than Zero');
+        setOpen(true);
+      } else {
+        props.addToCart(item, amount);
+      }
     } else {
+      setMessage('Please Log In');
       setOpen(true);
     }
   };
@@ -123,7 +130,7 @@ function ProductCard(props) {
           timeout: 500
         }}
       >
-        <div className={classes.modalMessage}>Please Log In</div>
+        <div className={classes.modalMessage}>{message}</div>
       </Modal>
     </Card>
   );
