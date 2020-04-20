@@ -15,6 +15,8 @@ export const addToCart = productId => dispatch => {
   dispatch({ type: ADD_TO_CART, payload: productId });
 };
 
+// export const calculateCost = () => dispatch => {}
+
 export const removeFromCart = productId => dispatch => {
   dispatch({ type: REMOVE_FROM_CART, payload: productId });
 };

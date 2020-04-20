@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
 function ProductCard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  // const [amount, setAmount] = React.useState(0);
+  const [amount, setAmount] = React.useState(0);
 
   const validateUser = item => {
     if (localStorage.user !== undefined) {
@@ -67,6 +67,10 @@ function ProductCard(props) {
     } else {
       setOpen(true);
     }
+  };
+
+  const handleAmount = event => {
+    setAmount(event.target.value);
   };
 
   const handleClose = () => {
@@ -95,7 +99,13 @@ function ProductCard(props) {
         </Typography>
       </CardContent>
       <CardActions style={{ justifyContent: 'space-between' }}>
-        <Input type="number" style={{ width: '75px' }} placeholder="Amount" />
+        <Input
+          type="number"
+          style={{ width: '75px' }}
+          placeholder="Amount"
+          value={amount}
+          onChange={handleAmount}
+        />
         <Button variant="depressed" onClick={() => validateUser(props.item)}>
           Add To Cart
         </Button>

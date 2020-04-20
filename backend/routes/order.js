@@ -16,7 +16,10 @@ router.route('/').post(async (req, res) => {
     res.status(404).json('User not found!');
   }
 
-  const newOrder = new Order({ users: user, products: [...req.body.products] });
+  const newOrder = new Order({
+    user: user,
+    products: [...req.body.products]
+  });
 
   return newOrder
     .save()

@@ -48,7 +48,7 @@ class CustomizedTables extends React.Component {
   state = {
     open: false,
     openEdit: false,
-    id: null
+    product: {}
   };
 
   componentDidMount() {
@@ -64,7 +64,7 @@ class CustomizedTables extends React.Component {
   };
 
   handleEditOpen = product => {
-    this.setState({ openEdit: true, id: product._id });
+    this.setState({ openEdit: true, id: product._id, product: product });
   };
 
   handleCloseEdit = () => {
@@ -147,7 +147,6 @@ class CustomizedTables extends React.Component {
             id={this.state.id}
             open={this.state.openEdit}
             handleCloseEdit={() => this.handleCloseEdit()}
-            // product={}
           />
         </Table>
       </TableContainer>

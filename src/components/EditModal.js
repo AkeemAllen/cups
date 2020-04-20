@@ -103,10 +103,12 @@ function EditModal(props) {
               value={category}
               onChange={handleCategory}
               disableUnderline={true}
+              native
             >
               <option value="Coffee">Coffee</option>
               <option value="Beverage">Beverage</option>
               <option value="Snack">Snack</option>
+              <option value="Special">Special</option>
             </Select>
             <Input
               placeholder="Quantiy"
@@ -140,7 +142,8 @@ EditModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleCloseEdit: PropTypes.func.isRequired,
   updateProduct: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  productName: PropTypes.string
 };
 
 const mapDispatchToProps = dispatch => ({
