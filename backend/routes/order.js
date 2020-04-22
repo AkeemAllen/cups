@@ -11,6 +11,7 @@ router.route('/').get(async (req, res) => {
 
 router.route('/').post(async (req, res) => {
   const user = await User.findById(req.body.userId);
+  const cost = req.body.cost;
 
   if (user === null) {
     res.status(404).json('User not found!');
@@ -18,7 +19,8 @@ router.route('/').post(async (req, res) => {
 
   const newOrder = new Order({
     user: user,
-    products: [...req.body.products]
+    products: [...req.body.products],
+    cost: cost
   });
 
   return newOrder

@@ -86,7 +86,9 @@ function Cart(props) {
             color: 'white'
           }}
           disabled={props.cart.length <= 0}
-          onClick={() => props.placeOrder(props.user, props.cart)}
+          onClick={() =>
+            props.placeOrder(props.user, props.cart, props.totalCost)
+          }
         >
           Place Order
         </Button>

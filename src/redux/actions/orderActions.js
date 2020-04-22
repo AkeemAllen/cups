@@ -29,10 +29,15 @@ export const removeFromCart = productId => dispatch => {
   dispatch({ type: REMOVE_FROM_CART, payload: productId });
 };
 
-export const placeOrder = (user, cart) => dispatch => {
-  axios.post(uri, { userId: user._id, products: cart }).then(response => {
-    dispatch({ type: PLACE_ORDER, payload: cart });
-  });
+export const placeOrder = (user, cart, cost) => dispatch => {
+  axios
+    .post(uri, { userId: user._id, products: cart, cost })
+    .then(response => {
+      dispatch({ type: PLACE_ORDER, payload: response.data });
+    })
+    .catch(err => {
+      throw err;
+    });
 };
 
 export const removeAllFromCart = () => dispatch => {

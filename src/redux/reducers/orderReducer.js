@@ -40,7 +40,9 @@ export default function(state = initialState, action) {
     }
     case PLACE_ORDER: {
       return {
-        ...state
+        ...state,
+        cart: [],
+        totalCost: 0
       };
     }
     case REMOVE_ALL_FROM_CART: {
