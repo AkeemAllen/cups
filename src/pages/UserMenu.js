@@ -5,6 +5,7 @@ import { fetchProducts } from '../redux/actions/productActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Searchbar from '../components/Searchbar';
 
 class UserMenu extends React.Component {
   state = {
@@ -122,6 +123,9 @@ class UserMenu extends React.Component {
                 <h3 style={styles.choices}>Specials</h3>
               </Button>
             </Grid>
+          </Grid>
+          <Grid container justify="center">
+            <Searchbar />
           </Grid>
           {this.state.category === 'specials' ? specials : null}
           {this.state.category === 'all' ? productItems : null}

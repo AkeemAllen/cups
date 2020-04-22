@@ -1,6 +1,7 @@
 import React from 'react';
-import InputBase from '@material-ui/core/InputBase';
+import { InputBase } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
+import { Search } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   search: {
@@ -34,6 +35,7 @@ export default function SearchAppBar() {
 
   return (
     <div className={classes.search} align="top-right">
+      <Search />
       <InputBase
         placeholder="Search…"
         classes={{

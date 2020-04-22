@@ -128,6 +128,7 @@ function TransitionsModal(props) {
               <option value="Beverage">Beverage</option>
               <option value="Snack">Snack</option>
               <option value="Special">Special</option>
+              <option value="Coffee">Coffee</option>
             </Select>
             <Input
               placeholder="Quantiy"

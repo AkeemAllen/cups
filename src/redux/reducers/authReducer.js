@@ -2,7 +2,7 @@ import { AUTH_USER, LOG_OUT } from '../actions/types';
 
 const intialState = {
   isAdmin: false,
-  user: null
+  user: undefined
 };
 
 export default function(state = intialState, action) {
