@@ -13,6 +13,7 @@ import { authorizeUser } from './redux/actions/authActions';
 import { fetchProducts } from './redux/actions/productActions';
 import FileUpload from './pages/FileUpload';
 import UserMenu from './pages/UserMenu';
+import Registration from './pages/Registration';
 
 class App extends React.Component {
   render() {
@@ -26,6 +27,7 @@ class App extends React.Component {
           <PrivateRoute path="/admin" component={Dashboard} />
           <Route path="/fileupload" component={FileUpload} />
           <Route path="/menu" component={UserMenu} />
+          <Route path="/register" component={Registration} />
           <Redirect to="/" />
         </Switch>
       </div>

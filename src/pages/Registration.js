@@ -2,17 +2,19 @@ import React from 'react';
 import Input from '@material-ui/core/Input';
 import { Button, Container } from '@material-ui/core';
 import { AccountCircleOutlined, LockOutlined } from '@material-ui/icons';
-import { Redirect, Link } from 'react-router-dom';
-import { authorizeUser } from '../redux/actions/authActions';
+import { Redirect } from 'react-router-dom';
+import { registerUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
-class Login extends React.Component {
+class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: '',
       password: '',
+      disability: '',
       redirect: false
     };
   }
@@ -25,14 +27,18 @@ class Login extends React.Component {
     this.setState({ password: event.target.value });
   };
 
+  handleDisability = event => {
+    this.setState({ disability: event.target.value });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
-    const { userName, password } = this.state;
-    this.props.authorizeUser(userName, password);
+    const { userName, password, disability } = this.state;
+    this.props.registerUser(userName, password, disability);
   };
 
   render() {
-    const { userName, password } = this.state;
+    const { userName, password, disability } = this.state;
     const { auth, user } = this.props;
 
     if (user !== null) {
@@ -54,7 +60,7 @@ class Login extends React.Component {
         maxWidth="sm"
       >
         <form onSubmit={this.handleSubmit} style={styles.form}>
-          <h1 style={styles.header}>Login</h1>
+          <h1 style={styles.header}>Register</h1>
           <div style={styles.input}>
             <AccountCircleOutlined fontSize="small" style={styles.icon} />
             <Input
@@ -74,21 +80,37 @@ class Login extends React.Component {
               disableUnderline={true}
             />
           </div>
-          <Button type="submit" style={styles.submitBtn}>
+          <div style={styles.input}>
+            <LockOutlined fontSize="small" style={styles.icon} />
+            <Input
+              placeholder="Disability"
+              value={disability}
+              onChange={this.handleDisability}
+              disableUnderline={true}
+            />
+          </div>
+          <Button
+            type="submit"
+            style={styles.submitBtn}
+            disabled={
+              userName === '' ||
+              password === '' ||
+              userName == null ||
+              password == null ||
+              disability === '' ||
+              disability == null
+            }
+          >
             Submit
           </Button>
-          <Link to="/register" style={{ marginTop: '20px' }}>
-            {' '}
-            Not Registered? Register Here.{' '}
-          </Link>
         </form>
       </Container>
     );
   }
 }
 
-Login.propTypes = {
-  authorizeUser: PropTypes.func.isRequired,
+Registration.propTypes = {
+  registerUser: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
   user: PropTypes.object
 };
@@ -98,7 +120,11 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { authorizeUser })(Login);
+const mapDispatchToProps = dispatch => ({
+  registerUser: bindActionCreators(registerUser, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);
 
 const styles = {
   form: {

@@ -1,4 +1,4 @@
-import { AUTH_USER, LOG_OUT } from './types';
+import { AUTH_USER, LOG_OUT, REGISTER_USER } from './types';
 
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -43,5 +43,21 @@ export const logOut = () => dispatch => {
   localStorage.removeItem('isAdmin');
   dispatch({
     type: LOG_OUT
+  });
+};
+
+export const registerUser = (userName, password, disability) => dispatch => {
+  let uri;
+  process.env.NODE_ENV !== 'production'
+    ? (uri = 'http://localhost:5000/users/login')
+    : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/users/`);
+  axios.post(uri, {
+    userName,
+    password,
+    customerInfo: {
+      disability: disability
+    }
+  }).then(res => {
+    dispatch({ type: REGISTER_USER, payload: res.data });
   });
 };
