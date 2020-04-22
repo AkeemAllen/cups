@@ -51,13 +51,15 @@ export const registerUser = (userName, password, disability) => dispatch => {
   process.env.NODE_ENV !== 'production'
     ? (uri = 'http://localhost:5000/users/login')
     : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/users/`);
-  axios.post(uri, {
-    userName,
-    password,
-    customerInfo: {
-      disability: disability
-    }
-  }).then(res => {
-    dispatch({ type: REGISTER_USER, payload: res.data });
-  });
+  axios
+    .post(uri, {
+      userName,
+      password,
+      customerInfo: {
+        disability: disability
+      }
+    })
+    .then(res => {
+      dispatch({ type: REGISTER_USER, payload: res.data });
+    });
 };
