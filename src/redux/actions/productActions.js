@@ -80,11 +80,8 @@ export const uploadImage = (productId, formData) => dispatch => {
     });
 };
 
-// export const viewImage = () => dispatch => {
-//   let imageViewUri;
-//   process.env.NODE_ENV !== 'production'
-//     ? (imageViewUri = 'http://localhost:5000/upload')
-//     : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/upload`);
-
-//     axios.get()
-// };
+export const reduceStock = (productId, quantity, currentStock) => dispatch => {
+  // Get the Current Amount of stock
+  const newQuantity = currentStock - quantity;
+  dispatch(updateProduct(productId, { quantity: newQuantity }));
+};
