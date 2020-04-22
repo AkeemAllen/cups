@@ -1,115 +1,158 @@
 import React from 'react';
-import ProductCard from '../components/productCard';
-import {
-  Container,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Button
-} from '@material-ui/core';
-import NavBar from '../components/navBar';
+import ProductCard from '../components/ProductCard';
+import { Grid, Button } from '@material-ui/core';
 import { fetchProducts } from '../redux/actions/productActions';
-import { removeFromCart, placeOrder } from '../redux/actions/orderActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ShoppingCart, Inbox, Mail, Delete } from '@material-ui/icons';
-import './stylesheets/userMenu.scss';
+import { bindActionCreators } from 'redux';
 
 class UserMenu extends React.Component {
   state = {
-    open: false
+    category: 'all'
   };
 
   componentDidMount() {
     this.props.fetchProducts();
   }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
+  changeMenuItems = newCategory => {
+    this.setState({ category: newCategory });
   };
 
   render() {
-    const itemNumber = this.props.cart.length;
-    const productItems = this.props.products.map(product => (
-      <ProductCard
-        key={product._id}
-        item={product}
-        title={product.productName}
-        price={product.price}
-        image={require('../assets/images/coffee.jpg')}
-      />
+    let imageViewUri;
+    process.env.NODE_ENV !== 'production'
+      ? (imageViewUri = 'http://localhost:5000/image')
+      : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/image`);
+
+    const { products } = this.props;
+
+    const productItems = products.map(product => (
+      <Grid item key={product._id}>
+        <ProductCard
+          item={product}
+          title={product.productName}
+          price={product.price}
+          image={`${imageViewUri}/${product.image}`}
+        />
+      </Grid>
     ));
 
+    const snacks = products
+      .filter(product => product.category === 'Snack')
+      .map(product => (
+        <Grid item key={product._id}>
+          <ProductCard
+            item={product}
+            title={product.productName}
+            price={product.price}
+            image={`${imageViewUri}/${product.image}`}
+          />
+        </Grid>
+      ));
+    const coffee = products
+      .filter(product => product.category === 'Coffee')
+      .map(product => (
+        <Grid item key={product._id}>
+          <ProductCard
+            item={product}
+            title={product.productName}
+            price={product.price}
+            image={`${imageViewUri}/${product.image}`}
+          />
+        </Grid>
+      ));
+    const beverages = products
+      .filter(product => product.category === 'Beverage')
+      .map(product => (
+        <Grid item key={product._id}>
+          <ProductCard
+            item={product}
+            title={product.productName}
+            price={product.price}
+            image={`${imageViewUri}/${product.image}`}
+          />
+        </Grid>
+      ));
+    const specials = products
+      .filter(product => product.category === 'Special')
+      .map(product => (
+        <Grid item key={product._id}>
+          <ProductCard
+            item={product}
+            title={product.productName}
+            price={product.price}
+            image={`${imageViewUri}/${product.image}`}
+          />
+        </Grid>
+      ));
+
     return (
-      <div>
-        <div className="main-container">
-          <NavBar />
-          <h1 align="center">Our Menu</h1>
-          <IconButton className="icon-container" onClick={this.handleOpen}>
-            <ShoppingCart className="shopping-icon" />
-            <div>{itemNumber}</div>
-          </IconButton>
-        </div>
-        <Container maxWidth="lg" className="content">
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            {productItems}
-          </div>
-        </Container>
-        <Drawer
-          anchor="right"
-          open={this.state.open}
-          onClose={this.handleClose}
-          style={{ display: 'flex', justifyContent: 'center' }}
+      <div style={{ padding: 16, marginTop: 60 }}>
+        <Grid
+          container
+          spacing={4}
+          justify="center"
+          alignItems="center"
+          style={{ width: '60%', margin: 'auto' }}
         >
-          <List style={{ width: '250px' }}>
-            {this.props.cart.map(product => (
-              <ListItem button key={product._id}>
-                <ListItemIcon>
-                  {product % 2 === 0 ? <Inbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={product.productName} />
-                <IconButton
-                  onClick={() => this.props.removeFromCart(product._id)}
-                >
-                  <Delete />
-                </IconButton>
-              </ListItem>
-            ))}
-          </List>
-          <Button
-            style={{ width: '75%', display: 'flex', justifyContent: 'center' }}
-            onClick={() => this.props.placeOrder(this.props.cart)}
-          >
-            Place Order
-          </Button>
-        </Drawer>
+          <Grid container justify="center">
+            <Grid item>
+              <Button onClick={() => this.changeMenuItems('all')}>
+                <h3 style={styles.choices}>All</h3>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button onClick={() => this.changeMenuItems('coffee')}>
+                <h3 style={styles.choices}>Coffee</h3>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button onClick={() => this.changeMenuItems('beverages')}>
+                <h3 style={styles.choices}>Beverages</h3>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button onClick={() => this.changeMenuItems('snacks')}>
+                <h3 style={styles.choices}>Snacks</h3>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button onClick={() => this.changeMenuItems('specials')}>
+                <h3 style={styles.choices}>Specials</h3>
+              </Button>
+            </Grid>
+          </Grid>
+          {this.state.category === 'specials' ? specials : null}
+          {this.state.category === 'all' ? productItems : null}
+          {this.state.category === 'coffee' ? coffee : null}
+          {this.state.category === 'beverages' ? beverages : null}
+          {this.state.category === 'snacks' ? snacks : null}
+        </Grid>
       </div>
     );
   }
 }
 
 UserMenu.propTypes = {
-  fetchProducts: PropTypes.func.isRequired,
-  removeFromCart: PropTypes.func.isRequired,
-  placeOrder: PropTypes.func.isRequired,
   products: PropTypes.array.isRequired,
-  cart: PropTypes.array
+  fetchProducts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   products: state.products.products,
-  cart: state.orders.cart
+  cart: state.orders.cart,
+  user: state.auth.user
 });
 
-export default connect(mapStateToProps, {
-  fetchProducts,
-  removeFromCart,
-  placeOrder
-})(UserMenu);
+const mapDispatchToProps = dispatch => ({
+  fetchProducts: bindActionCreators(fetchProducts, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+
+const styles = {
+  choices: {
+    fontFamily: 'Courgette, sans-serif'
+  }
+};

@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const Order = require('../models/order.model');
 const User = require('../models/user.model');
-const Product = require('../models/product.model');
 
 // Getting all orders
 router.route('/').get(async (req, res) => {
@@ -12,15 +11,17 @@ router.route('/').get(async (req, res) => {
 
 router.route('/').post(async (req, res) => {
   const user = await User.findById(req.body.userId);
-  const product = await Product.findById(req.body.productId);
+  const cost = req.body.cost;
 
   if (user === null) {
     res.status(404).json('User not found!');
   }
-  if (product === null) {
-    res.status(404).json('Product not found!');
-  }
-  const newOrder = new Order({ users: [user], products: [product] });
+
+  const newOrder = new Order({
+    user: user,
+    products: [...req.body.products],
+    cost: cost
+  });
 
   return newOrder
     .save()

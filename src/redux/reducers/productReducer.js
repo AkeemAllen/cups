@@ -28,7 +28,7 @@ export default function(state = intialState, action) {
       };
     }
     case NEW_PRODUCT:
-      state.products.push(action.payload);
+      state.products.unshift(action.payload);
       return {
         ...state,
         product: action.payload
