@@ -3,7 +3,8 @@ import {
   FETCH_PRODUCTS,
   NEW_PRODUCT,
   DELETE_PRODUCT,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT,
+  FETCH_ONE_PRODUCT
 } from './types';
 import axios from 'axios';
 
@@ -22,6 +23,18 @@ export const fetchProducts = () => dispatch => {
       })
     );
 };
+
+export const fetchOneProduct = id => dispatch => {
+  fetch(uri + `/${id}`)
+    .then(res => res.json())
+    .then(product =>
+      dispatch({
+        type: FETCH_ONE_PRODUCT,
+        payload: product
+      })
+    );
+};
+
 export const deleteProduct = id => dispatch => {
   axios
     .delete(uri + `/${id}`)

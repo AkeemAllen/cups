@@ -34,6 +34,7 @@ class UserMenu extends React.Component {
           title={product.productName}
           price={product.price}
           image={`${imageViewUri}/${product.image}`}
+          currentStock={product.quantity}
         />
       </Grid>
     ));
