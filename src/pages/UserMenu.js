@@ -9,7 +9,8 @@ import Searchbar from '../components/Searchbar';
 
 class UserMenu extends React.Component {
   state = {
-    category: 'all'
+    category: 'all',
+    searchItem: ''
   };
 
   componentDidMount() {
@@ -20,6 +21,10 @@ class UserMenu extends React.Component {
     this.setState({ category: newCategory });
   };
 
+  handleSearchItem = event => {
+    this.setState({ searchItem: event.target.value });
+  };
+
   render() {
     let imageViewUri;
     process.env.NODE_ENV !== 'production'
@@ -27,6 +32,7 @@ class UserMenu extends React.Component {
       : (imageViewUri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/image`);
 
     const { products } = this.props;
+    const { searchItem } = this.state;
 
     const productItems = products.map(product => (
       <Grid item key={product._id}>
@@ -88,6 +94,20 @@ class UserMenu extends React.Component {
           />
         </Grid>
       ));
+    const searchedItems = products
+      .filter(product =>
+        product.productName.toLowerCase().includes(this.state.searchItem)
+      )
+      .map(product => (
+        <Grid item key={product._id}>
+          <ProductCard
+            item={product}
+            title={product.productName}
+            price={product.price}
+            image={`${imageViewUri}/${product.image}`}
+          />
+        </Grid>
+      ));
 
     return (
       <div style={{ padding: 16, marginTop: 60 }}>
@@ -126,13 +146,24 @@ class UserMenu extends React.Component {
             </Grid>
           </Grid>
           <Grid container justify="center">
-            <Searchbar />
+            <Searchbar handleSearchItem={this.handleSearchItem} />
           </Grid>
-          {this.state.category === 'specials' ? specials : null}
-          {this.state.category === 'all' ? productItems : null}
-          {this.state.category === 'coffee' ? coffee : null}
-          {this.state.category === 'beverages' ? beverages : null}
-          {this.state.category === 'snacks' ? snacks : null}
+          {searchItem !== '' ? searchedItems : null}
+          {this.state.category === 'specials' && searchItem === ''
+            ? specials
+            : null}
+          {this.state.category === 'all' && searchItem === ''
+            ? productItems
+            : null}
+          {this.state.category === 'coffee' && searchItem === ''
+            ? coffee
+            : null}
+          {this.state.category === 'beverages' && searchItem === ''
+            ? beverages
+            : null}
+          {this.state.category === 'snacks' && searchItem === ''
+            ? snacks
+            : null}
         </Grid>
       </div>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import { InputBase } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Search } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   search: {
@@ -43,14 +44,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SearchAppBar() {
+function SearchAppBar(props) {
   const classes = useStyles();
-  // eslint-disable-next-line no-unused-vars
-  const [searchItem, setSearchItem] = React.useState('');
-
-  const handleSearchItem = event => {
-    setSearchItem(event.target.value);
-  };
 
   return (
     <div className={classes.search}>
@@ -64,10 +59,14 @@ function SearchAppBar() {
           input: classes.inputInput
         }}
         inputProps={{ 'aria-label': 'search' }}
-        onChange={handleSearchItem}
+        onChange={props.handleSearchItem}
       />
     </div>
   );
 }
+
+SearchAppBar.propTypes = {
+  handleSearchItem: PropTypes.func.isRequired
+};
 
 export default SearchAppBar;
