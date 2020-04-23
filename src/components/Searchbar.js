@@ -5,14 +5,27 @@ import { Search } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   search: {
-    display: 'flex',
-    justifyContent: 'flex-end',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.black, 0.1),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.black, 0.2)
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto'
     }
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   inputRoot: {
     color: 'inherit'
@@ -30,12 +43,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SearchAppBar() {
+function SearchAppBar() {
   const classes = useStyles();
+  // eslint-disable-next-line no-unused-vars
+  const [searchItem, setSearchItem] = React.useState('');
+
+  const handleSearchItem = event => {
+    setSearchItem(event.target.value);
+  };
 
   return (
-    <div className={classes.search} align="top-right">
-      <Search />
+    <div className={classes.search}>
+      <div className={classes.searchIcon}>
+        <Search />
+      </div>
       <InputBase
         placeholder="Search…"
         classes={{
@@ -43,7 +64,10 @@ export default function SearchAppBar() {
           input: classes.inputInput
         }}
         inputProps={{ 'aria-label': 'search' }}
+        onChange={handleSearchItem}
       />
     </div>
   );
 }
+
+export default SearchAppBar;
