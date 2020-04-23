@@ -3,7 +3,8 @@ import {
   FETCH_PRODUCTS,
   NEW_PRODUCT,
   DELETE_PRODUCT,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT,
+  FETCH_ONE_PRODUCT
 } from '../actions/types';
 
 const intialState = {
@@ -18,6 +19,12 @@ export default function(state = intialState, action) {
         ...state,
         products: action.payload
       };
+    case FETCH_ONE_PRODUCT: {
+      return {
+        ...state,
+        product: action.payload
+      };
+    }
     case DELETE_PRODUCT: {
       state.products = state.products.filter(
         product => product._id !== action.payload

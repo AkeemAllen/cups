@@ -6,14 +6,15 @@ import {
   CALCULATE_COST
 } from './types';
 import axios from 'axios';
+import { updateProduct } from './productActions';
 
 let uri;
 process.env.NODE_ENV !== 'production'
   ? (uri = 'http://localhost:5000/orders')
   : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/orders`);
 
-export const addToCart = (productId, quantity) => dispatch => {
-  dispatch({ type: ADD_TO_CART, productId, quantity });
+export const addToCart = (productId, quantity, currentStock) => dispatch => {
+  dispatch({ type: ADD_TO_CART, productId, quantity, currentStock });
 };
 
 export const calculateCost = (
@@ -33,6 +34,13 @@ export const placeOrder = (user, cart, cost) => dispatch => {
   axios
     .post(uri, { userId: user._id, products: cart, cost })
     .then(response => {
+      // Reduct Stock
+      cart.forEach(product => {
+        const reducedStock = product.product.quantity - product.quantity;
+        dispatch(
+          updateProduct(product.product._id, { quantity: reducedStock })
+        );
+      });
       dispatch({ type: PLACE_ORDER, payload: response.data });
     })
     .catch(err => {

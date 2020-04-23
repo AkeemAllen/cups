@@ -101,6 +101,7 @@ function Cart(props) {
           disabled={props.cart.length <= 0}
           onClick={() => {
             props.placeOrder(props.user, props.cart, props.totalCost);
+            // props.reduceStock(product.product._id, props.amount, props.product.quantity)
             setModal(true);
           }}
         >
@@ -132,6 +133,7 @@ Cart.propTypes = {
   cart: PropTypes.array,
   user: PropTypes.object,
   totalCost: PropTypes.number
+  // product
 };
 
 const mapStateToProps = state => ({
