@@ -4,6 +4,7 @@ export const LOG_OUT = 'LOG_OUT';
 
 // Product Actions
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
+export const FETCH_ONE_PRODUCT = 'FETCH_ONE_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const NEW_PRODUCT = 'NEW_PRODUCT';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
