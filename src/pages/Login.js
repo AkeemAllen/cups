@@ -87,8 +87,7 @@ class Login extends React.Component {
             Submit
           </Button>
           <Link to="/register" style={{ marginTop: '20px' }}>
-            {' '}
-            Not Registered? Register Here.{' '}
+            Not Registered? Register Here.
           </Link>
         </form>
       </Container>
