@@ -36,7 +36,7 @@ class Login extends React.Component {
     const { userName, password } = this.state;
     const { auth, user } = this.props;
 
-    if (user !== null) {
+    if (user !== undefined) {
       if (auth) {
         return <Redirect to="/admin" />;
       }

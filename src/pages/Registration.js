@@ -1,8 +1,7 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
-import { Button, Container } from '@material-ui/core';
+import { Button, Container, Backdrop, Modal } from '@material-ui/core';
 import { AccountCircleOutlined, LockOutlined } from '@material-ui/icons';
-import { Redirect } from 'react-router-dom';
 import { registerUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,9 +14,18 @@ class Registration extends React.Component {
       userName: '',
       password: '',
       disability: '',
-      redirect: false
+      redirect: false,
+      open: true
     };
   }
+
+  handleOpen = event => {
+    this.setState({ open: true });
+  };
+
+  handleClose = event => {
+    this.setState({ open: false });
+  };
 
   handleUsername = event => {
     this.setState({ userName: event.target.value });
@@ -35,19 +43,16 @@ class Registration extends React.Component {
     event.preventDefault();
     const { userName, password, disability } = this.state;
     this.props.registerUser(userName, password, disability);
+    this.setState({ open: true });
   };
 
   render() {
-    const { userName, password, disability } = this.state;
-    const { auth, user } = this.props;
+    const { userName, password, disability, open } = this.state;
+    // const { user } = this.props;
 
-    if (user !== null) {
-      if (auth) {
-        return <Redirect to="/admin" />;
-      }
-      return <Redirect to="/menu" />;
-    }
-
+    // if (user !== undefined && user.isAdmin === false) {
+    //   this.handleOpen();
+    // }
     return (
       <Container
         style={{
@@ -103,6 +108,21 @@ class Registration extends React.Component {
             Submit
           </Button>
         </form>
+        <Modal
+          style={styles.modal}
+          open={open}
+          onClose={this.handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500
+          }}
+        >
+          <div style={styles.modalMessage}>
+            <h3> Registered </h3>
+            <h5> You can now proceed to login! </h5>
+          </div>
+        </Modal>
       </Container>
     );
   }
@@ -154,5 +174,20 @@ const styles = {
   },
   icon: {
     marginRight: '15px'
+  },
+  modalMessage: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '30px',
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
+  },
+  modal: {
+    justifyContent: 'center',
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    height: '100vh'
   }
 };
