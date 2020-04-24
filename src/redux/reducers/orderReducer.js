@@ -3,17 +3,25 @@ import {
   REMOVE_FROM_CART,
   PLACE_ORDER,
   REMOVE_ALL_FROM_CART,
-  CALCULATE_COST
+  CALCULATE_COST,
+  FETCH_ORDERS
 } from '../actions/types';
 
 const initialState = {
   cart: [],
   product: '',
-  totalCost: 0
+  totalCost: 0,
+  orders: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case FETCH_ORDERS: {
+      return {
+        ...state,
+        orders: action.payload
+      };
+    }
     case ADD_TO_CART:
       state.cart.push({
         product: action.productId,

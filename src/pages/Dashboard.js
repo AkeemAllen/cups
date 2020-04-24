@@ -14,13 +14,13 @@ import {
   Button
 } from '@material-ui/core';
 import Table from '../components/Table';
-import Modal from '../components/Modal';
 import { Inbox, Mail, Home } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../redux/actions/authActions';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import Analytics from '../components/Analytics';
 
 const drawerWidth = 240;
 
@@ -48,10 +48,15 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   const classes = useStyles();
   const [redirect, setRedirect] = React.useState(false);
+  const [currentComponent, setCurrentComponent] = React.useState('Inventory');
 
   if (redirect) {
     return <Redirect to="/" />;
   }
+
+  const changeComponent = componentName => {
+    setCurrentComponent(componentName);
+  };
 
   return (
     <div>
@@ -82,8 +87,8 @@ function Dashboard(props) {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItem>
-            {['Inventory'].map((text, index) => (
-              <ListItem button key={text}>
+            {['Inventory', 'Analytics'].map((text, index) => (
+              <ListItem button key={text} onClick={() => changeComponent(text)}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <Inbox /> : <Mail />}
                 </ListItemIcon>
@@ -95,8 +100,8 @@ function Dashboard(props) {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Modal />
-          <Table />
+          {currentComponent === 'Inventory' ? <Table /> : null}
+          {currentComponent === 'Analytics' ? <Analytics /> : null}
         </main>
       </div>
     </div>

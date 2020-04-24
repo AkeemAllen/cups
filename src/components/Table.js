@@ -19,6 +19,7 @@ import { Delete, Create } from '@material-ui/icons';
 import ImageForm from './ImageForm';
 import EditModal from './EditModal';
 import { bindActionCreators } from 'redux';
+import Modal from '../components/Modal';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -126,31 +127,34 @@ class CustomizedTables extends React.Component {
       </StyledTableRow>
     ));
     return (
-      <TableContainer component={Paper}>
-        <Table style={styles.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Product Name</StyledTableCell>
-              <StyledTableCell align="center">Category</StyledTableCell>
-              <StyledTableCell align="center">Stock</StyledTableCell>
-              <StyledTableCell align="center">Price</StyledTableCell>
-              <StyledTableCell align="center">Image</StyledTableCell>
-              <StyledTableCell align="center">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{productItems}</TableBody>
-          <ImageForm
-            id={this.state.id}
-            open={this.state.open}
-            handleClose={() => this.handleClose()}
-          />
-          <EditModal
-            id={this.state.id}
-            open={this.state.openEdit}
-            handleCloseEdit={() => this.handleCloseEdit()}
-          />
-        </Table>
-      </TableContainer>
+      <div>
+        <Modal />
+        <TableContainer component={Paper}>
+          <Table style={styles.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Product Name</StyledTableCell>
+                <StyledTableCell align="center">Category</StyledTableCell>
+                <StyledTableCell align="center">Stock</StyledTableCell>
+                <StyledTableCell align="center">Price</StyledTableCell>
+                <StyledTableCell align="center">Image</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{productItems}</TableBody>
+            <ImageForm
+              id={this.state.id}
+              open={this.state.open}
+              handleClose={() => this.handleClose()}
+            />
+            <EditModal
+              id={this.state.id}
+              open={this.state.openEdit}
+              handleCloseEdit={() => this.handleCloseEdit()}
+            />
+          </Table>
+        </TableContainer>
+      </div>
     );
   }
 }
