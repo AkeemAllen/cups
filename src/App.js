@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 import { authorizeUser } from './redux/actions/authActions';
 import { fetchProducts } from './redux/actions/productActions';
 import UserMenu from './pages/UserMenu';
+import Registration from './pages/Registration';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
@@ -23,6 +24,7 @@ class App extends React.Component {
           <Route path="/login" component={Login} />
           <PrivateRoute path="/admin" component={Dashboard} />
           <Route path="/menu" component={UserMenu} />
+          <Route path="/register" component={Registration} />
           <Redirect to="/" />
         </Switch>
         <Footer />

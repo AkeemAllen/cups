@@ -1,6 +1,7 @@
 // User Actions
 export const AUTH_USER = 'AUTH_USER';
 export const LOG_OUT = 'LOG_OUT';
+export const REGISTER_USER = 'REGISTER_USER';
 
 // Product Actions
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';

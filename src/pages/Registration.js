@@ -1,22 +1,31 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
-import { Button, Container } from '@material-ui/core';
+import { Button, Container, Backdrop, Modal } from '@material-ui/core';
 import { AccountCircleOutlined, LockOutlined } from '@material-ui/icons';
-import { Redirect, Link } from 'react-router-dom';
-import { authorizeUser } from '../redux/actions/authActions';
+import { registerUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
-class Login extends React.Component {
+class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: '',
       password: '',
-      redirect: false
+      disability: '',
+      redirect: false,
+      open: false
     };
   }
+
+  handleOpen = event => {
+    this.setState({ open: true });
+  };
+
+  handleClose = event => {
+    this.setState({ open: false });
+  };
 
   handleUsername = event => {
     this.setState({ userName: event.target.value });
@@ -26,23 +35,24 @@ class Login extends React.Component {
     this.setState({ password: event.target.value });
   };
 
+  handleDisability = event => {
+    this.setState({ disability: event.target.value });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
-    const { userName, password } = this.state;
-    this.props.authorizeUser(userName, password);
+    const { userName, password, disability } = this.state;
+    this.props.registerUser(userName, password, disability);
+    this.setState({ open: true });
   };
 
   render() {
-    const { userName, password } = this.state;
-    const { auth, user } = this.props;
+    const { userName, password, disability, open } = this.state;
+    // const { user } = this.props;
 
-    if (user !== undefined) {
-      if (auth) {
-        return <Redirect to="/admin" />;
-      }
-      return <Redirect to="/menu" />;
-    }
-
+    // if (user !== undefined && user.isAdmin === false) {
+    //   this.handleOpen();
+    // }
     return (
       <Container
         style={{
@@ -54,7 +64,7 @@ class Login extends React.Component {
         maxWidth="sm"
       >
         <form onSubmit={this.handleSubmit} style={styles.form}>
-          <h1 style={styles.header}>Login</h1>
+          <h1 style={styles.header}>Register</h1>
           <div style={styles.input}>
             <AccountCircleOutlined fontSize="small" style={styles.icon} />
             <Input
@@ -74,29 +84,52 @@ class Login extends React.Component {
               disableUnderline={true}
             />
           </div>
+          <div style={styles.input}>
+            <LockOutlined fontSize="small" style={styles.icon} />
+            <Input
+              placeholder="Disability"
+              value={disability}
+              onChange={this.handleDisability}
+              disableUnderline={true}
+            />
+          </div>
           <Button
             type="submit"
             style={styles.submitBtn}
             disabled={
               userName === '' ||
               password === '' ||
-              userName === null ||
-              password === null
+              userName == null ||
+              password == null ||
+              disability === '' ||
+              disability == null
             }
           >
             Submit
           </Button>
-          <Link to="/register" style={{ marginTop: '20px' }}>
-            Not Registered? Register Here.
-          </Link>
         </form>
+        <Modal
+          style={styles.modal}
+          open={open}
+          onClose={this.handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500
+          }}
+        >
+          <div style={styles.modalMessage}>
+            <h3> Registered </h3>
+            <h5> You can now proceed to login! </h5>
+          </div>
+        </Modal>
       </Container>
     );
   }
 }
 
-Login.propTypes = {
-  authorizeUser: PropTypes.func.isRequired,
+Registration.propTypes = {
+  registerUser: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
   user: PropTypes.object
 };
@@ -107,10 +140,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  authorizeUser: bindActionCreators(authorizeUser, dispatch)
+  registerUser: bindActionCreators(registerUser, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);
 
 const styles = {
   form: {
@@ -141,5 +174,20 @@ const styles = {
   },
   icon: {
     marginRight: '15px'
+  },
+  modalMessage: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '30px',
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
+  },
+  modal: {
+    justifyContent: 'center',
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    height: '100vh'
   }
 };
