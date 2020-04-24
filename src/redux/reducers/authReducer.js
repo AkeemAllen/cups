@@ -17,8 +17,8 @@ export default function(state = intialState, action) {
       return { ...state, isAdmin: false, user: undefined };
     case REGISTER_USER: {
       return {
-        ...state,
-        user: action.payload
+        ...state
+        // user: action.payload
       };
     }
     default:
