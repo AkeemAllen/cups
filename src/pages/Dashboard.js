@@ -14,7 +14,6 @@ import {
   Button
 } from '@material-ui/core';
 import Table from '../components/Table';
-import Modal from '../components/Modal';
 import { Inbox, Mail, Home } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -51,15 +50,13 @@ function Dashboard(props) {
   const [redirect, setRedirect] = React.useState(false);
   const [currentComponent, setCurrentComponent] = React.useState('Inventory');
 
-
   if (redirect) {
     return <Redirect to="/" />;
   }
 
-  const changeComponent = (componentName) => {
+  const changeComponent = componentName => {
     setCurrentComponent(componentName);
-    
-  }
+  };
 
   return (
     <div>
@@ -103,9 +100,8 @@ function Dashboard(props) {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Modal />
-        { currentComponent === 'Inventory' ? <Table /> : null}
-        { currentComponent === 'Analytics' ? <Analytics /> : null}
+          {currentComponent === 'Inventory' ? <Table /> : null}
+          {currentComponent === 'Analytics' ? <Analytics /> : null}
         </main>
       </div>
     </div>

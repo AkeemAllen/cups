@@ -15,14 +15,14 @@ process.env.NODE_ENV !== 'production'
 
 export const fetchOrders = () => dispatch => {
   fetch(uri)
-  .then(res => res.json())
-  .then(orders =>
-    dispatch({
-      type: FETCH_ORDERS,
-      payload: orders
-    })
-  );
-}
+    .then(res => res.json())
+    .then(orders =>
+      dispatch({
+        type: FETCH_ORDERS,
+        payload: orders
+      })
+    );
+};
 
 export const addToCart = (productId, quantity) => dispatch => {
   dispatch({ type: ADD_TO_CART, productId, quantity });
