@@ -11,6 +11,7 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 
 // Order Actions
+export const FETCH_ORDERS = 'FETCH_ORDERS';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const PLACE_ORDER = 'PLACE_ORDER';
