@@ -15,7 +15,7 @@ class Registration extends React.Component {
       password: '',
       disability: '',
       redirect: false,
-      open: true
+      open: false
     };
   }
 
