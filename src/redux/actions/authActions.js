@@ -60,7 +60,6 @@ export const registerUser = (userName, password, disability) => dispatch => {
       }
     })
     .then(res => {
-      console.log(res.data);
       dispatch({ type: REGISTER_USER, payload: res.data });
     });
 };

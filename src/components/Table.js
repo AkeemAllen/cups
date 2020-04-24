@@ -95,6 +95,7 @@ class CustomizedTables extends React.Component {
                 View
               </a>
               <Divider orientation="vertical" />
+              {/* eslint-disable-next-line */}
               <a
                 style={{ textDecoration: 'none' }}
                 href="#"

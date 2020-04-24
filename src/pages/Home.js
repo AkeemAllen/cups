@@ -83,7 +83,8 @@ function Home() {
         style={{
           backgroundImage: `linear-gradient(rgba(250, 250, 250,0.5), rgba(250, 250, 250,0.5)),url(${require('../assets/images/coffee-background_3.jpg')})`,
           backgroundSize: 'cover',
-          height: '400px'
+          height: '400px',
+          marginTop: '50px'
         }}
         justify="center"
       >
