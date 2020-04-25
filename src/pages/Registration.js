@@ -1,11 +1,17 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
 import Input from '@material-ui/core/Input';
 import { Button, Container, Backdrop, Modal } from '@material-ui/core';
-import { AccountCircleOutlined, LockOutlined } from '@material-ui/icons';
-import { registerUser } from '../redux/actions/authActions';
+import {
+  AccountCircleOutlined,
+  LockOutlined,
+  AccessibleOutlined
+} from '@material-ui/icons';
+import { registerUser, setNewUserNull } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { FormErrors } from '../components/FormErrors';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -14,6 +20,11 @@ class Registration extends React.Component {
       userName: '',
       password: '',
       disability: '',
+      usernameValid: false,
+      passwordValid: false,
+      disabilityValid: false,
+      formErrors: { userName: '', password: '', disability: '' },
+      formValid: false,
       redirect: false,
       open: false
     };
@@ -24,19 +35,73 @@ class Registration extends React.Component {
   };
 
   handleClose = event => {
-    this.setState({ open: false });
+    this.props.setNewUserNull();
   };
 
-  handleUsername = event => {
-    this.setState({ userName: event.target.value });
+  handleChange = event => {
+    event.preventDefault();
+    const { name, value } = event.target;
+
+    this.setState(
+      {
+        [name]: value
+      },
+      () => {
+        this.validateField(name, value);
+      }
+    );
   };
 
-  handlePassword = event => {
-    this.setState({ password: event.target.value });
+  validateField = (fieldName, value) => {
+    const fieldValidationErrors = this.state.formErrors;
+    let passwordValid = this.state.passwordValid;
+    let disabilityValid = this.state.disabilityValid;
+    let usernameValid = this.state.usernameValid;
+
+    switch (fieldName) {
+      case 'userName':
+        {
+          usernameValid = value.length >= 3;
+          fieldValidationErrors.userName = usernameValid
+            ? ''
+            : 'Name is too short';
+        }
+        break;
+      case 'password':
+        {
+          passwordValid = value.length >= 6;
+          fieldValidationErrors.password = passwordValid
+            ? ''
+            : 'Password is too short';
+        }
+        break;
+      case 'disability':
+        {
+          disabilityValid = value.length >= 3;
+          fieldValidationErrors.disability = disabilityValid
+            ? ''
+            : 'Disability is too short';
+        }
+        break;
+    }
+    this.setState(
+      {
+        formErrors: fieldValidationErrors,
+        passwordValid: passwordValid,
+        usernameValid: usernameValid,
+        disabilityValid: disabilityValid
+      },
+      this.validateForm
+    );
   };
 
-  handleDisability = event => {
-    this.setState({ disability: event.target.value });
+  validateForm = () => {
+    this.setState({
+      formValid:
+        this.state.usernameValid &&
+        this.state.passwordValid &&
+        this.state.disabilityValid
+    });
   };
 
   handleSubmit = event => {
@@ -47,12 +112,15 @@ class Registration extends React.Component {
   };
 
   render() {
-    const { userName, password, disability, open } = this.state;
-    // const { user } = this.props;
+    const {
+      userName,
+      password,
+      disability,
+      formErrors,
+      formValid
+    } = this.state;
+    const { registrationError, newUser } = this.props;
 
-    // if (user !== undefined && user.isAdmin === false) {
-    //   this.handleOpen();
-    // }
     return (
       <Container
         style={{
@@ -65,12 +133,19 @@ class Registration extends React.Component {
       >
         <form onSubmit={this.handleSubmit} style={styles.form}>
           <h1 style={styles.header}>Register</h1>
+          {registrationError !== null ? (
+            <div style={{ color: 'red', margin: 'auto' }}>
+              Registration Failed
+            </div>
+          ) : null}
+          <FormErrors formErrors={formErrors} />
           <div style={styles.input}>
             <AccountCircleOutlined fontSize="small" style={styles.icon} />
             <Input
               placeholder="Username"
               value={userName}
-              onChange={this.handleUsername}
+              name="userName"
+              onChange={this.handleChange}
               disableUnderline={true}
             />
           </div>
@@ -80,37 +155,28 @@ class Registration extends React.Component {
               placeholder="Password"
               value={password}
               type="password"
-              onChange={this.handlePassword}
+              name="password"
+              onChange={this.handleChange}
               disableUnderline={true}
             />
           </div>
           <div style={styles.input}>
-            <LockOutlined fontSize="small" style={styles.icon} />
+            <AccessibleOutlined fontSize="small" style={styles.icon} />
             <Input
               placeholder="Disability"
               value={disability}
-              onChange={this.handleDisability}
+              name="disability"
+              onChange={this.handleChange}
               disableUnderline={true}
             />
           </div>
-          <Button
-            type="submit"
-            style={styles.submitBtn}
-            disabled={
-              userName === '' ||
-              password === '' ||
-              userName == null ||
-              password == null ||
-              disability === '' ||
-              disability == null
-            }
-          >
+          <Button type="submit" style={styles.submitBtn} disabled={!formValid}>
             Submit
           </Button>
         </form>
         <Modal
           style={styles.modal}
-          open={open}
+          open={newUser !== null}
           onClose={this.handleClose}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -130,17 +196,21 @@ class Registration extends React.Component {
 
 Registration.propTypes = {
   registerUser: PropTypes.func.isRequired,
+  setNewUserNull: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
-  user: PropTypes.object
+  newUser: PropTypes.object,
+  registrationError: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   auth: state.auth.isAdmin,
-  user: state.auth.user
+  newUser: state.auth.newUser,
+  registrationError: state.auth.registrationError
 });
 
 const mapDispatchToProps = dispatch => ({
-  registerUser: bindActionCreators(registerUser, dispatch)
+  registerUser: bindActionCreators(registerUser, dispatch),
+  setNewUserNull: bindActionCreators(setNewUserNull, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

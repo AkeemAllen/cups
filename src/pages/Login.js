@@ -1,12 +1,12 @@
 import React from 'react';
-import Input from '@material-ui/core/Input';
-import { Button, Container } from '@material-ui/core';
+import { Button, Container, Input } from '@material-ui/core';
 import { AccountCircleOutlined, LockOutlined } from '@material-ui/icons';
 import { Redirect, Link } from 'react-router-dom';
 import { authorizeUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { FormErrors } from '../components/FormErrors';
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,16 +14,63 @@ class Login extends React.Component {
     this.state = {
       userName: '',
       password: '',
-      redirect: false
+      redirect: false,
+      formErrors: { password: '', userName: '' },
+      usernameValid: false,
+      passwordValid: false,
+      formValid: false
     };
   }
 
-  handleUsername = event => {
-    this.setState({ userName: event.target.value });
+  handleChange = event => {
+    event.preventDefault();
+    const { name, value } = event.target;
+
+    this.setState(
+      {
+        [name]: value
+      },
+      () => {
+        this.validateField(name, value);
+      }
+    );
   };
 
-  handlePassword = event => {
-    this.setState({ password: event.target.value });
+  validateField = (fieldName, value) => {
+    const fieldValidationErrors = this.state.formErrors;
+    let passwordValid = this.state.passwordValid;
+    let usernameValid = this.state.usernameValid;
+
+    switch (fieldName) {
+      case 'userName': {
+        usernameValid = value.length >= 3;
+        fieldValidationErrors.username = usernameValid
+          ? ''
+          : 'Name is too short';
+        break;
+      }
+      case 'password': {
+        passwordValid = value.length >= 3;
+        fieldValidationErrors.passwordValid = passwordValid
+          ? ''
+          : 'Password is too short';
+        break;
+      }
+    }
+    this.setState(
+      {
+        formErrors: fieldValidationErrors,
+        passwordValid: passwordValid,
+        usernameValid: usernameValid
+      },
+      this.validateForm
+    );
+  };
+
+  validateForm = () => {
+    this.setState({
+      formValid: this.state.usernameValid && this.state.passwordValid
+    });
   };
 
   handleSubmit = event => {
@@ -33,8 +80,8 @@ class Login extends React.Component {
   };
 
   render() {
-    const { userName, password } = this.state;
-    const { auth, user, error } = this.props;
+    const { userName, password, formErrors, formValid } = this.state;
+    const { auth, user, loginError } = this.props;
 
     if (user !== undefined) {
       if (auth) {
@@ -55,15 +102,17 @@ class Login extends React.Component {
       >
         <form onSubmit={this.handleSubmit} style={styles.form}>
           <h1 style={styles.header}>Login</h1>
-          {error !== null ? (
-            <div style={{ color: 'red', margin: 'auto' }}>Login Failed</div>
+          {loginError !== null ? (
+            <div style={{ color: 'red', margin: 'auto' }}>User Not Found</div>
           ) : null}
+          <FormErrors formErrors={formErrors} />
           <div style={styles.input}>
             <AccountCircleOutlined fontSize="small" style={styles.icon} />
             <Input
               placeholder="Username"
               value={userName}
-              onChange={this.handleUsername}
+              name="userName"
+              onChange={this.handleChange}
               disableUnderline={true}
             />
           </div>
@@ -72,21 +121,13 @@ class Login extends React.Component {
             <Input
               placeholder="Password"
               value={password}
+              name="password"
               type="password"
-              onChange={this.handlePassword}
+              onChange={this.handleChange}
               disableUnderline={true}
             />
           </div>
-          <Button
-            type="submit"
-            style={styles.submitBtn}
-            disabled={
-              userName === '' ||
-              password === '' ||
-              userName === null ||
-              password === null
-            }
-          >
+          <Button type="submit" style={styles.submitBtn} disabled={!formValid}>
             Submit
           </Button>
           <Link to="/register" style={{ marginTop: '20px' }}>
@@ -102,13 +143,13 @@ Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
   user: PropTypes.object,
-  error: PropTypes.string
+  loginError: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   auth: state.auth.isAdmin,
   user: state.auth.user,
-  error: state.auth.error
+  loginError: state.auth.loginError
 });
 
 const mapDispatchToProps = dispatch => ({

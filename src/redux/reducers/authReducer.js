@@ -2,13 +2,17 @@ import {
   AUTH_USER,
   LOG_OUT,
   REGISTER_USER,
-  AUTH_USER_FAILURE
+  AUTH_USER_FAILURE,
+  REGISTER_USER_FAILURE,
+  SET_NEW_USER_NULL
 } from '../actions/types';
 
 const intialState = {
   isAdmin: false,
   user: undefined,
-  error: null
+  loginError: null,
+  registrationError: null,
+  newUser: null
 };
 
 export default function(state = intialState, action) {
@@ -18,13 +22,13 @@ export default function(state = intialState, action) {
         ...state,
         isAdmin: action.payload.user.isAdmin,
         user: action.payload.user,
-        error: null
+        loginError: null
       };
     }
     case AUTH_USER_FAILURE: {
       return {
         ...state,
-        error: action.payload.message
+        loginError: action.payload.message
       };
     }
     case LOG_OUT: {
@@ -32,8 +36,20 @@ export default function(state = intialState, action) {
     }
     case REGISTER_USER: {
       return {
-        ...state
-        // user: action.payload
+        ...state,
+        newUser: action.payload
+      };
+    }
+    case REGISTER_USER_FAILURE: {
+      return {
+        ...state,
+        registrationError: action.payload
+      };
+    }
+    case SET_NEW_USER_NULL: {
+      return {
+        ...state,
+        newUser: null
       };
     }
     default:

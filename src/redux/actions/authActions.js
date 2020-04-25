@@ -1,4 +1,11 @@
-import { AUTH_USER, LOG_OUT, REGISTER_USER, AUTH_USER_FAILURE } from './types';
+import {
+  AUTH_USER,
+  LOG_OUT,
+  REGISTER_USER,
+  AUTH_USER_FAILURE,
+  REGISTER_USER_FAILURE,
+  SET_NEW_USER_NULL
+} from './types';
 
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -65,5 +72,15 @@ export const registerUser = (userName, password, disability) => dispatch => {
     })
     .then(res => {
       dispatch({ type: REGISTER_USER, payload: res.data });
+    })
+    .catch(error => {
+      dispatch({
+        type: REGISTER_USER_FAILURE,
+        payload: error
+      });
     });
+};
+
+export const setNewUserNull = () => dispatch => {
+  dispatch({ type: SET_NEW_USER_NULL });
 };
