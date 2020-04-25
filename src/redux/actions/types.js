@@ -1,5 +1,6 @@
 // User Actions
 export const AUTH_USER = 'AUTH_USER';
+export const AUTH_USER_FAILURE = 'AUTH_USER_FAILURE';
 export const LOG_OUT = 'LOG_OUT';
 export const REGISTER_USER = 'REGISTER_USER';
 

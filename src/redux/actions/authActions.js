@@ -1,4 +1,4 @@
-import { AUTH_USER, LOG_OUT, REGISTER_USER } from './types';
+import { AUTH_USER, LOG_OUT, REGISTER_USER, AUTH_USER_FAILURE } from './types';
 
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -33,6 +33,10 @@ export const authorizeUser = (userName, password) => dispatch => {
     .catch(error => {
       localStorage.removeItem('token');
       localStorage.removeItem('isAdmin');
+      dispatch({
+        type: AUTH_USER_FAILURE,
+        payload: error
+      });
       throw error;
     });
 };

@@ -34,7 +34,7 @@ class Login extends React.Component {
 
   render() {
     const { userName, password } = this.state;
-    const { auth, user } = this.props;
+    const { auth, user, error } = this.props;
 
     if (user !== undefined) {
       if (auth) {
@@ -55,6 +55,9 @@ class Login extends React.Component {
       >
         <form onSubmit={this.handleSubmit} style={styles.form}>
           <h1 style={styles.header}>Login</h1>
+          {error !== null ? (
+            <div style={{ color: 'red', margin: 'auto' }}>Login Failed</div>
+          ) : null}
           <div style={styles.input}>
             <AccountCircleOutlined fontSize="small" style={styles.icon} />
             <Input
@@ -98,12 +101,14 @@ class Login extends React.Component {
 Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  error: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   auth: state.auth.isAdmin,
-  user: state.auth.user
+  user: state.auth.user,
+  error: state.auth.error
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -141,5 +146,20 @@ const styles = {
   },
   icon: {
     marginRight: '15px'
+  },
+  modalMessage: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '30px',
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 9px 0px rgba(0,0,0,0.7)'
+  },
+  modal: {
+    justifyContent: 'center',
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    height: '100vh'
   }
 };
