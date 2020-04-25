@@ -16,7 +16,7 @@ class Analytics extends React.Component {
     return (
       <div>
         <h1>Analytics</h1>
-        <h3>Total Revenue:$ {totalRevenue}</h3>
+        <h3>Total Revenue: ${totalRevenue}</h3>
       </div>
     );
   }

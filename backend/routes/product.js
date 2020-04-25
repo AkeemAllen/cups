@@ -1,14 +1,60 @@
 const router = require('express').Router();
 const Product = require('../models/product.model');
 
-// Connecting to the database
+/**
+ * @swagger
+ * /products:
+ *  get:
+ *    tags:
+ *      - Products
+ *    description: Returns all products
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ *      '400':
+ *        description: An error occurred
+ */
 router.route('/').get(async (req, res) => {
   await Product.find()
     .then(products => res.json(products))
     .catch(err => res.status(400).jeson('Error: ' + err));
 });
 
-// Post Request Route
+/**
+ * @swagger
+ * /products:
+ *  post:
+ *    tags:
+ *      - Products
+ *    description: Add a Product
+ *    consumes:
+ *      - application/json
+ *    parameters:
+ *      - in: body
+ *        name: product
+ *        description: The Product to create
+ *        schema:
+ *          type: object
+ *          required:
+ *            - productName
+ *            - quantity
+ *            - price
+ *            - category
+ *          properties:
+ *            productName:
+ *              type: string
+ *            quantity:
+ *              type: number
+ *            price:
+ *              type: number
+ *            category:
+ *              type: string
+ *    responses:
+ *          '200':
+ *            description: Product Added
+ *          '400':
+ *            description: An error occurred
+ */
 router.route('/').post(async (req, res) => {
   const productName = req.body.productName;
   const quantity = req.body.quantity;
@@ -30,49 +76,88 @@ router.route('/').post(async (req, res) => {
 
 /**
  * @swagger
- * /products/:id:
+ * /products/{id}:
  *  get:
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *          required: true
+ *    tags:
+ *      - Products
  *    description: Return a single Product
  *    responses:
  *      '200':
  *        description: A successful response
+ *      '404':
+ *        description: Product Not Found
  *      '400':
  *        description: An error occurred
  */
 router.route('/:id').get(async (req, res) => {
   await Product.findById(req.params.id)
-    .then(product => res.json(product))
+    .then(product => {
+      if (product === null) {
+        res.status(404).json('Product Not Found');
+      } else {
+        res.status(200).json(product);
+      }
+    })
     .catch(err => res.status(400).json('Error ' + err));
 });
 
 /**
  * @swagger
- * /products/:id:
+ * /products/{id}:
  *  delete:
- *    description: Deletes a single Product
- *    response:
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *          required: true
+ *    tags:
+ *      - Products
+ *    description: Deletes a single product
+ *    responses:
  *      '200':
- *        description: A successful response
+ *        description: Product deleted
+ *      '404':
+ *        description: Product Not Found
  *      '400':
  *        description: An error occurred
  */
 router.route('/:id').delete(async (req, res) => {
   await Product.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Product Deleted'))
+    .then(product => {
+      if (product === null) {
+        res.status(404).json('Product Not Found');
+      } else {
+        res.status(200).json('Product Deleted');
+      }
+    })
     .catch(err => res.status(400).json('Error ' + err));
 });
 
 /**
  * @swagger
- * /products/update/:id:
+ * /products/update/{id}:
  *  post:
- *    description: Updates a Product's Information
+ *    tags:
+ *      - Products
+ *    description: Updates a product's Information
  *    consumes:
  *      - application/json
  *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *          required: true
  *      - in: body
- *        name: product
- *        description: The Product to edit
+ *        name: order
+ *        description: The Product to Update
  *        schema:
  *          type: object
  *          properties:
@@ -84,6 +169,8 @@ router.route('/:id').delete(async (req, res) => {
  *              type: number
  *            price:
  *              type: number
+ *            image:
+ *              type: string
  */
 router.route('/update/:id').put(async (req, res) => {
   await Product.findById(req.params.id)

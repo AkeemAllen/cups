@@ -16,6 +16,8 @@ const bcrypt = require('bcryptjs');
  * @swagger
  * /users:
  *  get:
+ *    tags:
+ *      - Users
  *    description: Returns all Users
  *    responses:
  *      '200':
@@ -33,6 +35,8 @@ router.route('/').get(async (req, res) => {
  * @swagger
  * /users:
  *  post:
+ *    tags:
+ *      - Users
  *    description: Add a User
  *    consumes:
  *      - application/json
@@ -52,6 +56,7 @@ router.route('/').get(async (req, res) => {
  *              type: string
  *            customerInfo:
  *              type: object
+ *              required: false
  *              properties:
  *                disability:
  *                  type: string
@@ -59,11 +64,17 @@ router.route('/').get(async (req, res) => {
  *                  type: number
  *            managerInfo:
  *              type: object
+ *              required: false
  *              properties:
  *                branch:
  *                  type: number
  *            isAdmin:
  *              type: boolean
+ *    responses:
+ *          '200':
+ *            description: A successful response
+ *          '400':
+ *            description: An error occurred
  */
 router.route('/').post(async (req, res) => {
   const userName = req.body.userName;
@@ -92,46 +103,92 @@ router.route('/').post(async (req, res) => {
 
 /**
  * @swagger
- * /users/:id:
+ * /users/{id}:
  *  get:
+ *    tags:
+ *      - Users
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *          required: true
  *    description: Return a single User
  *    responses:
  *      '200':
  *        description: A successful response
+ *      '404':
+ *        description: User Not Found
  *      '400':
  *        description: An error occurred
  */
 router.route('/:id').get(async (req, res) => {
   await User.findById(req.params.id)
-    .then(user => res.json(user))
+    .then(user => {
+      if (user === null) {
+        res.status(404).json('User Not Found');
+      } else {
+        res.json(user);
+      }
+    })
     .catch(err => res.status(400).json('Error ' + err));
 });
 
 /**
  * @swagger
- * /users/:id:
+ * /users/{id}:
  *  delete:
+ *    tags:
+ *      - Users
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *          retuired: true
  *    description: Deletes a single User
- *    response:
+ *    responses:
  *      '200':
- *        description: A successful response
+ *        description: User Deleted successfully
+ *      '404':
+ *        description: User Not Found
  *      '400':
  *        description: An error occurred
  */
 router.route('/:id').delete(async (req, res) => {
   await User.findByIdAndDelete(req.params.id)
-    .then(() => res.json('User Deleted'))
+    .then(user => {
+      if (user === null) {
+        res.status(404).json('User Not Found');
+      } else {
+        res.status(200).json(user);
+      }
+    })
     .catch(err => res.status(400).json('Error ' + err));
 });
 
 /**
  * @swagger
- * /users/update/:id:
+ * /users/update/{id}:
  *  post:
+ *    tags:
+ *      - Users
  *    description: Updates a User's Information
  *    consumes:
  *      - application/json
+ *    responses:
+ *      '200':
+ *        description: User Updated Successfully
+ *      '404':
+ *        description: User Not Found
+ *      '400':
+ *        description: Error Occurred
  *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *          required: true
  *      - in: body
  *        name: user
  *        description: The User to edit
@@ -167,6 +224,9 @@ router.route('/update/:id').post(async (req, res) => {
         if (err) {
           console.log(err);
         }
+        if (user === null) {
+          res.status(404).json('User Not Found');
+        }
         user.userName = req.body.userName;
         user.password = hash;
         user.customerInfo = req.body.customerInfo;
@@ -175,7 +235,7 @@ router.route('/update/:id').post(async (req, res) => {
 
         user
           .save()
-          .then(() => res.json('User Updated'))
+          .then(() => res.status(200).json('User Updated'))
           .catch(err => res.status(400).json('Error ' + err));
       });
     })
@@ -186,6 +246,8 @@ router.route('/update/:id').post(async (req, res) => {
  * @swagger
  * /users/login:
  *  post:
+ *    tags:
+ *     - Users
  *    description: Allows an existing User to log in
  *    consumes:
  *      - application/json
@@ -206,8 +268,10 @@ router.route('/update/:id').post(async (req, res) => {
  *    responses:
  *      '200':
  *        description: User Logged in
+ *      '404':
+ *        description: User Not Found
  *      '400':
- *        description: User not logged in
+ *        description: Unable to log in
  */
 router.route('/login').post(async (req, res) => {
   const username = req.body.userName;
@@ -216,7 +280,7 @@ router.route('/login').post(async (req, res) => {
   await User.findOne({ userName: username })
     .then(user => {
       if (!user) {
-        res.status(400).json('User Not Found');
+        res.status(404).json('User Not Found');
         return null;
       } else {
         bcrypt.compare(password, user.password, (err, isMatch) => {
