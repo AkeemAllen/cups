@@ -1,4 +1,3 @@
-/* eslint-disable no-lone-blocks */
 import React from 'react';
 import Input from '@material-ui/core/Input';
 import { Button, Container, Backdrop, Modal } from '@material-ui/core';
@@ -57,32 +56,36 @@ class Registration extends React.Component {
     let passwordValid = this.state.passwordValid;
     let disabilityValid = this.state.disabilityValid;
     let usernameValid = this.state.usernameValid;
+    let something = '';
 
     switch (fieldName) {
-      case 'userName':
-        {
-          usernameValid = value.length >= 3;
-          fieldValidationErrors.userName = usernameValid
-            ? ''
-            : 'Name is too short';
-        }
+      case 'userName': {
+        usernameValid = value.length >= 3;
+        fieldValidationErrors.userName = usernameValid
+          ? ''
+          : 'Name is too short';
         break;
-      case 'password':
-        {
-          passwordValid = value.length >= 6;
-          fieldValidationErrors.password = passwordValid
-            ? ''
-            : 'Password is too short';
-        }
+      }
+      case 'password': {
+        passwordValid = value.length >= 6;
+        fieldValidationErrors.password = passwordValid
+          ? ''
+          : 'Password is too short';
         break;
-      case 'disability':
-        {
-          disabilityValid = value.length >= 3;
-          fieldValidationErrors.disability = disabilityValid
-            ? ''
-            : 'Disability is too short';
-        }
+      }
+      case 'disability': {
+        disabilityValid = value.length >= 3;
+        fieldValidationErrors.disability = disabilityValid
+          ? ''
+          : 'Disability is too short';
         break;
+      }
+      default: {
+        something = 'Just needed a default case lol';
+        // eslint-disable-next-line no-console
+        console.log(something);
+        break;
+      }
     }
     this.setState(
       {

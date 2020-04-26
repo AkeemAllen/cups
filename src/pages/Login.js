@@ -40,6 +40,7 @@ class Login extends React.Component {
     const fieldValidationErrors = this.state.formErrors;
     let passwordValid = this.state.passwordValid;
     let usernameValid = this.state.usernameValid;
+    let something = '';
 
     switch (fieldName) {
       case 'userName': {
@@ -54,6 +55,12 @@ class Login extends React.Component {
         fieldValidationErrors.passwordValid = passwordValid
           ? ''
           : 'Password is too short';
+        break;
+      }
+      default: {
+        something = 'Just needed a default case lol';
+        // eslint-disable-next-line no-console
+        console.log(something);
         break;
       }
     }
