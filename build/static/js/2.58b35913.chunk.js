@@ -5127,7 +5127,8 @@
               ('ReactNative' !== navigator.product &&
                 'NativeScript' !== navigator.product &&
                 'NS' !== navigator.product)) &&
-            'undefined' !== typeof window && 'undefined' !== typeof document
+            'undefined' !== typeof window &&
+            'undefined' !== typeof document
           );
         },
         forEach: u,
@@ -5857,7 +5858,8 @@
                 -1 === e.indexOf('Mobile Safari') ||
                 -1 !== e.indexOf('Chrome') ||
                 -1 !== e.indexOf('Windows Phone')) &&
-              window.history && 'pushState' in window.history
+              window.history &&
+              'pushState' in window.history
             );
           })(),
           i = !(-1 === window.navigator.userAgent.indexOf('Trident')),
@@ -6347,7 +6349,7 @@
         return (
           55296 === (64512 & e.charCodeAt(t)) &&
           !(t < 0 || t + 1 >= e.length) &&
-            56320 === (64512 & e.charCodeAt(t + 1))
+          56320 === (64512 & e.charCodeAt(t + 1))
         );
       }
       function a(e) {
@@ -7182,7 +7184,8 @@
             return (
               void 0 !== this._readableState &&
               void 0 !== this._writableState &&
-              this._readableState.destroyed && this._writableState.destroyed
+              this._readableState.destroyed &&
+              this._writableState.destroyed
             );
           },
           set: function(e) {
@@ -12987,7 +12990,7 @@
               n.decoder && (i = n.decoder.write(i)),
               !n.objectMode || (null !== i && void 0 !== i)) &&
                 (n.objectMode || (i && i.length)) &&
-                  (t.push(i) || ((r = !0), e.pause()));
+                (t.push(i) || ((r = !0), e.pause()));
             }),
             e))
               void 0 === this[i] &&
@@ -16674,7 +16677,8 @@
               n = e.tagName;
             return (
               !('INPUT' !== n || !y[t] || e.readOnly) ||
-              ('TEXTAREA' === n && !e.readOnly) || !!e.isContentEditable
+              ('TEXTAREA' === n && !e.readOnly) ||
+              !!e.isContentEditable
             );
           })(t)
         );
@@ -18186,8 +18190,8 @@
           ? 0 === i.type
           : !r &&
             2 < t.length &&
-              ('o' === t[0] || 'O' === t[0]) &&
-              ('n' === t[1] || 'N' === t[1])) ||
+            ('o' === t[0] || 'O' === t[0]) &&
+            ('n' === t[1] || 'N' === t[1])) ||
           ((function(e, t, n, r) {
             if (
               null === t ||
@@ -20800,7 +20804,8 @@
           ? e.shouldComponentUpdate(r, o, a)
           : !t.prototype ||
               !t.prototype.isPureReactComponent ||
-              !ni(n, r) || !ni(i, o);
+              !ni(n, r) ||
+              !ni(i, o);
       }
       function To(e, t, n) {
         var r = !1,
