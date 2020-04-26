@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable no-unused-expressions */
 const router = require('express').Router();
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
