@@ -10,7 +10,7 @@ import {
 } from './types';
 import axios from 'axios';
 import { updateProduct } from './productActions';
-// import { updateUser } from './authActions';
+import { updateUser } from './authActions';
 
 let uri;
 process.env.NODE_ENV !== 'production'
@@ -53,7 +53,7 @@ export const removeFromCart = productId => dispatch => {
   dispatch({ type: REMOVE_FROM_CART, payload: productId });
 };
 
-export const placeOrder = (user, cart, cost) => dispatch => {
+export const placeOrder = (user, cart, cost, accountBalance) => dispatch => {
   if (user.customerInfo.accountBalance < cost) {
     dispatch({
       type: PLACE_ORDER_FAILURE,
@@ -71,6 +71,14 @@ export const placeOrder = (user, cart, cost) => dispatch => {
           );
         });
         dispatch({ type: PLACE_ORDER, payload: response.data });
+      })
+      .then(() => {
+        let newBalance = 0;
+        newBalance = accountBalance - cost;
+        console.log(newBalance);
+        dispatch(
+          updateUser(user._id, { customerInfo: { accountBalance: newBalance } })
+        );
       })
       .catch(err => {
         throw err;

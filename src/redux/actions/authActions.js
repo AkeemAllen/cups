@@ -91,10 +91,10 @@ export const updateUser = (
   { userName, customerInfo, managerInfo }
 ) => dispatch => {
   axios
-    .put(uri + `/update/${id}`, {
-      userName,
-      customerInfo,
-      managerInfo
+    .put(uri + `update/${id}`, {
+      userName: userName,
+      customerInfo: customerInfo,
+      managerInfo: managerInfo
     })
     .then(response =>
       dispatch({ type: UPDATE_USER_INFO, payload: response.data })

@@ -37,7 +37,12 @@ function Cart(props) {
   };
 
   const handleOrder = () => {
-    props.placeOrder(props.user, props.cart, props.totalCost);
+    props.placeOrder(
+      props.user,
+      props.cart,
+      props.totalCost,
+      props.accountBalance
+    );
     handleModalOpen('Order Successful');
   };
 

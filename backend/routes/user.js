@@ -218,7 +218,7 @@ router.route('/:id').delete(async (req, res) => {
  *            isAdmin:
  *              type: boolean
  */
-router.route('/update/:id').post(async (req, res) => {
+router.route('/update/:id').put(async (req, res) => {
   await User.findById(req.params.id)
     .then(user => {
       bcrypt.hash(req.body.password, 10, async (err, hash) => {
