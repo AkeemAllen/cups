@@ -227,11 +227,19 @@ router.route('/update/:id').post(async (req, res) => {
         if (user === null) {
           res.status(404).json('User Not Found');
         }
-        user.userName = req.body.userName;
-        user.password = hash;
-        user.customerInfo = req.body.customerInfo;
-        user.managerInfo = req.body.managerInfo;
-        user.isAdmin = req.body.isAdmin;
+        req.body.userName !== undefined
+          ? (user.userName = req.body.userName)
+          : null;
+        req.body.password !== undefined ? (user.password = hash) : null;
+        req.body.customerInfo !== undefined
+          ? (user.customerInfo = req.body.customerInfo)
+          : null;
+        req.body.managerInfo !== undefined
+          ? (user.managerInfo = req.body.managerInfo)
+          : null;
+        req.body.isAdmin !== undefined
+          ? (user.isAdmin = req.body.isAdmin)
+          : null;
 
         user
           .save()

@@ -21,7 +21,8 @@ const userModel = new Schema(
       },
       accountBalance: {
         type: Number,
-        required: false
+        required: false,
+        default: 500
       },
       required: false
     },

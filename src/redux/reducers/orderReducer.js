@@ -4,18 +4,29 @@ import {
   PLACE_ORDER,
   REMOVE_ALL_FROM_CART,
   CALCULATE_COST,
-  FETCH_ORDERS
+  FETCH_ORDERS,
+  PLACE_ORDER_FAILURE,
+  FETCH_ACCOUNT_BALANCE
 } from '../actions/types';
 
 const initialState = {
   cart: [],
   product: '',
   totalCost: 0,
-  orders: []
+  orders: [],
+  canAfford: true,
+  accountBalance: 0,
+  error: null
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case FETCH_ACCOUNT_BALANCE: {
+      return {
+        ...state,
+        accountBalance: action.payload
+      };
+    }
     case FETCH_ORDERS: {
       return {
         ...state,
@@ -40,17 +51,28 @@ export default function(state = initialState, action) {
       state.cart.forEach(product => {
         totalCost = totalCost + parseInt(product.cost);
       });
+      const canAfford = state.accountBalance < totalCost;
       return {
         ...state,
         product: action.payload,
-        totalCost: totalCost
+        totalCost: totalCost,
+        canAfford: !canAfford
       };
     }
     case PLACE_ORDER: {
+      let newBalance = 0;
+      newBalance = state.accountBalance - state.totalCost;
       return {
         ...state,
         cart: [],
-        totalCost: 0
+        totalCost: 0,
+        accountBalance: newBalance
+      };
+    }
+    case PLACE_ORDER_FAILURE: {
+      return {
+        ...state,
+        error: action.payload
       };
     }
     case REMOVE_ALL_FROM_CART: {
@@ -74,10 +96,12 @@ export default function(state = initialState, action) {
       state.cart.forEach(product => {
         totalCost = totalCost + parseInt(product.cost);
       });
+      const canAfford = state.accountBalance < totalCost;
       return {
         ...state,
         cart: [...state.cart],
-        totalCost: totalCost
+        totalCost: totalCost,
+        canAfford: !canAfford
       };
     }
     default:

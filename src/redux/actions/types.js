@@ -5,6 +5,7 @@ export const LOG_OUT = 'LOG_OUT';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
 export const SET_NEW_USER_NULL = 'SET_NEW_USER_NULL';
+export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
 // Product Actions
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
@@ -17,8 +18,10 @@ export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 
 // Order Actions
 export const FETCH_ORDERS = 'FETCH_ORDERS';
+export const FETCH_ACCOUNT_BALANCE = 'FETCH_ACCOUNT_BALANCE';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const PLACE_ORDER = 'PLACE_ORDER';
+export const PLACE_ORDER_FAILURE = 'PLACE_ORDER_FAILURE';
 export const REMOVE_ALL_FROM_CART = 'REMOVE_ALL_FROM_CART';
 export const CALCULATE_COST = 'CALCULATE_COST';

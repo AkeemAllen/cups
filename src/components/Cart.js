@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux';
 function Cart(props) {
   const [open, setOpen] = React.useState(false);
   const [openModal, setModal] = React.useState(false);
+  const [message, setMessage] = React.useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -26,8 +27,18 @@ function Cart(props) {
     setOpen(false);
   };
 
+  const handleModalOpen = message => {
+    setModal(open);
+    setMessage(message);
+  };
+
   const handleCloseModal = () => {
     setModal(false);
+  };
+
+  const handleOrder = () => {
+    props.placeOrder(props.user, props.cart, props.totalCost);
+    handleModalOpen('Order Successful');
   };
 
   const itemNumber = props.cart.length;
@@ -51,11 +62,33 @@ function Cart(props) {
             style={{
               fontFamily: 'Courgette, san-serif',
               marginRight: 'auto',
-              marginLeft: 'auto'
+              marginLeft: 'auto',
+              marginBottom: '5px'
             }}
           >
             {props.user.userName}
           </h3>
+        ) : null}
+        {props.user !== undefined ? (
+          <h4
+            style={{
+              fontFamily: 'Courgette, san-serif',
+              marginTop: '0px',
+              marginLeft: '10px'
+            }}
+          >
+            Balance: ${props.accountBalance}
+          </h4>
+        ) : null}
+        {props.canAfford !== true ? (
+          <h5
+            style={{
+              fontFamily: 'Courgette, san-serif',
+              color: 'red'
+            }}
+          >
+            Account Balance too low
+          </h5>
         ) : null}
         <List style={{ width: '250px' }}>
           {props.cart.map(product => (
@@ -109,10 +142,9 @@ function Cart(props) {
             margin: '10px auto',
             color: 'white'
           }}
-          disabled={props.cart.length <= 0}
+          disabled={props.cart.length <= 0 || props.canAfford === false}
           onClick={() => {
-            props.placeOrder(props.user, props.cart, props.totalCost);
-            setModal(true);
+            handleOrder();
           }}
         >
           Place Order
@@ -128,8 +160,7 @@ function Cart(props) {
           }}
         >
           <div style={styles.modalMessage}>
-            <h1>Order Successful</h1>
-            <h3>Thanks for coming to cups</h3>
+            <h1>{message}</h1>
           </div>
         </Modal>
       </Drawer>
@@ -142,12 +173,16 @@ Cart.propTypes = {
   removeFromCart: PropTypes.func.isRequired,
   cart: PropTypes.array,
   user: PropTypes.object,
+  canAfford: PropTypes.bool,
+  accountBalance: PropTypes.number,
   totalCost: PropTypes.number
 };
 
 const mapStateToProps = state => ({
   cart: state.orders.cart,
   user: state.auth.user,
+  canAfford: state.orders.canAfford,
+  accountBalance: state.orders.accountBalance,
   totalCost: state.orders.totalCost
 });
 

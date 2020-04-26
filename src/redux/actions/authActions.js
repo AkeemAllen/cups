@@ -4,11 +4,17 @@ import {
   REGISTER_USER,
   AUTH_USER_FAILURE,
   REGISTER_USER_FAILURE,
-  SET_NEW_USER_NULL
+  SET_NEW_USER_NULL,
+  UPDATE_USER_INFO
 } from './types';
-
+import { fetchAccountBalance } from './orderActions';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+
+let uri;
+process.env.NODE_ENV !== 'production'
+  ? (uri = 'http://localhost:5000/users/')
+  : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/users/`);
 
 export const authorizeUser = (userName, password) => dispatch => {
   let uri;
@@ -34,6 +40,9 @@ export const authorizeUser = (userName, password) => dispatch => {
             type: AUTH_USER,
             payload: decoded
           });
+          dispatch(
+            fetchAccountBalance(decoded.user.customerInfo.accountBalance)
+          );
         }
       );
     })
@@ -58,10 +67,6 @@ export const logOut = () => dispatch => {
 };
 
 export const registerUser = (userName, password, disability) => dispatch => {
-  let uri;
-  process.env.NODE_ENV !== 'production'
-    ? (uri = 'http://localhost:5000/users/')
-    : (uri = `${process.env.REACT_APP_MONGO_API_BASE_URI}/users/`);
   axios
     .post(uri, {
       userName,
@@ -79,6 +84,21 @@ export const registerUser = (userName, password, disability) => dispatch => {
         payload: error
       });
     });
+};
+
+export const updateUser = (
+  id,
+  { userName, customerInfo, managerInfo }
+) => dispatch => {
+  axios
+    .put(uri + `/update/${id}`, {
+      userName,
+      customerInfo,
+      managerInfo
+    })
+    .then(response =>
+      dispatch({ type: UPDATE_USER_INFO, payload: response.data })
+    );
 };
 
 export const setNewUserNull = () => dispatch => {
